@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Oyuns Finance — Modern Finance Website
 
-## Getting Started
+International money transfer platform built with Next.js, Directus CMS, and Supabase.
 
-First, run the development server:
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 16, React 19, TypeScript, Tailwind CSS 4 |
+| CMS | Directus (Headless) |
+| Database | Supabase (PostgreSQL) |
+| Charts | Recharts |
+| Animations | Framer Motion |
+| Hosting | Cloudflare Pages |
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.local.example .env.local   # then fill in credentials
+npm run dev                         # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Full Setup Guide
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**→ Start here: [`docs/COMPLETE_SETUP.md`](docs/COMPLETE_SETUP.md)**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+It walks you through every step — Supabase tables, Directus collections, local testing, and deployment — with links to deeper reference docs:
 
-## Learn More
+| Step | Doc |
+|------|-----|
+| 1–2 | Install & env file | _in COMPLETE_SETUP.md_ |
+| 3 | Supabase (database) | [`docs/SUPABASE_SETUP.md`](docs/SUPABASE_SETUP.md) |
+| 4 | Directus (CMS) | [`docs/DIRECTUS_SETUP.md`](docs/DIRECTUS_SETUP.md) |
+| 5–6 | Test & push to GitHub | _in COMPLETE_SETUP.md_ |
+| 7 | Cloudflare deployment | [`docs/CLOUDFLARE_DEPLOYMENT.md`](docs/CLOUDFLARE_DEPLOYMENT.md) |
+| 8 | Post-launch ops | _in COMPLETE_SETUP.md_ |
+| — | Daily cheat sheet | [`docs/QUICK_REFERENCE.md`](docs/QUICK_REFERENCE.md) |
 
-To learn more about Next.js, take a look at the following resources:
+## Database Tables (Supabase)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `bot_rates` — Individual exchange rates (buy/sell)
+- `business_rates` — Business exchange rates (B2C/B2B)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## CMS Collections (Directus)
 
-## Deploy on Vercel
+- `services`, `blog_posts`, `testimonials`, `partners`, `site_settings`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Pages
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Route | Purpose |
+|-------|---------|
+| `/` | Home — hero, services, testimonials |
+| `/exchange` | Live rates, historical chart, calculator |
+| `/services` | All service offerings |
+| `/blog` | Blog posts from Directus |
+| `/about` | Company info |
+| `/contact` | Contact form |
+
+## Commands
+
+```bash
+npm run dev          # Development server
+npm run build        # Production build
+npm run start        # Serve production build
+npm run lint         # Lint check
+npm run type-check   # TypeScript check
+```
+
+## Contact
+
+Email: info@oyunsfinance.mn | Web: [oyuns.mn](https://oyuns.mn)
