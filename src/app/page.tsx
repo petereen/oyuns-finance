@@ -229,7 +229,7 @@ export default function Home() {
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
               OYUNS FINANCE
-              <span className="block text-2xl sm:text-3xl lg:text-4xl mt-3 leading-snug font-bold text-nowrap">
+              <span className="block text-2xl sm:text-3xl lg:text-4xl mt-3 leading-snug font-bold text-wrap sm:text-nowrap">
                 ОЛОН УЛСЫН МӨНГӨН ГУЙВУУЛГЫН ҮЙЛЧИЛГЭЭ
               </span>
             </h1>

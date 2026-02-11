@@ -75,7 +75,7 @@ export default function ExchangeRateChart({ data, currencyPair }: ExchangeRateCh
               fontSize: '13px',
               padding: '10px 14px',
             }}
-            formatter={(value: number) => value.toFixed(2)}
+            formatter={(value: any) => (typeof value === 'number' ? value.toFixed(2) : '0.00')}
           />
           <Area 
             type="monotone" 
