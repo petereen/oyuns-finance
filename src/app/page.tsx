@@ -1,332 +1,383 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
+import ExchangeCalculator from '@/components/ExchangeCalculator';
+import { getServices, getTestimonials, getPartners, assetUrl, type Service, type Testimonial, type Partner } from '@/lib/directus';
+import { getLatestBotRate, type BotRate } from '@/lib/supabase';
+
+/* ── Icon Components ─────────────────────────────────────────────────── */
+
+const IndividualIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+  </svg>
+);
+
+const BusinessPayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+  </svg>
+);
+
+const ReceivePayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+  </svg>
+);
+
+const SendPayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+  </svg>
+);
+
+/* ── Feature icons ───────────────────────────────────────────────────── */
+
+const FlexPriceIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+  </svg>
+);
+
+const SpeedIcon = () => (
+  <svg className="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+  </svg>
+);
+
+const SecureIcon = () => (
+  <svg className="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+  </svg>
+);
+
+const SupportIcon = () => (
+  <svg className="w-7 h-7 text-violet-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+  </svg>
+);
 
 export default function Home() {
-  const clientServices = [
-    {
-      title: 'Student Pay',
-      description: 'Гадаадад суралцаж буй оюутнуудад зориулсан хялбар, найдвартай мөнгөн шилжүүлэг',
-      features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал'],
-      telegramLink: 'https://t.me/oyunsaio_bot',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      ),
-    },
-    {
-      title: 'DrivePay',
-      description: 'Алсын тээврийн жолооч нарын мөнгөн гүйлгээг хялбар болгох шийдэл',
-      features: ['Шатахуун, замын төлбөр', 'Засвар үйлчилгээний төлбөр', 'Ажилчдын цалин'],
-      telegramLink: 'http://t.me/oyuns_drivepaybot',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-    },
+  const [directusServices, setDirectusServices] = useState<Service[]>([]);
+  const [directusTestimonials, setDirectusTestimonials] = useState<Testimonial[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [botRate, setBotRate] = useState<BotRate | null>(null);
+  const [loaded, setLoaded] = useState(false);
+  const [calcOpen, setCalcOpen] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [services, testimonials, rate, partnerData] = await Promise.all([
+          getServices().catch(() => []),
+          getTestimonials().catch(() => []),
+          getLatestBotRate().catch(() => null),
+          getPartners().catch(() => []),
+        ]);
+        if (services.length) setDirectusServices(services as Service[]);
+        if (testimonials.length) setDirectusTestimonials(testimonials as Testimonial[]);
+        if (partnerData.length) setPartners(partnerData as Partner[]);
+        setBotRate(rate);
+      } catch (e) {
+        console.error('Fetch failed, using fallback:', e);
+      } finally {
+        setLoaded(true);
+      }
+    }
+    fetchData();
+  }, []);
+
+  /* ── Fallback data ──────────────────────────────────────────────────── */
+
+  const iconMap: Record<string, React.ReactNode> = {
+    'individual': <IndividualIcon />,
+    'businesspay': <BusinessPayIcon />,
+    'receive-payment': <ReceivePayIcon />,
+    'send-payment': <SendPayIcon />,
+  };
+
+  /* Mongolian Individual (combined Student Pay + Individual) */
+  const fallbackIndividual = {
+    title: 'Хувь хүнд зориулсан үйлчилгээ',
+    description: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
+    features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин'],
+    telegramLink: 'https://t.me/oyunsaio_bot',
+    icon: <IndividualIcon />,
+  };
+
+  /* Mongolian Business */
+  const fallbackBusiness = {
+    title: 'BusinessPay',
+    description: 'Байгууллагуудын төлбөр тооцооны шийдэл',
+    features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо'],
+    telegramLink: 'https://t.me/Soyuns_aio',
+    icon: <BusinessPayIcon />,
+  };
+
+  /* Russian client services (separate from business) */
+  const fallbackReceive = {
+    title: 'Гадаад улсаас төлбөр хүлээн авах',
+    description: 'Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах найдвартай шийдэл',
+    features: ['Төлбөрийн найдвартай шилжүүлэг', 'Шуурхай гүйлгээ'],
+    icon: <ReceivePayIcon />,
+  };
+
+  const fallbackSend = {
+    title: 'Гадаад улс руу төлбөр төлөх',
+    description: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
+    features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх'],
+    icon: <SendPayIcon />,
+  };
+
+  const fallbackTestimonials = [
+    { author: 'Хэрэглэгч', content: 'Үйлчилгээ нь маш хурдан, найдвартай. Харилцаа хандлага ч гэсэн их найрсаг, тав тухтай байдагт сэтгэл хангалуун байдаг.', rating: 5 },
+    { author: 'Хэрэглэгч', content: 'Бусад газруудаас илүү шуурхай, найдвартай гэдэгт итгэлтэй болсон. Ирээдүйд улам өргөжиж хөгжөөсэй гэж хүсэж байна!', rating: 5 },
+    { author: 'Хэрэглэгч', content: 'Үнэхээр хурдан, найдвартай, бас эелдэг. Баярлалаа!', rating: 5 },
   ];
 
-  const businessServices = [
-    {
-      title: 'BusinessPay',
-      description: 'Байгууллагуудын төлбөр тооцооны шийдэл',
-      features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо'],
-      telegramLink: 'https://t.me/Soyuns_aio',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
-    {
-      title: 'Гадаад улсаас төлбөр хүлээн авах',
-      description: 'Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах найдвартай шийдэл',
-      features: ['Төлбөрийн найдвартай шилжүүлэг', 'Шуурхай гүйлгээ'],
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      ),
-    },
-    {
-      title: 'Гадаад улс руу төлбөр төлөх',
-      description: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
-      features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх'],
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3" />
-        </svg>
-      ),
-    },
-  ];
+  /* ── Map Directus data → display ────────────────────────────────────── */
 
-  const testimonials = [
-    {
-      author: 'Хэрэглэгч',
-      content: 'Үйлчилгээ нь маш хурдан, найдвартай. Харилцаа хандлага ч гэсэн их найрсаг, тав тухтай байдагт сэтгэл хангалуун байдаг.',
-      rating: 5,
-    },
-    {
-      author: 'Хэрэглэгч',
-      content: 'Бусад газруудаас илүү шуурхай, найдвартай гэдэгт итгэлтэй болсон. Ирээдүйд улам өргөжиж хөгжөөсэй гэж хүсэж байна!',
-      rating: 5,
-    },
-    {
-      author: 'Хэрэглэгч',
-      content: 'Үнэхээр хурдан, найдвартай, бас эелдэг. Баярлалаа!',
-      rating: 5,
-    },
-  ];
+  const mongolianIndividual = directusServices.length
+    ? directusServices.filter((s) => s.category === 'client').map((s) => ({
+        title: s.title, description: s.description, features: s.features ?? [],
+        telegramLink: s.telegram_link, icon: iconMap[s.icon] || <IndividualIcon />,
+      }))
+    : [fallbackIndividual];
+
+  const mongolianBusiness = directusServices.length
+    ? directusServices.filter((s) => s.category === 'business').map((s) => ({
+        title: s.title, description: s.description, features: s.features ?? [],
+        telegramLink: s.telegram_link, icon: iconMap[s.icon] || <BusinessPayIcon />,
+      }))
+    : [fallbackBusiness];
+
+  const russianServices = [fallbackReceive, fallbackSend];
+
+  const testimonials = directusTestimonials.length
+    ? directusTestimonials.map((t) => ({ author: t.author, content: t.content, rating: t.rating }))
+    : fallbackTestimonials;
 
   const features = [
-    {
-      title: 'Уян хатан',
-      description: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан тариф',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      color: 'from-blue-50 to-indigo-50',
-    },
-    {
-      title: 'Хурдан, найдвартай',
-      description: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем',
-      icon: (
-        <svg className="w-7 h-7 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-      color: 'from-amber-50 to-yellow-50',
-    },
-    {
-      title: 'Баталгаатай',
-      description: 'Олон улсын стандартын дагуу аюулгүй үйлчилгээ',
-      icon: (
-        <svg className="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      ),
-      color: 'from-emerald-50 to-teal-50',
-    },
-    {
-      title: 'Дэмжлэг',
-      description: 'Өндөр түвшний үйлчилгээ, найдвартай гүйлгээ',
-      icon: (
-        <svg className="w-7 h-7 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
-      color: 'from-violet-50 to-purple-50',
-    },
+    { title: 'Уян хатан', description: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан тариф', icon: <FlexPriceIcon />, color: 'from-blue-50 to-indigo-50' },
+    { title: 'Хурдан, найдвартай', description: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем', icon: <SpeedIcon />, color: 'from-amber-50 to-yellow-50' },
+    { title: 'Баталгаатай', description: 'Олон улсын стандартын дагуу аюулгүй үйлчилгээ', icon: <SecureIcon />, color: 'from-emerald-50 to-teal-50' },
+    { title: 'Дэмжлэг', description: 'Өндөр түвшний үйлчилгээ, найдвартай гүйлгээ', icon: <SupportIcon />, color: 'from-violet-50 to-purple-50' },
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section — mesh gradient */}
+    <div className="min-h-screen bg-[#eaeaea]">
+      {/* ── Hero — centered with slide-open calculator ──────────────── */}
       <section className="relative mesh-gradient text-white pt-32 pb-24 overflow-hidden">
-        {/* Floating decorative shapes */}
         <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-float pointer-events-none" />
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl animate-float-delay pointer-events-none" />
+
+        {/* Slide-open calculator panel */}
+        <AnimatePresence>
+          {calcOpen && (
+            <motion.div
+              initial={{ x: '-100%', opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: '-100%', opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="fixed top-0 left-0 z-50 h-full w-full sm:w-[380px] bg-white shadow-2xl overflow-y-auto"
+            >
+              <div className="p-6">
+                <button
+                  onClick={() => setCalcOpen(false)}
+                  className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                  Хаах
+                </button>
+                <ExchangeCalculator initialRate={botRate} />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {calcOpen && (
+          <div className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" onClick={() => setCalcOpen(false)} />
+        )}
+
+        {/* Floating calculator button — left side */}
+        <button
+          onClick={() => setCalcOpen(true)}
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-gradient-to-b from-amber-400 to-amber-600 text-white px-3 py-5 rounded-r-xl shadow-lg hover:shadow-xl hover:px-4 transition-all duration-300 group"
+          aria-label="Тооцоолуур нээх"
+        >
+          <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm2.25-4.5h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm2.25-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H15v-.008Zm0 2.25h.008v.008H15v-.008ZM4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
+          </svg>
+          <span className="block text-[10px] font-bold mt-1 tracking-wide">Ханш</span>
+        </button>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, ease: 'easeOut' }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8 text-sm font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              2018 оноос найдвартай үйлчилгээ
+              2018 ОНООС 
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
-              Олон улсын мөнгөн
-              <br />
-              <span className="text-cyan-300">гуйвуулгын үйлчилгээ</span>
+              OYUNS FINANCE
+              <span className="block text-2xl sm:text-3xl lg:text-4xl mt-3 leading-snug font-bold text-nowrap">
+                ОЛОН УЛСЫН МӨНГӨН ГУЙВУУЛГЫН ҮЙЛЧИЛГЭЭ
+              </span>
             </h1>
-            <p className="text-lg sm:text-xl mb-10 text-blue-100/80 max-w-2xl mx-auto leading-relaxed">
-              Таны найдвартай санхүүгийн түнш. Хурдан, найдвартай, хямд.
+            <p className="text-lg sm:text-xl mb-10 text-blue-100/80 max-w-2xl mx-auto leading-relaxed flex items-center justify-center gap-2">
+              Илүү <span className="typewriter font-bold text-white"></span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/exchange"
-                className="group bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
+                className="group bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
               >
-                Валют солих
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                ВАЛЮТ СОЛИХ
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
               </Link>
               <Link
                 href="/services"
-                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-base"
+                className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-base text-center"
               >
-                Үйлчилгээ үзэх
+                БИДНИЙ ҮЙЛЧИЛГЭЭ
               </Link>
             </div>
-          </motion.div>
-
-          {/* Stats row */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-16 grid grid-cols-3 gap-4 max-w-lg mx-auto"
-          >
-            {[
-              { value: '2018', label: 'Оноос' },
-              { value: '1000+', label: 'Хэрэглэгч' },
-              { value: '5+', label: 'Үйлчилгээ' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center bg-white/5 backdrop-blur-sm rounded-xl py-4 border border-white/10">
-                <div className="text-2xl font-extrabold">{stat.value}</div>
-                <div className="text-xs text-blue-200 mt-0.5">{stat.label}</div>
-              </div>
-            ))}
           </motion.div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 bg-slate-50">
+      {/* ── Features ──────────────────────────────────────────────────── */}
+      <section className="py-20 bg-[#eaeaea]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Давуу тал</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Яагаад <span className="gradient-text">OYUNS FINANCE</span>?
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">
+              ЯАГААД <span className="gradient-text">OYUNS FINANCE</span> ГЭЖ?
             </h2>
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl p-6 text-center card-hover border border-gray-100"
-              >
-                <div className={`inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br ${feature.color} rounded-xl mb-4`}>
-                  {feature.icon}
-                </div>
-                <h3 className="text-base font-bold text-slate-900 mb-1.5">{feature.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{feature.description}</p>
+              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }} className="bg-white rounded-2xl p-6 text-center card-hover border border-gray-200">
+                <div className={`inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br ${feature.color} rounded-xl mb-4`}>{feature.icon}</div>
+                <h3 className="text-base font-bold text-[#1a1a1a] mb-1.5">{feature.title}</h3>
+                <p className="text-[#555] text-sm leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Client Services Section */}
+      {/* ── Монгол хэрэглэгчдэд — Хувь хүн + Байгууллага side-by-side ── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Хувь хүн</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Монгол хэрэглэгчдэд зориулсан
-            </h2>
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Монгол хэрэглэгчдэд зориулсан үйлчилгээ</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хувь хүн болон Байгууллагын гүйлгээ</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {clientServices.map((service, index) => (
-              <ServiceCard key={index} {...service} index={index} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {mongolianIndividual.map((s, i) => (
+              <ServiceCard key={`ind-${i}`} {...s} index={i} />
+            ))}
+            {mongolianBusiness.map((s, i) => (
+              <ServiceCard key={`biz-${i}`} {...s} index={i + 1} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Business Services Section */}
-      <section className="py-20 bg-slate-50">
+      {/* ── Оросын хэрэглэгчдэд — visually distinct ─────────────────── */}
+      <section className="py-20 bg-gradient-to-br from-[#2455D8] to-[#1b40a8] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Байгууллага</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Байгууллагуудад зориулсан
-            </h2>
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-sm font-semibold text-cyan-300 tracking-wide uppercase mb-2">Орос хэрэглэгчдэд зориулсан үйлчилгээ</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Олон улсын төлбөр тооцоо</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {businessServices.map((service, index) => (
-              <ServiceCard key={index} {...service} index={index} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {russianServices.map((s, i) => (
+              <ServiceCard key={i} {...s} index={i} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 bg-white">
+      {/* ── Testimonials ──────────────────────────────────────────────── */}
+      <section className="py-20 bg-[#eaeaea]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="text-center mb-14"
-          >
-            <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Сэтгэгдэл</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-              Хэрэглэгчдийн сэтгэгдэл
-            </h2>
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хэрэглэгчдийн сэтгэгдэл</h2>
           </motion.div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} {...testimonial} />
-            ))}
+            {testimonials.map((t, i) => <TestimonialCard key={i} {...t} />)}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── CTA ───────────────────────────────────────────────────────── */}
+      {partners.length > 0 && (
+        <section className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хамтран ажиллагч байгууллагууд</h2>
+            </motion.div>
+            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
+              {partners.map((partner, i) => (
+                <motion.div
+                  key={partner.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  viewport={{ once: true }}
+                >
+                  {partner.url ? (
+                    <a href={partner.url} target="_blank" rel="noopener noreferrer" className="block grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300" title={partner.name}>
+                      <img
+                        src={assetUrl(partner.logo)}
+                        alt={partner.name}
+                        className="h-12 md:h-14 w-auto object-contain"
+                      />
+                    </a>
+                  ) : (
+                    <div className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300" title={partner.name}>
+                      <img
+                        src={assetUrl(partner.logo)}
+                        alt={partner.name}
+                        className="h-12 md:h-14 w-auto object-contain"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── CTA ───────────────────────────────────────────────────────── */}
       <section className="relative py-20 mesh-gradient text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#1b40a8]/50 to-transparent pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">
-              Өдөр бүрийн ханш ба зах зээлийн мэдээ авах
-            </h2>
-            <p className="text-blue-100/80 text-lg mb-8 max-w-xl mx-auto">
-              Бидний валютын ханшийн хуудаснаас шинэчлэгдсэн мэдээллийг харна уу
-            </p>
-            <Link
-              href="/exchange"
-              className="inline-flex items-center gap-2 bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-base"
-            >
-              Ханш үзэх
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">Өдөр бүрийн ханш ба зах зээлийн тойм мэдээ авах:</h2>
+            <p className="text-blue-100/80 text-lg mb-8 max-w-xl mx-auto">Бидний телеграм сувгийг дагаж валютын ханшийн мэдээлэл аваарай!</p>
+            <a href="https://t.me/oyuns_alo" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
               </svg>
-            </Link>
+              Телеграм суваг
+            </a>
           </motion.div>
         </div>
       </section>

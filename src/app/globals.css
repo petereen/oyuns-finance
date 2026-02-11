@@ -1,19 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafbff;
-  --foreground: #0f172a;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #3b82f6;
+  --background: #eaeaea;
+  --foreground: #1a1a1a;
+  --primary: #2455D8;
+  --primary-dark: #1b40a8;
+  --primary-light: #3d6de5;
   --accent: #06b6d4;
   --accent-dark: #0891b2;
+  --accent-light: #22d3ee;
   --surface: #ffffff;
-  --surface-secondary: #f1f5f9;
-  --border: #e2e8f0;
-  --text-muted: #64748b;
-  --gradient-start: #1e40af;
-  --gradient-mid: #2563eb;
+  --surface-secondary: #f0f0f0;
+  --border: #d4d4d4;
+  --text-muted: #555555;
+  --gradient-start: #2455D8;
+  --gradient-mid: #3d6de5;
   --gradient-end: #06b6d4;
 }
 
@@ -25,11 +26,12 @@
   --color-primary-light: var(--primary-light);
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-dark);
+  --color-accent-light: var(--accent-light);
   --color-surface: var(--surface);
   --color-surface-secondary: var(--surface-secondary);
   --color-border: var(--border);
   --color-text-muted: var(--text-muted);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-montserrat);
 }
 
 html {
@@ -42,7 +44,79 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
 
-/* Glass morphism utility */
+
+@keyframes typing-oyuns {
+  /* 0-33%: хялбар */
+  0%, 25% { content: ""; }
+  1% { content: "х"; }
+  2% { content: "хя"; }
+  3% { content: "хял"; }
+  4% { content: "хялб"; }
+  5% { content: "хялба"; }
+  6% { content: "хялбар"; }
+  20% { content: "хялбар"; } /* wait */
+  21% { content: "хялба"; }
+  22% { content: "хялб"; }
+  23% { content: "хял"; }
+  24% { content: "хя"; }
+  25% { content: "х"; }
+
+  /* 33-66%: найдвартай */
+  33% { content: ""; }
+  34% { content: "н"; }
+  35% { content: "на"; }
+  36% { content: "най"; }
+  37% { content: "найд"; }
+  38% { content: "найдв"; }
+  39% { content: "найдва"; }
+  40% { content: "найдвар"; }
+  41% { content: "найдварт"; }
+  42% { content: "найдварта"; }
+  43% { content: "найдвартай"; }
+  55% { content: "найдвартай"; } /* wait */
+  56% { content: "найдварта"; }
+  57% { content: "найдварт"; }
+  58% { content: "найдвар"; }
+  59% { content: "найдва"; }
+  60% { content: "найдв"; }
+  61% { content: "найд"; }
+  62% { content: "най"; }
+  63% { content: "на"; }
+  64% { content: "н"; }
+  65% { content: ""; }
+
+  /* 66-100%: хурдан */
+  66% { content: ""; }
+  67% { content: "х"; }
+  68% { content: "ху"; }
+  69% { content: "хур"; }
+  70% { content: "хурд"; }
+  71% { content: "хурда"; }
+  72% { content: "хурдан"; }
+  85% { content: "хурдан"; } /* wait */
+  86% { content: "хурда"; }
+  87% { content: "хурд"; }
+  88% { content: "хур"; }
+  89% { content: "ху"; }
+  90% { content: "х"; }
+  91% { content: ""; }
+  100% { content: ""; }
+}
+
+.typewriter::before {
+  content: "";
+  animation: typing-oyuns 12s infinite;
+}
+.typewriter::after {
+  content: "";
+  border-right: 2px solid white; /* Use white caret against dark/gradient bg */
+  animation: blink 0.5s linear infinite;
+  margin-left: 2px;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
 .glass {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px);
@@ -67,7 +141,7 @@ body {
 
 /* Animated gradient background */
 .gradient-animated {
-  background: linear-gradient(-45deg, #1e3a8a, #2563eb, #0891b2, #06b6d4);
+  background: linear-gradient(-45deg, #2455D8, #3d6de5, #06b6d4, #22d3ee);
   background-size: 400% 400%;
   animation: gradientShift 12s ease infinite;
 }
@@ -80,13 +154,13 @@ body {
 
 /* Mesh gradient hero */
 .mesh-gradient {
-  background-color: #1e3a8a;
+  background-color: #2455D8;
   background-image:
-    radial-gradient(at 40% 20%, #2563eb 0px, transparent 50%),
+    radial-gradient(at 40% 20%, #3d6de5 0px, transparent 50%),
     radial-gradient(at 80% 0%, #0891b2 0px, transparent 50%),
-    radial-gradient(at 0% 50%, #1e40af 0px, transparent 50%),
+    radial-gradient(at 0% 50%, #1b40a8 0px, transparent 50%),
     radial-gradient(at 80% 80%, #06b6d4 0px, transparent 50%),
-    radial-gradient(at 0% 100%, #1e3a8a 0px, transparent 50%);
+    radial-gradient(at 0% 100%, #2455D8 0px, transparent 50%);
 }
 
 /* Floating animation */
@@ -106,8 +180,8 @@ body {
 
 /* Pulse glow */
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(37, 99, 235, 0.2); }
-  50% { box-shadow: 0 0 40px rgba(37, 99, 235, 0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(36, 85, 216, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(36, 85, 216, 0.4); }
 }
 
 .pulse-glow {

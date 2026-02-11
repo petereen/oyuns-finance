@@ -17,11 +17,11 @@ export default function Navbar() {
 
   const navLinks = [
     { href: '/', label: 'Нүүр хуудас' },
-    { href: '/services', label: 'Үйлчилгээ' },
-    { href: '/blog', label: 'Блог' },
-    { href: '/exchange', label: 'Ханш' },
     { href: '/about', label: 'Бидний тухай' },
-    { href: '/contact', label: 'Холбогдох' },
+    { href: '/services', label: 'Үйлчилгээ' },
+    { href: '/exchange', label: 'Ханш' },
+    { href: '/blog', label: 'Мэдээ, мэдээлэл' },
+    { href: '/contact', label: 'Бидэнтэй холбогдох' },
   ];
 
   const isActive = (href: string) => {
@@ -40,15 +40,11 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 lg:h-18">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-1.5 group">
+          <Link href="/" className="flex items-center group">
             <div className="relative">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow duration-300">
                 <span className="text-white font-extrabold text-sm tracking-tight">O</span>
               </div>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-lg font-extrabold tracking-tight gradient-text">OYUNS</span>
-              <span className="text-[10px] font-semibold text-slate-400 tracking-[0.2em] uppercase">Finance</span>
             </div>
           </Link>
 
@@ -66,13 +62,13 @@ export default function Navbar() {
               >
                 {link.label}
                 {isActive(link.href) && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-blue-600 rounded-full" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#2455D8] rounded-full" />
                 )}
               </Link>
             ))}
             <Link
               href="/exchange"
-              className="ml-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+              className="ml-3 bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
             >
               Валют солих
             </Link>
@@ -108,8 +104,8 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   isActive(link.href)
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    ? 'text-[#2455D8] bg-blue-50'
+                    : 'text-[#555] hover:text-[#1a1a1a] hover:bg-gray-100'
                 }`}
               >
                 {link.label}
@@ -118,7 +114,7 @@ export default function Navbar() {
             <Link
               href="/exchange"
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-6 py-3 rounded-xl font-semibold text-center text-sm"
+              className="mt-2 bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-6 py-3 rounded-xl font-semibold text-center text-sm"
             >
               Валют солих
             </Link>

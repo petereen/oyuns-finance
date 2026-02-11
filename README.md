@@ -69,4 +69,4 @@ npm run type-check   # TypeScript check
 
 ## Contact
 
-Email: info@oyunsfinance.mn | Web: [oyuns.mn](https://oyuns.mn)
+Email: info@oyuns.mn | Web: [oyuns.mn](https://oyuns.mn)

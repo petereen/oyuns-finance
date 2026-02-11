@@ -8,9 +8,15 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: false,
     formats: ['image/webp', 'image/avif'],
-    domains: [
-      'your-directus-instance.com',
-      'cdn.directus.io',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.oyuns.mn',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.oyuns.mn',
+      },
     ],
   },
 
@@ -50,29 +56,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
     ];
-  },
-
-  // Custom webpack config for optimization
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            default: false,
-            vendors: false,
-            vendor: {
-              filename: 'chunks/vendor.js',
-              test: /node_modules/,
-              name: 'vendors',
-              priority: 10,
-            },
-          },
-        },
-      };
-    }
-    return config;
   },
 };
 

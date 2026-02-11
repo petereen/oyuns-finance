@@ -1,110 +1,143 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import ServiceCard from '@/components/ServiceCard';
+import { getServices, type Service } from '@/lib/directus';
+
+/* ── Icon Components ─────────────────────────────────────────────────── */
+
+const IndividualIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+  </svg>
+);
+
+const BusinessPayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+  </svg>
+);
+
+const ReceivePayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+  </svg>
+);
+
+const SendPayIcon = () => (
+  <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5" />
+  </svg>
+);
+
+/* ── Why‑choose icons ────────────────────────────────────────────────── */
+
+const FlexIcon = () => (
+  <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+  </svg>
+);
+
+const ClockIcon = () => (
+  <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+  </svg>
+);
+
+const LockIcon = () => (
+  <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+  </svg>
+);
+
+const ChatIcon = () => (
+  <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+  </svg>
+);
 
 export default function ServicesPage() {
-  const allServices = [
-    {
-      title: 'Student Pay',
-      description: 'Гадаадад суралцаж буй оюутнуудад зориулсан хялбар, найдвартай мөнгөн шилжүүлэг',
-      features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал'],
-      telegramLink: 'https://t.me/oyunsaio_bot',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-        </svg>
-      ),
-    },
-    {
-      title: 'DrivePay',
-      description: 'Алсын тээврийн жолооч нарын мөнгөн гүйлгээг хялбар болгох шийдэл',
-      features: ['Шатахуун, замын төлбөр', 'Засвар үйлчилгээний төлбөр', 'Ажилчдын цалин'],
-      telegramLink: 'http://t.me/oyuns_drivepaybot',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-    },
-    {
-      title: 'BusinessPay',
-      description: 'Байгууллагуудын төлбөр тооцооны шийдэл',
-      features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо'],
-      telegramLink: 'https://t.me/Soyuns_aio',
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-    },
-    {
-      title: 'Гадаад улсаас төлбөр хүлээн авах',
-      description: 'Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах найдвартай шийдэл',
-      features: ['Төлбөрийн найдвартай шилжүүлэг', 'Шуурхай гүйлгээ', 'Олон төрлийн валют дэмжлэг'],
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-        </svg>
-      ),
-    },
-    {
-      title: 'Гадаад улс руу төлбөр төлөх',
-      description: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
-      features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх', 'Хурдан баталгаажуулалт'],
-      icon: (
-        <svg className="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16v2a2 2 0 01-2 2H5a2 2 0 01-2-2v-7a2 2 0 012-2h2m3-4H9a2 2 0 00-2 2v7a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-1m-1 4l-3 3m0 0l-3-3m3 3V3" />
-        </svg>
-      ),
-    },
-  ];
+  const [directusServices, setDirectusServices] = useState<Service[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const services = await getServices();
+        if (services.length) setDirectusServices(services as Service[]);
+      } catch (e) {
+        console.error('Directus fetch failed, using fallback:', e);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const iconMap: Record<string, React.ReactNode> = {
+    'individual': <IndividualIcon />,
+    'businesspay': <BusinessPayIcon />,
+    'receive-payment': <ReceivePayIcon />,
+    'send-payment': <SendPayIcon />,
+  };
+
+  /* ── Mongolian Individual (combined Student Pay + Individual) ──────── */
+  const fallbackIndividual = {
+    title: 'Хувь хүнд зориулсан үйлчилгээ',
+    description: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
+    features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин'],
+    telegramLink: 'https://t.me/oyunsaio_bot',
+    icon: <IndividualIcon />,
+  };
+
+  /* ── Mongolian Business ────────────────────────────────────────────── */
+  const fallbackBusiness = {
+    title: 'BusinessPay',
+    description: 'Байгууллагуудын төлбөр тооцооны шийдэл',
+    features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо'],
+    telegramLink: 'https://t.me/Soyuns_aio',
+    icon: <BusinessPayIcon />,
+  };
+
+  /* ── Russian client services (separate section) ────────────────────── */
+  const fallbackReceive = {
+    title: 'Гадаад улсаас төлбөр хүлээн авах',
+    description: 'Гадаадын харилцагчаас мөнгө хүлээн авахад хялбар шийдэл',
+    features: ['Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах', ' Төлбөрийн найдвартай, шуурхай шилжүүлэг'],
+    icon: <ReceivePayIcon />,
+  };
+
+  const fallbackSend = {
+    title: 'Гадаад улс руу төлбөр төлөх',
+    description: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
+    features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх'],
+    icon: <SendPayIcon />,
+  };
+
+  /* ── Build display arrays ──────────────────────────────────────────── */
+  const mongolianIndividual = directusServices.length
+    ? directusServices.filter((s) => s.category === 'client').map((s) => ({
+        title: s.title, description: s.description, features: s.features ?? [],
+        telegramLink: s.telegram_link, icon: iconMap[s.icon] || <IndividualIcon />,
+      }))
+    : [fallbackIndividual];
+
+  const mongolianBusiness = directusServices.length
+    ? directusServices.filter((s) => s.category === 'business').map((s) => ({
+        title: s.title, description: s.description, features: s.features ?? [],
+        telegramLink: s.telegram_link, icon: iconMap[s.icon] || <BusinessPayIcon />,
+      }))
+    : [fallbackBusiness];
+
+  const russianServices = [fallbackReceive, fallbackSend];
 
   const whyChoose = [
-    {
-      title: 'Уян хатан тариф',
-      desc: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан үнийн санал',
-      icon: (
-        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      color: 'bg-blue-50',
-    },
-    {
-      title: 'Хурдан гүйлгээ',
-      desc: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем',
-      icon: (
-        <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-        </svg>
-      ),
-      color: 'bg-amber-50',
-    },
-    {
-      title: 'Баталгаатай',
-      desc: 'Олон улсын стандартын дагуу аюулгүй, баталгаатай үйлчилгээ',
-      icon: (
-        <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-        </svg>
-      ),
-      color: 'bg-emerald-50',
-    },
-    {
-      title: '24/7 дэмжлэг',
-      desc: 'Өндөр түвшний үйлчилгээ, найдвартай харилцаа',
-      icon: (
-        <svg className="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      ),
-      color: 'bg-violet-50',
-    },
+    { title: 'Уян хатан', desc: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан үнийн тариф', icon: <FlexIcon />, color: 'bg-blue-50' },
+    { title: 'Хурдан, найдвартай гүйлгээ', desc: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем', icon: <ClockIcon />, color: 'bg-amber-50' },
+    { title: 'Баталгаатай', desc: 'Олон улсын стандартын дагуу аюулгүй, баталгаатай үйлчилгээ', icon: <LockIcon />, color: 'bg-emerald-50' },
+    { title: 'Хэрэглэгчийн дэмжлэг', desc: 'Өндөр түвшний үйлчилгээ, найдвартай харилцаа', icon: <ChatIcon />, color: 'bg-violet-50' },
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-slate-50">
+    <div className="min-h-screen pt-24 pb-20 bg-[#eaeaea]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -113,20 +146,44 @@ export default function ServicesPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-14"
         >
-          <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Үйлчилгээ</p>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
+          <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Үйлчилгээ</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a1a] mb-4">
             Бидний үйлчилгээ
           </h1>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto">
+          <p className="text-lg text-[#555] max-w-2xl mx-auto">
             Хувь хүн болон байгууллагад зориулсан олон улсын мөнгөн гуйвуулгын иж бүрэн шийдэл
           </p>
         </motion.div>
 
-        {/* Service Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {allServices.map((service, index) => (
-            <ServiceCard key={index} {...service} index={index} />
-          ))}
+        {/* ── Монгол хэрэглэгчдэд — Хувь хүн + Байгууллага side-by-side ── */}
+        <div className="mb-16">
+          <div className="bg-white rounded-2xl border border-gray-200 p-8 md:p-12">
+            <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-8">
+              <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-1">Монгол хэрэглэгчдэд</p>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">Монгол хэрэглэгчдэд зориулсан үйлчилгээ</h2>
+            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {mongolianIndividual.map((s, i) => (
+                <ServiceCard key={`ind-${i}`} {...s} index={i} />
+              ))}
+              {mongolianBusiness.map((s, i) => (
+                <ServiceCard key={`biz-${i}`} {...s} index={i + 1} />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Оросын хэрэглэгчдэд — visually distinct ───────────────── */}
+        <div className="mb-16 bg-gradient-to-br from-[#2455D8] to-[#1b40a8] rounded-2xl p-8 md:p-12">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-8">
+            <p className="text-sm font-semibold text-cyan-300 tracking-wide uppercase mb-1">Орос хэрэглэгчдэд зориулсан үйлчилгээ</p>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Олон улсын төлбөр тооцоо</h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {russianServices.map((s, i) => (
+              <ServiceCard key={i} {...s} index={i} />
+            ))}
+          </div>
         </div>
 
         {/* Why Choose Us Section */}
@@ -135,24 +192,24 @@ export default function ServicesPage() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl border border-gray-100 p-8 md:p-12"
+          className="bg-white rounded-2xl border border-gray-200 p-8 md:p-12"
         >
           <div className="text-center mb-10">
-            <p className="text-sm font-semibold text-blue-600 tracking-wide uppercase mb-2">Давуу тал</p>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Давуу тал</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">
               Яагаад биднийг сонгох вэ?
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {whyChoose.map((item, i) => (
-              <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 transition-colors">
+              <div key={i} className="flex items-start gap-4 p-4 rounded-xl hover:bg-[#eaeaea] transition-colors">
                 <div className={`flex-shrink-0 w-11 h-11 ${item.color} rounded-xl flex items-center justify-center`}>
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 mb-1">{item.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                  <h3 className="text-base font-bold text-[#1a1a1a] mb-1">{item.title}</h3>
+                  <p className="text-sm text-[#555] leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -167,22 +224,22 @@ export default function ServicesPage() {
           viewport={{ once: true }}
           className="mt-16 relative mesh-gradient rounded-2xl p-8 md:p-12 text-center text-white overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1b40a8]/30 to-transparent pointer-events-none" />
           <div className="relative">
             <h2 className="text-2xl sm:text-3xl font-extrabold mb-3">
               Бидэнтэй хамтран ажиллахад бэлэн үү?
             </h2>
             <p className="text-lg mb-8 text-blue-100/80 max-w-xl mx-auto">
-              Танай бизнес эсвэл хувийн санхүүгийн хэрэгцээнд тохирсон шийдлийг олоорой
+              Таны бизнес эсвэл хувийн санхүүгийн хэрэгцээнд тохирсон шийдлийг яг одоо олоорой!
             </p>
             <a
-              href="https://t.me/oyuns_aio"
+              href="https://t.me/Soyuns_aio"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-blue-50 hover:shadow-xl hover:shadow-white/10 transition-all duration-300 text-base"
+              className="inline-flex items-center gap-2 bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.717-.962 3.767-1.362 5.001-.169.523-.506.697-.83.715-.704.031-1.237-.465-1.918-.912-.964-.633-1.508-1.028-2.447-1.647-.951-.627-.334-1.098.208-1.735.142-.164 2.606-2.389 2.652-2.592.006-.025.011-.117-.043-.166-.054-.049-.133-.033-.19-.019-.079.019-1.339.851-3.781 2.5-.358.246-.682.366-.973.36-.32-.006-.936-.181-1.395-.329-.563-.181-1.009-.277-1.086-.299-.167-.046-.252-.088-.252-.183 0-.074.057-.149.172-.225.641-.423 1.64-1.056 2.987-1.9.984-.615 2.149-1.314 3.487-2.097.284-.166.567-.333.85-.499.117-.069.234-.068.35.002.116.069.174.183.174.315z"/>
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
               </svg>
               Холбогдох
             </a>

@@ -143,32 +143,36 @@ DIRECTUS_STATIC_TOKEN=your-static-token-here
 
 ### Services Example
 ```json
-{
-  "title": "Student Pay",
-  "slug": "student-pay",
-  "description": "Гадаадад суралцаж буй оюутнуудад зориулсан хялбар, найдвартай мөнгөн шилжүүлэг",
-  "features": ["Сургалтын төлбөр", "Байрны түрээс", "Хувийн хэрэглээний зардал"],
-  "icon": "book",
-  "telegram_link": "https://t.me/oyunsaio_bot",
-  "category": "client",
-  "sort": 1,
-  "status": "published"
-}
+[
+  {
+    "title": "Student Pay",
+    "slug": "student-pay",
+    "description": "Гадаадад суралцаж буй оюутнуудад зориулсан хялбар, найдвартай мөнгөн шилжүүлэг",
+    "features": ["Сургалтын төлбөр", "Байрны түрээс", "Хувийн хэрэглээний зардал", "Шатахуун, замын төлбөр", "Засвар, үйлчилгээний төлбөр", "Aжилчдын цалин"],
+    "icon": "book",
+    "telegram_link": "https://t.me/oyunsaio_bot",
+    "category": "client",
+    "sort": 1,
+    "status": "published"
+  }
+]
 ```
 
 ### Blog Post Example
 ```json
-{
-  "title": "FinTech гэж юу вэ?",
-  "slug": "what-is-fintech",
-  "excerpt": "FinTech буюу санхүүгийн технологийн тухай ойлголт",
-  "content": "<p>Full article content here...</p>",
-  "author": "Oyuns Finance Team",
-  "published_date": "2025-06-04T00:00:00Z",
-  "category": "OYUNShot",
-  "tags": ["fintech", "technology", "finance"],
-  "status": "published"
-}
+[
+  {
+    "title": "FinTech гэж юу вэ?",
+    "slug": "what-is-fintech",
+    "excerpt": "FinTech буюу санхүүгийн технологийн тухай ойлголт",
+    "content": "<p>Full article content here...</p>",
+    "author": "Oyuns Finance Team",
+    "published_date": "2025-06-04T00:00:00Z",
+    "category": "OYUNShot",
+    "tags": ["fintech", "technology", "finance"],
+    "status": "published"
+  }
+]
 ```
 
 ## Next Steps

@@ -425,7 +425,7 @@ Happy coding! 🎉
 ## 📞 Contact Information
 
 **Website:** https://oyuns.mn
-**Email:** info@oyunsfinance.mn
-**Telegram:** @oyuns_aio
+**Email:** info@oyuns.mn
+**Telegram:** @oyuns_alo
 **Phone:** +7 977 801 9143
 

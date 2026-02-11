@@ -145,7 +145,7 @@ Insert a test row to confirm the table works:
 
 ```sql
 INSERT INTO bot_rates (buy_rate, sell_rate, updated_at, created_at)
-VALUES (45.5000, 46.0000, now(), now());
+VALUES (44.8000, 47.8000, now(), now());
 ```
 
 You should see it in **Table Editor → bot_rates**.
@@ -156,21 +156,34 @@ You should see it in **Table Editor → bot_rates**.
 
 > **Deep reference →** [DIRECTUS_SETUP.md](DIRECTUS_SETUP.md)
 
+
+
+
+
+
+
 ### 4.1 Create a Directus project
 
 **Option A — Directus Cloud (easiest):**
 1. Go to [directus.cloud](https://directus.cloud/) → create a project
 2. Copy the project URL (e.g. `https://your-project.directus.app`)
 
-**Option B — Self-hosted (Docker):**
-```bash
-docker run -d -p 8055:8055 \
-  -e KEY=random-key -e SECRET=random-secret \
-  -e DB_CLIENT=postgres \
-  -e DB_HOST=host -e DB_PORT=5432 \
-  -e DB_DATABASE=directus -e DB_USER=directus -e DB_PASSWORD=password \
-  directus/directus
-```
+**Option B — Self-hosted (Docker Compose):**
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop/) and **ensure it is running**.
+2. Navigate to the `oyuns-directus` folder:
+   ```bash
+   cd ../oyuns-directus
+   ```
+3. Start the services:
+   ```bash
+   docker-compose up -d
+   ```
+   Directus will be available at `http://localhost:8055`.
+   - Email: `admin@example.com`
+   - Password: `password`
+
+> **Note:** If you get a "failed to connect" error, start Docker Desktop first.
 
 ### 4.2 Create collections
 
