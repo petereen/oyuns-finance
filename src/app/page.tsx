@@ -270,7 +270,6 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
             <div className="text-center mb-10">
-              <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">OYUNS FINANCE</p>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-6">Бидний тухай</h2>
             </div>
             <div className="bg-[#f7f7f7] rounded-2xl border border-gray-100 p-8 mb-8">
@@ -347,7 +346,6 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Ханш</p>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Өнөөдрийн валютын ханш</h2>
           </motion.div>
 
