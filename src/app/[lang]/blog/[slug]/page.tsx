@@ -18,7 +18,7 @@ const fallbackPosts: Record<string, Partial<BlogPost>> = {
     category: 'OYUNShot',
   },
   'oyunshot-9-procrastination-cost': {
-    title: 'OYUNShot №9. Хойш тавилтын зардал: "Дараа хийнэ ээ…" гэж хэлэх бүртээ та юуг алддаг вэ?',
+    title: 'OYUNShot №9. Хойш тавилтын зардал: ""Дараа хийнэ ээ…"" гэж хэлэх бүртээ та юуг алддаг вэ?',
     slug: 'oyunshot-9-procrastination-cost',
     excerpt: 'Хойш тавих зуршил таны санхүүд хэрхэн нөлөөлдөг тухай.',
     content:
@@ -39,6 +39,7 @@ const fallbackPosts: Record<string, Partial<BlogPost>> = {
 
 export default function BlogPostPage() {
   const params = useParams();
+  const lang = params.lang as 'mn' | 'ru';
   const slug = params.slug as string;
   const [post, setPost] = useState<Partial<BlogPost> | null>(null);
   const [loading, setLoading] = useState(true);
@@ -62,6 +63,23 @@ export default function BlogPostPage() {
     load();
   }, [slug]);
 
+  const t = {
+    mn: {
+      back_to_news: 'Мэдээ, мэдээлэл рүү буцах',
+      not_found_title: 'Нийтлэл олдсонгүй',
+      not_found_desc: 'Энэ нийтлэл байхгүй эсвэл устгагдсан байна.',
+      back_btn: 'Мэдээ, мэдээлэл руу буцах',
+    },
+    ru: {
+      back_to_news: 'Назад к новостям',
+      not_found_title: 'Статья не найдена',
+      not_found_desc: 'Эта статья не существует или была удалена.',
+      back_btn: 'Вернуться к новостям',
+    }
+  };
+
+  const content = t[lang] || t.mn;
+
   if (loading) {
     return (
       <div className="min-h-screen pt-24 pb-20 bg-[#eaeaea] flex items-center justify-center">
@@ -74,13 +92,13 @@ export default function BlogPostPage() {
     return (
       <div className="min-h-screen pt-24 pb-20 bg-[#eaeaea]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl font-bold text-[#1a1a1a] mb-4">Нийтлэл олдсонгүй</h1>
-          <p className="text-[#555] mb-8">Энэ нийтлэл байхгүй эсвэл устгагдсан байна.</p>
+          <h1 className="text-3xl font-bold text-[#1a1a1a] mb-4">{content.not_found_title}</h1>
+          <p className="text-[#555] mb-8">{content.not_found_desc}</p>
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 bg-[#2455D8] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
           >
-            Мэдээ, мэдээлэл руу буцах
+            {content.back_btn}
           </Link>
         </div>
       </div>
@@ -97,7 +115,7 @@ export default function BlogPostPage() {
           <svg className="w-4 h-4 mr-1 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Мэдээ, мэдээлэл рүү буцах
+          {content.back_to_news}
         </Link>
 
         <motion.article
@@ -118,7 +136,7 @@ export default function BlogPostPage() {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  {new Date(post.published_date).toLocaleDateString('mn-MN')}
+                  {new Date(post.published_date).toLocaleDateString(lang === 'mn' ? 'mn-MN' : 'ru-RU')}
                 </time>
               )}
             </div>

@@ -2,9 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useParams } from 'next/navigation'; // Added
 import { createMessage } from '@/lib/directus';
 
 export default function ContactPage() {
+  const params = useParams(); // Added
+  const lang = params.lang as 'mn' | 'ru'; // Added
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -13,19 +17,70 @@ export default function ContactPage() {
     message: '',
   });
 
+  // Translation dictionary
+  const t = {
+    mn: {
+      sub_title: 'Холбогдох',
+      main_title: 'Бидэнтэй холбогдох',
+      desc: 'Таны асуулт, санал хүсэлтийг хүлээн авахад таатай байх болно.',
+      contact_info_title: 'Холбоо барих',
+      phone_title: 'Утас',
+      email_title: 'Имэйл',
+      socials_title: 'Сошиал хаягууд',
+      form_title: 'Мессеж илгээх',
+      label_name: 'Нэр *',
+      ph_name: 'Таны нэр',
+      label_email: 'Имэйл *',
+      ph_email: 'example@email.com',
+      label_phone: 'Утас',
+      ph_phone: '+976 1234 5678',
+      label_msg: 'Мессеж *',
+      ph_msg: 'Таны мессеж...',
+      btn_send: 'Илгээх',
+      btn_sending: 'Илгээж байна...',
+      alert_success: 'Таны хүсэлтийг хүлээн авлаа. Удахгүй холбогдох болно.',
+      alert_error: 'Алдаа гарлаа. Та дахин оролдоно уу.',
+    },
+    ru: {
+      sub_title: 'Связаться',
+      main_title: 'Свяжитесь с нами',
+      desc: 'Мы всегда рады ответить на ваши вопросы и предложения.',
+      contact_info_title: 'Контактная информация',
+      phone_title: 'Телефон',
+      email_title: 'Эл. почта',
+      socials_title: 'Мы в соцсетях',
+      form_title: 'Отправить сообщение',
+      label_name: 'Имя *',
+      ph_name: 'Ваше имя',
+      label_email: 'Эл. почта *',
+      ph_email: 'example@email.com',
+      label_phone: 'Телефон',
+      ph_phone: '+7 977 123 4567',
+      label_msg: 'Сообщение *',
+      ph_msg: 'Ваше сообщение...',
+      btn_send: 'Отправить',
+      btn_sending: 'Отправка...',
+      alert_success: 'Ваш запрос получен. Мы свяжемся с вами в ближайшее время.',
+      alert_error: 'Произошла ошибка. Пожалуйста, попробуйте еще раз.',
+    }
+  };
+
+  const content = t[lang] || t.mn;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
+    // Pass extra metadata if needed, or just plain form data
     const success = await createMessage(formData);
     
     setLoading(false);
     
     if (success) {
-      alert('Таны хүсэлтийг хүлээн авлаа. Удахгүй холбогдох болно.');
+      alert(content.alert_success);
       setFormData({ name: '', email: '', phone: '', message: '' });
     } else {
-      alert('Алдаа гарлаа. Та дахин оролдоно уу.');
+      alert(content.alert_error);
     }
   };
 
@@ -38,7 +93,7 @@ export default function ContactPage() {
 
   const contactInfo = [
     {
-      title: 'Утас',
+      title: content.phone_title,
       value: '+7 977 801 9143',
       href: 'tel:+79778019143',
       icon: (
@@ -49,7 +104,7 @@ export default function ContactPage() {
       color: 'bg-blue-50',
     },
     {
-      title: 'Имэйл',
+      title: content.email_title,
       value: 'info@oyuns.mn',
       href: 'mailto:info@oyuns.mn',
       icon: (
@@ -104,7 +159,7 @@ export default function ContactPage() {
       label: 'WhatsApp',
       href: 'https://wa.me/79778019143',
       icon: (
-        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5"" fill="currentColor" viewBox="0 0 24 24">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
       ),
@@ -112,7 +167,7 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-24 pb-20 bg-[#eaeaea]">
+    <div className="min-h-screen pt-24 pb-20 bg-[#eaeaea]"">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -121,12 +176,12 @@ export default function ContactPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Холбогдох</p>
+          <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">{content.sub_title}</p>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a1a] mb-3">
-            Бидэнтэй холбогдох
+            {content.main_title}
           </h1>
           <p className="text-lg text-slate-500">
-            Таны асуулт, санал хүсэлтийг хүлээн авахад таатай байх болно.
+            {content.desc}
           </p>
         </motion.div>
 
@@ -140,7 +195,7 @@ export default function ContactPage() {
           >
             {/* Contact cards */}
             <div className="bg-white rounded-2xl border border-gray-100 p-7">
-              <h2 className="text-lg font-bold text-slate-900 mb-5">Холбоо барих</h2>
+              <h2 className="text-lg font-bold text-slate-900 mb-5">{content.contact_info_title}</h2>
               <div className="space-y-4">
                 {contactInfo.map((item, i) => (
                   <a
@@ -150,7 +205,7 @@ export default function ContactPage() {
                     rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                     className="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 transition-colors group"
                   >
-                    <div className={`flex-shrink-0 w-11 h-11 ${item.color} rounded-xl flex items-center justify-center`}>
+                    <div className={lex-shrink-0 w-11 h-11  rounded-xl flex items-center justify-center}>
                       {item.icon}
                     </div>
                     <div>
@@ -166,7 +221,7 @@ export default function ContactPage() {
             <div className="relative mesh-gradient rounded-2xl p-7 text-white overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent pointer-events-none" />
               <div className="relative">
-                <h2 className="text-lg font-bold mb-5">Сошиал хаягууд</h2>
+                <h2 className="text-lg font-bold mb-5">{content.socials_title}</h2>
                 <div className="grid grid-cols-2 gap-3">
                   {socials.map((item, i) => (
                     <a
@@ -192,11 +247,11 @@ export default function ContactPage() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="bg-white rounded-2xl border border-gray-100 p-7"
           >
-            <h2 className="text-lg font-bold text-slate-900 mb-5">Мессеж илгээх</h2>
+            <h2 className="text-lg font-bold text-slate-900 mb-5">{content.form_title}</h2>
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-slate-500 mb-1.5">
-                  Нэр *
+                  {content.label_name}
                 </label>
                 <input
                   type="text"
@@ -206,13 +261,13 @@ export default function ContactPage() {
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900"
-                  placeholder="Таны нэр"
+                  placeholder={content.ph_name}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-slate-500 mb-1.5">
-                  Имэйл *
+                  {content.label_email}
                 </label>
                 <input
                   type="email"
@@ -222,13 +277,13 @@ export default function ContactPage() {
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900"
-                  placeholder="example@email.com"
+                  placeholder={content.ph_email}
                 />
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-slate-500 mb-1.5">
-                  Утас
+                  {content.label_phone}
                 </label>
                 <input
                   type="tel"
@@ -237,13 +292,13 @@ export default function ContactPage() {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900"
-                  placeholder="+976 1234 5678"
+                  placeholder={content.ph_phone}
                 />
               </div>
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-slate-500 mb-1.5">
-                  Мессеж *
+                  {content.label_msg}
                 </label>
                 <textarea
                   id="message"
@@ -253,7 +308,7 @@ export default function ContactPage() {
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none text-slate-900"
-                  placeholder="Таны мессеж..."
+                  placeholder={content.ph_msg}
                 />
               </div>
 
@@ -262,7 +317,7 @@ export default function ContactPage() {
                 disabled={loading}
                 className="w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-8 py-3.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                {loading ? 'Илгээж байна...' : 'Илгээх'}
+                {loading ? content.btn_sending : content.btn_send}
               </button>
             </form>
           </motion.div>

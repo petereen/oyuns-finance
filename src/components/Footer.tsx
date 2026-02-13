@@ -1,6 +1,10 @@
 import Link from 'next/link';
 
-export default function Footer() {
+interface FooterProps {
+  lang?: 'mn' | 'ru';
+}
+
+export default function Footer({ lang = 'mn' }: FooterProps) {
   return (
     <footer className="relative bg-slate-900 text-white overflow-hidden">
       {/* Decorative gradient orb */}
@@ -20,7 +24,10 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-5">
-              Олон улсын мөнгөн гуйвуулгын үйлчилгээ. 2018 оноос эхлэн олон улсын болон дотоодын санхүүгийн хэрэгцээг хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага.
+              {lang === 'ru' 
+                ? 'Международные денежные переводы. Финансовая организация, предоставляющая простые и надежные решения с 2018 года.'
+                : 'Олон улсын мөнгөн гуйвуулгын үйлчилгээ. 2018 оноос эхлэн олон улсын болон дотоодын санхүүгийн хэрэгцээг хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага.'
+              }
             </p>
             <div className="flex items-center gap-3">
               <a href="https://t.me/oyuns_alo" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/5 hover:bg-blue-500/20 border border-white/10 hover:border-blue-400/30 flex items-center justify-center transition-all duration-200 group">
@@ -43,14 +50,16 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Холбоосууд</h3>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {lang === 'ru' ? 'Ссылки' : 'Холбоосууд'}
+            </h3>
             <ul className="space-y-2.5">
               {[
-                { href: '/', label: 'Нүүр хуудас' },
-                { href: '/about', label: 'Бидний тухай' },
-                { href: '/services', label: 'Үйлчилгээ' },
-                { href: '/blog', label: 'Мэдээ, мэдээлэл' },
-                { href: '/contact', label: 'Бидэнтэй холбогдох' },
+                { href: `/${lang}`, label: lang === 'ru' ? 'Главная' : 'Нүүр хуудас' },
+                { href: `/${lang}/about`, label: lang === 'ru' ? 'О нас' : 'Бидний тухай' },
+                { href: `/${lang}/services`, label: lang === 'ru' ? 'Услуги' : 'Үйлчилгээ' },
+                { href: `/${lang}/blog`, label: lang === 'ru' ? 'Новости' : 'Мэдээ, мэдээлэл' },
+                { href: `/${lang}/contact`, label: lang === 'ru' ? 'Контакты' : 'Бидэнтэй холбогдох' },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-slate-400 hover:text-white text-sm transition-colors duration-200 flex items-center gap-1.5 group">
@@ -64,18 +73,22 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Үйлчилгээ</h3>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {lang === 'ru' ? 'Услуги' : 'Үйлчилгээ'}
+            </h3>
             <ul className="space-y-2.5 text-sm text-slate-400">
-              <li>Хувь хэрэглэгчид зориулсан</li>
+              <li>{lang === 'ru' ? 'Для физических лиц' : 'Хувь хэрэглэгчид зориулсан'}</li>
               <li>BusinessPay</li>
-              <li>Гадаадаас төлбөр хүлээн авах</li>
-              <li>Гадаад руу төлбөр төлөх</li>
+              <li>{lang === 'ru' ? 'Получение платежей из-за границы' : 'Гадаадаас төлбөр хүлээн авах'}</li>
+              <li>{lang === 'ru' ? 'Платежи за границу' : 'Гадаад руу төлбөр төлөх'}</li>
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Холбоо барих</h3>
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+              {lang === 'ru' ? 'Контакты' : 'Холбоо барих'}
+            </h3>
             <ul className="space-y-3 text-sm">
               <li>
                 <a href="tel:+79778019143" className="text-slate-400 hover:text-white transition-colors flex items-center gap-2.5">
