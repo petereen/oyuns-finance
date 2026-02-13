@@ -207,12 +207,12 @@ export default function Home() {
       ru_services_title: 'Международные платежи',
       testimonials_title: 'Отзывы клиентов',
       news_sub: 'Новости и информация',
-      news_title: 'Последние статьи',
+      news_title: 'Последние статьи и публикации',
       read_more: 'Читать далее',
-      all_news: 'Смотреть все статьи',
+      all_news: 'Смотреть все публикации',
       partners_title: 'Партнеры',
       cta_title: 'Получайте ежедневные курсы и обзор рынка:',
-      cta_desc: 'Подписывайтесь на наш канал в Telegram, чтобы получать информацию о курсах валют!',
+      cta_desc: 'Подписывайтесь на наш канал в Telegram, чтобы получать информацию о наших услугах и курсах валют!',
       cta_btn: 'Канал Telegram',
       close_calc: 'Закрыть',
       calc_label: 'Курс',
@@ -355,7 +355,7 @@ export default function Home() {
                   </svg>
                   {content.close_calc}
                 </button>
-                <ExchangeCalculator initialRate={botRate} />
+                <ExchangeCalculator initialRate={botRate} lang={lang} />
               </div>
             </motion.div>
           )}
@@ -394,12 +394,11 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl mb-10 text-blue-100/80 max-w-2xl mx-auto leading-relaxed flex items-center justify-center gap-2">
-              {/* Note: keeping typewriter empty for now or remove if not needed. It was empty in original */}
-              <span className="typewriter font-bold text-white"></span>
+              <span className={lang === 'ru' ? 'typewriter-ru font-bold text-white' : 'typewriter font-bold text-white'}></span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/exchange"
+                href={`/${lang}/exchange`}
                 className="group bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
               >
                 {content.exchange_btn}
@@ -408,7 +407,7 @@ export default function Home() {
                 </svg>
               </Link>
               <Link
-                href="/services"
+                href={`/${lang}/services`}
                 className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-base text-center"
               >
                 {content.services_btn}
@@ -456,7 +455,7 @@ export default function Home() {
 
             <div className="text-center">
               <Link
-                href="/about"
+                href={`/${lang}/about`}
                 className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group"
               >
                 {content.more_btn}
@@ -588,7 +587,7 @@ export default function Home() {
           </div>
 
           <div className="text-center">
-            <Link href="/exchange" className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group">
+            <Link href={`/${lang}/exchange`} className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group">
               {content.view_rates}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
@@ -608,10 +607,10 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {mongolianIndividual.map((s, i) => (
-              <ServiceCard key={`ind-${i}`} {...s} index={i} />
+              <ServiceCard key={`ind-${i}`} {...s} index={i} lang={lang} />
             ))}
             {mongolianBusiness.map((s, i) => (
-              <ServiceCard key={`biz-${i}`} {...s} index={i + 1} />
+              <ServiceCard key={`biz-${i}`} {...s} index={i + 1} lang={lang} />
             ))}
           </div>
         </div>
@@ -627,7 +626,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {russianServices.map((s, i) => (
-              <ServiceCard key={i} {...s} index={i} />
+              <ServiceCard key={i} {...s} index={i} lang={lang} />
             ))}
           </div>
         </div>

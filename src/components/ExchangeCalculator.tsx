@@ -17,11 +17,31 @@ interface ExchangeCalculatorProps {
   initialRate?: BotRate | null;
   /** Compact layout for sidebar usage */
   compact?: boolean;
+  lang?: 'mn' | 'ru';
 }
 
-export default function ExchangeCalculator({ initialRate, compact = false }: ExchangeCalculatorProps) {
+export default function ExchangeCalculator({ initialRate, compact = false, lang = 'mn' }: ExchangeCalculatorProps) {
   const [rate, setRate] = useState<BotRate | null>(initialRate ?? null);
   const [loading, setLoading] = useState(!initialRate);
+  
+  const t = {
+    mn: {
+      title: 'Валют тооцоолуур',
+      send: 'Илгээх',
+      receive: 'Хүлээн авах',
+      contact: 'Бидэнтэй холбогдох',
+      switch: 'Чиглэл солих'
+    },
+    ru: {
+      title: 'Калькулятор обмена',
+      send: 'Отправить',
+      receive: 'Получить',
+      contact: 'Связаться с нами',
+      switch: 'Переключить направление'
+    }
+  };
+  
+  const content = t[lang] || t.mn;
   const [direction, setDirection] = useState<Direction>('rub-to-mnt');
   const [amount, setAmount] = useState('100000');
 
@@ -71,7 +91,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
   return (
     <div className={`bg-white rounded-2xl border border-gray-100 ${compact ? 'p-5' : 'p-7'} card-hover`}>
       <h3 className={`${compact ? 'text-base' : 'text-lg'} font-bold text-[#1a1a1a] mb-4`}>
-        Валют тооцоолуур
+        {content.title}
       </h3>
 
       {/* Direction toggle */}
@@ -90,7 +110,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
         <button
           onClick={toggleDirection}
           className="w-9 h-9 flex-shrink-0 rounded-full bg-slate-100 hover:bg-blue-50 flex items-center justify-center transition-colors group"
-          aria-label="Чиглэл солих"
+          aria-label={content.switch}
         >
           <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
@@ -112,7 +132,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
       {/* From input */}
       <div className="mb-3">
         <label className="block text-xs font-medium text-slate-500 mb-1.5">
-          Илгээх ({fromLabel})
+          {content.send} ({fromLabel})
         </label>
         <div className="relative">
           <input
@@ -129,7 +149,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
       {/* Result */}
       <div className="mb-3">
         <label className="block text-xs font-medium text-slate-500 mb-1.5">
-          Хүлээн авах ({toLabel})
+          {content.receive} ({toLabel})
         </label>
         <div className="relative w-full px-4 py-3 border border-gray-200 rounded-xl bg-slate-50 text-slate-900 font-semibold">
           {loading ? (
@@ -156,7 +176,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
         className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-3 rounded-xl hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold text-sm"
       >
         <TelegramIcon className="w-4 h-4 mr-2" />
-        Валют солих
+        {content.contact}
       </a>
     </div>
   );
