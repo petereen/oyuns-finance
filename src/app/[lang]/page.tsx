@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import ExchangeCalculator from '@/components/ExchangeCalculator';
@@ -62,6 +63,9 @@ const SupportIcon = () => (
 );
 
 export default function Home() {
+  const params = useParams();
+  const lang = params.lang as 'mn' | 'ru';
+  
   const [directusServices, setDirectusServices] = useState<Service[]>([]);
   const [directusTestimonials, setDirectusTestimonials] = useState<Testimonial[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -99,6 +103,152 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const t = {
+    mn: {
+      hero_since: '2018 ОНООС',
+      hero_title_main: 'OYUNS FINANCE',
+      hero_title_sub: 'ОЛОН УЛСЫН МӨНГӨН ГУЙВУУЛГЫН ҮЙЛЧИЛГЭЭ',
+      exchange_btn: 'ВАЛЮТ СОЛИХ',
+      services_btn: 'БИДНИЙ ҮЙЛЧИЛГЭЭ',
+      about_title: 'Бидний тухай',
+      about_text_1: (
+        <>
+          <strong className="text-slate-900">OYUNS FINANCE</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
+          санхүүгийн үйлчилгээ, тээвэр зуучлал, карго, аялал жуулчлал зэрэг чиглэлээр
+          үйл ажиллагаа явуулж ирсэн ба олон улсын болон дотоодын санхүүгийн хэрэгцээг
+          хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага юм.
+        </>
+      ),
+      about_text_2: 'Бид Монгол Улс болон ОХУ хоорондын мөнгөн гуйвуулга, валют солилцооны үйлчилгээг хялбар, шуурхай, найдвартай хүргэж ирсэн туршлагатай байгууллага бөгөөд хувь хүн болон байгууллагуудын санхүүгийн хэрэгцээг хангахад анхаарч ажилладаг.',
+      stats: { since: 'оноос', transactions: 'гүйлгээ', clients: 'итгэлтэй үйлчлүүлэгч' },
+      more_btn: 'Дэлгэрэнгүй',
+      why_title: (<span>ЯАГААД <span className="gradient-text">OYUNS FINANCE</span> ГЭЖ?</span>),
+      today_rates: 'Өнөөдрийн валютын ханш',
+      personal_rates: 'Хувь хэрэглэгчийн ханш',
+      buy: 'Худалдан авах',
+      sell: 'Зарах',
+      business_rates: 'BusinessPay ханш',
+      p2b: 'Хувь хүнээс байгууллага руу',
+      b2b: 'Байгууллагаас байгууллага руу',
+      view_rates: 'Дэлгэрэнгүй ханш харах',
+      mn_services_sub: 'Монгол хэрэглэгчдэд зориулсан үйлчилгээ',
+      mn_services_title: 'Хувь хүн болон Байгууллагын гүйлгээ',
+      ru_services_sub: 'Орос хэрэглэгчдэд зориулсан үйлчилгээ',
+      ru_services_title: 'Олон улсын төлбөр тооцоо',
+      testimonials_title: 'Хэрэглэгчдийн сэтгэгдэл',
+      news_sub: 'Мэдээ, мэдээлэл',
+      news_title: 'Сүүлийн нийтлэлүүд',
+      read_more: 'Дэлгэрэнгүй үзэх',
+      all_news: 'Бүх нийтлэл үзэх',
+      partners_title: 'Хамтран ажиллагч байгууллагууд',
+      cta_title: 'Өдөр бүрийн ханш ба зах зээлийн тойм мэдээ авах:',
+      cta_desc: 'Бидний телеграм сувгийг дагаж валютын ханшийн мэдээлэл аваарай!',
+      cta_btn: 'Телеграм суваг',
+      close_calc: 'Хаах',
+      calc_label: 'Ханш',
+      
+      fallback_ind: {
+        title: 'Хувь хэрэглэгчид зориулсан үйлчилгээ',
+        desc: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
+        features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин']
+      },
+      fallback_biz: {
+        title: 'BusinessPay',
+        desc: 'Байгууллагуудын төлбөр тооцооны шийдэл',
+        features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо']
+      },
+      fallback_receive: {
+        title: 'Гадаад улсаас төлбөр хүлээн авах',
+        desc: 'Гадаадын харилцагчаас мөнгө хүлээн авахад хялбар шийдэл',
+        features: ['Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах', 'Төлбөрийн найдвартай, шуурхай шилжүүлэг']
+      },
+      fallback_send: {
+        title: 'Гадаад улс руу төлбөр төлөх',
+        desc: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
+        features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх']
+      },
+      
+      features: {
+        flex: { title: 'Уян хатан', desc: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан тариф' },
+        fast: { title: 'Хурдан, найдвартай', desc: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем' },
+        secure: { title: 'Баталгаатай', desc: 'Олон улсын стандартын дагуу аюулгүй үйлчилгээ' },
+        support: { title: 'Дэмжлэг', desc: 'Өндөр түвшний үйлчилгээ, найдвартай гүйлгээ' }
+      }
+    },
+    ru: {
+      hero_since: 'С 2018 ГОДА',
+      hero_title_main: 'OYUNS FINANCE',
+      hero_title_sub: 'МЕЖДУНАРОДНЫЕ ДЕНЕЖНЫЕ ПЕРЕВОДЫ',
+      exchange_btn: 'ОБМЕН ВАЛЮТЫ',
+      services_btn: 'НАШИ УСЛУГИ',
+      about_title: 'О нас',
+      about_text_1: (
+        <>
+          <strong className="text-slate-900">OYUNS FINANCE</strong> предоставляет услуги международных денежных переводов,
+          финансовых услуг, грузоперевозок и туризма с 2018 года. Мы — финансовая организация, нацеленная на простое и надежное
+          решение международных и местных финансовых потребностей.
+        </>
+      ),
+      about_text_2: 'Мы имеем большой опыт в предоставлении простых, быстрых и надежных услуг по переводу денег и обмену валюты между Монголией и Россией, уделяя особое внимание финансовым потребностям частных лиц и организаций.',
+      stats: { since: 'года', transactions: 'транзакций', clients: 'довольных клиентов' },
+      more_btn: 'Подробнее',
+      why_title: (<span>ПОЧЕМУ <span className="gradient-text">OYUNS FINANCE</span>?</span>),
+      today_rates: 'Курсы валют на сегодня',
+      personal_rates: 'Курсы для физических лиц',
+      buy: 'Покупка',
+      sell: 'Продажа',
+      business_rates: 'Курсы BusinessPay',
+      p2b: 'От физ. лица юридическому',
+      b2b: 'Между юридическими лицами',
+      view_rates: 'Смотреть курсы подробнее',
+      mn_services_sub: 'Услуги для монгольских клиентов',
+      mn_services_title: 'Транзакции для частных лиц и компаний',
+      ru_services_sub: 'Услуги для российских клиентов',
+      ru_services_title: 'Международные платежи',
+      testimonials_title: 'Отзывы клиентов',
+      news_sub: 'Новости и информация',
+      news_title: 'Последние статьи',
+      read_more: 'Читать далее',
+      all_news: 'Смотреть все статьи',
+      partners_title: 'Партнеры',
+      cta_title: 'Получайте ежедневные курсы и обзор рынка:',
+      cta_desc: 'Подписывайтесь на наш канал в Telegram, чтобы получать информацию о курсах валют!',
+      cta_btn: 'Канал Telegram',
+      close_calc: 'Закрыть',
+      calc_label: 'Курс',
+      
+      fallback_ind: {
+        title: 'Услуги для частных лиц',
+        desc: 'Надежные решения международных денежных переводов для частных лиц',
+        features: ['Оплата обучения', 'Аренда жилья', 'Личные расходы', 'Топливо, дорожные сборы', 'Ремонт и обслуживание', 'Зарплата сотрудников']
+      },
+      fallback_biz: {
+        title: 'BusinessPay',
+        desc: 'Платежные решения для организаций',
+        features: ['Международные транзакции', 'Импортные платежи', 'B2B расчеты']
+      },
+      fallback_receive: {
+        title: 'Прием платежей из-за рубежа',
+        desc: 'Простое решение для получения денег от иностранных клиентов',
+        features: ['Прием платежей от международных клиентов', 'Надежные и быстрые переводы']
+      },
+      fallback_send: {
+        title: 'Платежи за рубеж',
+        desc: 'Перевод средств иностранным контрагентам по импортным контрактам',
+        features: ['Платежи по международной торговле', 'Оплата инвойсов за импортные товары']
+      },
+      
+      features: {
+        flex: { title: 'Гибкость', desc: 'Дешевые и гибкие тарифы на внешние и внутренние транзакции' },
+        fast: { title: 'Быстро и надежно', desc: 'Надежная система мгновенных переводов' },
+        secure: { title: 'Гарантировано', desc: 'Безопасные услуги по международным стандартам' },
+        support: { title: 'Поддержка', desc: 'Высокий уровень обслуживания и надежные транзакции' }
+      }
+    }
+  };
+
+  const content = t[lang] || t.mn;
+
   /* ── Fallback data ──────────────────────────────────────────────────── */
 
   const iconMap: Record<string, React.ReactNode> = {
@@ -110,34 +260,34 @@ export default function Home() {
 
   /* Mongolian Individual (combined Student Pay + Individual) */
   const fallbackIndividual = {
-    title: 'Хувь хэрэглэгчид зориулсан үйлчилгээ',
-    description: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
-    features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин'],
+    title: content.fallback_ind.title,
+    description: content.fallback_ind.desc,
+    features: content.fallback_ind.features,
     telegramLink: 'https://t.me/oyunsaio_bot',
     icon: <IndividualIcon />,
   };
 
   /* Mongolian Business */
   const fallbackBusiness = {
-    title: 'BusinessPay',
-    description: 'Байгууллагуудын төлбөр тооцооны шийдэл',
-    features: ['Олон улсын гүйлгээ', 'Импортын төлбөрийн шилжүүлэг', 'Бизнес хоорондын төлбөр тооцоо'],
+    title: content.fallback_biz.title,
+    description: content.fallback_biz.desc,
+    features: content.fallback_biz.features,
     telegramLink: 'https://t.me/Soyuns_aio',
     icon: <BusinessPayIcon />,
   };
 
   /* Russian client services (separate from business) */
   const fallbackReceive = {
-    title: 'Гадаад улсаас төлбөр хүлээн авах',
-    description: 'Олон улсын үйлчлүүлэгчдээс төлбөр хүлээн авах найдвартай шийдэл',
-    features: ['Төлбөрийн найдвартай шилжүүлэг', 'Шуурхай гүйлгээ'],
+    title: content.fallback_receive.title,
+    description: content.fallback_receive.desc,
+    features: content.fallback_receive.features,
     icon: <ReceivePayIcon />,
   };
 
   const fallbackSend = {
-    title: 'Гадаад улс руу төлбөр төлөх',
-    description: 'Импортын гэрээний дагуу гадаадын харилцагч руу төлбөр шилжүүлэх',
-    features: ['Олон улсын худалдааны төлбөр', 'Импортын барааны инвойс төлөх'],
+    title: content.fallback_send.title,
+    description: content.fallback_send.desc,
+    features: content.fallback_send.features,
     icon: <SendPayIcon />,
   };
 
@@ -149,14 +299,16 @@ export default function Home() {
 
   /* ── Map Directus data → display ────────────────────────────────────── */
 
-  const mongolianIndividual = directusServices.length
+  const useDirectus = lang === 'mn' && directusServices.length > 0;
+
+  const mongolianIndividual = useDirectus
     ? directusServices.filter((s) => s.category === 'client').map((s) => ({
         title: s.title, description: s.description, features: s.features ?? [],
         telegramLink: s.telegram_link, icon: iconMap[s.icon] || <IndividualIcon />,
       }))
     : [fallbackIndividual];
 
-  const mongolianBusiness = directusServices.length
+  const mongolianBusiness = useDirectus
     ? directusServices.filter((s) => s.category === 'business').map((s) => ({
         title: s.title, description: s.description, features: s.features ?? [],
         telegramLink: s.telegram_link, icon: iconMap[s.icon] || <BusinessPayIcon />,
@@ -168,12 +320,12 @@ export default function Home() {
   const testimonials = directusTestimonials.length
     ? directusTestimonials.map((t) => ({ author: t.author, content: t.content, rating: t.rating }))
     : fallbackTestimonials;
-
+    
   const features = [
-    { title: 'Уян хатан', description: 'Гадаад болон дотоод гүйлгээний хямд, уян хатан тариф', icon: <FlexPriceIcon />, color: 'from-blue-50 to-indigo-50' },
-    { title: 'Хурдан, найдвартай', description: 'Хоромхон зуур шилжүүлэг хийгдэх найдвартай систем', icon: <SpeedIcon />, color: 'from-amber-50 to-yellow-50' },
-    { title: 'Баталгаатай', description: 'Олон улсын стандартын дагуу аюулгүй үйлчилгээ', icon: <SecureIcon />, color: 'from-emerald-50 to-teal-50' },
-    { title: 'Дэмжлэг', description: 'Өндөр түвшний үйлчилгээ, найдвартай гүйлгээ', icon: <SupportIcon />, color: 'from-violet-50 to-purple-50' },
+    { title: content.features.flex.title, description: content.features.flex.desc, icon: <FlexPriceIcon />, color: 'from-blue-50 to-indigo-50' },
+    { title: content.features.fast.title, description: content.features.fast.desc, icon: <SpeedIcon />, color: 'from-amber-50 to-yellow-50' },
+    { title: content.features.secure.title, description: content.features.secure.desc, icon: <SecureIcon />, color: 'from-emerald-50 to-teal-50' },
+    { title: content.features.support.title, description: content.features.support.desc, icon: <SupportIcon />, color: 'from-violet-50 to-purple-50' },
   ];
 
   return (
@@ -201,7 +353,7 @@ export default function Home() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                   </svg>
-                  Хаах
+                  {content.close_calc}
                 </button>
                 <ExchangeCalculator initialRate={botRate} />
               </div>
@@ -221,7 +373,7 @@ export default function Home() {
           <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm2.25-4.5h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm2.25-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H15v-.008Zm0 2.25h.008v.008H15v-.008ZM4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z" />
           </svg>
-          <span className="block text-[10px] font-bold mt-1 tracking-wide">Ханш</span>
+          <span className="block text-[10px] font-bold mt-1 tracking-wide">{content.calc_label}</span>
         </button>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -233,23 +385,24 @@ export default function Home() {
           >
             <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 mb-8 text-sm font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              2018 ОНООС 
+              {content.hero_since} 
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
-              OYUNS FINANCE
+              {content.hero_title_main}
               <span className="block text-2xl sm:text-3xl lg:text-4xl mt-3 leading-snug font-bold text-wrap sm:text-nowrap">
-                ОЛОН УЛСЫН МӨНГӨН ГУЙВУУЛГЫН ҮЙЛЧИЛГЭЭ
+                {content.hero_title_sub}
               </span>
             </h1>
             <p className="text-lg sm:text-xl mb-10 text-blue-100/80 max-w-2xl mx-auto leading-relaxed flex items-center justify-center gap-2">
-              Илүү <span className="typewriter font-bold text-white"></span>
+              {/* Note: keeping typewriter empty for now or remove if not needed. It was empty in original */}
+              <span className="typewriter font-bold text-white"></span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/exchange"
                 className="group bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base inline-flex items-center justify-center gap-2"
               >
-                ВАЛЮТ СОЛИХ
+                {content.exchange_btn}
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
@@ -258,7 +411,7 @@ export default function Home() {
                 href="/services"
                 className="bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20 text-base text-center"
               >
-                БИДНИЙ ҮЙЛЧИЛГЭЭ
+                {content.services_btn}
               </Link>
             </div>
           </motion.div>
@@ -270,27 +423,22 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
             <div className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-6">Бидний тухай</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-6">{content.about_title}</h2>
             </div>
             <div className="bg-[#f7f7f7] rounded-2xl border border-gray-100 p-8 mb-8">
               <p className="text-base text-slate-600 leading-relaxed mb-5">
-                <strong className="text-slate-900">OYUNS FINANCE</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
-                санхүүгийн үйлчилгээ, тээвэр зуучлал, карго, аялал жуулчлал зэрэг чиглэлээр
-                үйл ажиллагаа явуулж ирсэн ба олон улсын болон дотоодын санхүүгийн хэрэгцээг
-                хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага юм.
+                {content.about_text_1}
               </p>
               <p className="text-base text-slate-600 leading-relaxed">
-                Бид Монгол Улс болон ОХУ хоорондын мөнгөн гуйвуулга, валют солилцооны үйлчилгээг
-                хялбар, шуурхай, найдвартай хүргэж ирсэн туршлагатай байгууллага бөгөөд
-                хувь хүн болон байгууллагуудын санхүүгийн хэрэгцээг хангахад анхаарч ажилладаг.
+                {content.about_text_2}
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
               {[
-                { value: '2018', label: 'оноос', gradient: 'from-[#2455D8] to-[#1b40a8]' },
-                { value: '10000+', label: 'гүйлгээ', gradient: 'from-[#1b40a8] to-[#1b40a8]' },
-                { value: '2500+', label: 'итгэлтэй үйлчлүүлэгч', gradient: 'from-[#1b40a8] to-indigo-500' },
+                { value: '2018', label: content.stats.since, gradient: 'from-[#2455D8] to-[#1b40a8]' },
+                { value: '10000+', label: content.stats.transactions, gradient: 'from-[#1b40a8] to-[#1b40a8]' },
+                { value: '2500+', label: content.stats.clients, gradient: 'from-[#1b40a8] to-indigo-500' },
               ].map((stat, i) => (
                 <motion.div
                   key={i}
@@ -311,7 +459,7 @@ export default function Home() {
                 href="/about"
                 className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group"
               >
-                Дэлгэрэнгүй
+                {content.more_btn}
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
@@ -326,7 +474,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">
-              ЯАГААД <span className="gradient-text">OYUNS FINANCE</span> ГЭЖ?
+              {content.why_title}
             </h2>
           </motion.div>
 
@@ -346,7 +494,7 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Өнөөдрийн валютын ханш</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{content.today_rates}</h2>
           </motion.div>
 
           {/* Individual rates */}
@@ -357,14 +505,14 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-[#1a1a1a]">Хувь хэрэглэгчийн ханш</h3>
+              <h3 className="text-lg font-bold text-[#1a1a1a]">{content.personal_rates}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }} className="relative bg-gradient-to-br from-[#2455D8] to-[#3d6de5] rounded-2xl p-7 text-white overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-blue-200">Худалдан авах</p>
+                    <p className="text-sm font-medium text-blue-200">{content.buy}</p>
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>
                     </div>
@@ -380,7 +528,7 @@ export default function Home() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-emerald-200">Зарах</p>
+                    <p className="text-sm font-medium text-emerald-200">{content.sell}</p>
                     <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 13l-5 5m0 0l-5-5m5 5V6" /></svg>
                     </div>
@@ -402,14 +550,14 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-[#1a1a1a]">BusinessPay ханш</h3>
+              <h3 className="text-lg font-bold text-[#1a1a1a]">{content.business_rates}</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="relative bg-white border border-gray-200 rounded-2xl p-7 overflow-hidden border-l-4 border-l-[#2455D8]">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-[#555]">Хувь хүнээс байгууллага руу</p>
+                    <p className="text-sm font-medium text-[#555]">{content.p2b}</p>
                     <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
                       <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                     </div>
@@ -425,7 +573,7 @@ export default function Home() {
                 <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-50 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
                 <div className="relative">
                   <div className="flex items-center justify-between mb-3">
-                    <p className="text-sm font-medium text-[#555]">Байгууллагаас байгууллага руу</p>
+                    <p className="text-sm font-medium text-[#555]">{content.b2b}</p>
                     <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center">
                       <svg className="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
                     </div>
@@ -441,7 +589,7 @@ export default function Home() {
 
           <div className="text-center">
             <Link href="/exchange" className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group">
-              Дэлгэрэнгүй ханш харах
+              {content.view_rates}
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
@@ -454,8 +602,8 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Монгол хэрэглэгчдэд зориулсан үйлчилгээ</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хувь хүн болон Байгууллагын гүйлгээ</h2>
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">{content.mn_services_sub}</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{content.mn_services_title}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -473,8 +621,8 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-br from-[#2455D8] to-[#1b40a8] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <p className="text-sm font-semibold text-cyan-300 tracking-wide uppercase mb-2">Орос хэрэглэгчдэд зориулсан үйлчилгээ</p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Олон улсын төлбөр тооцоо</h2>
+            <p className="text-sm font-semibold text-cyan-300 tracking-wide uppercase mb-2">{content.ru_services_sub}</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white">{content.ru_services_title}</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -489,7 +637,7 @@ export default function Home() {
       <section className="py-20 bg-[#eaeaea]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хэрэглэгчдийн сэтгэгдэл</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{content.testimonials_title}</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => <TestimonialCard key={i} {...t} />)}
@@ -501,13 +649,13 @@ export default function Home() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
-            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Мэдээ, мэдээлэл</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Сүүлийн нийтлэлүүд</h2>
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">{content.news_sub}</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{content.news_title}</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {(blogPosts.length > 0 ? blogPosts : [
               { id: 1, title: 'OYUNShot №10 . Мөнгө, санхүүгийн суурь мэдлэг олгох 5 ном', slug: 'oyunshot-10-finance-books', excerpt: 'Санхүүгийн мэдлэгээ дээшлүүлэхэд тань тусална.', published_date: '2025-06-18', category: 'OYUNShot' },
-              { id: 2, title: 'OYUNShot №9. Хойш тавилтын зардал: "Дараа хийнэ ээ…"', slug: 'oyunshot-9-procrastination-cost', excerpt: 'Хойш тавих зуршил таны санхүүд хэрхэн нөлөөлдөг тухай.', published_date: '2025-06-11', category: 'OYUNShot' },
+              { id: 2, title: 'OYUNShot №9. Хойш тавилтын зардал: ""Дараа хийнэ ээ…""', slug: 'oyunshot-9-procrastination-cost', excerpt: 'Хойш тавих зуршил таны санхүүд хэрхэн нөлөөлдөг тухай.', published_date: '2025-06-11', category: 'OYUNShot' },
               { id: 3, title: 'OYUNShot №8. Санхүү + Технологи = FinTech гэж юу вэ?', slug: 'oyunshot-8-what-is-fintech', excerpt: 'FinTech буюу санхүүгийн технологийн тухай ойлголт.', published_date: '2025-06-04', category: 'OYUNShot' },
             ] as Array<{id: number; title: string; slug: string; excerpt: string; published_date: string; category: string; featured_image?: string}>).slice(0, 3).map((post, index) => (
               <motion.article
@@ -533,7 +681,7 @@ export default function Home() {
                 </div>
                 <div className="p-6">
                   <time className="text-xs text-slate-400 font-medium">
-                    {new Date(post.published_date).toLocaleDateString('mn-MN')}
+                    {new Date(post.published_date).toLocaleDateString(lang === 'mn' ? 'mn-MN' : 'ru-RU')}
                   </time>
                   <h3 className="text-base font-bold text-slate-900 mt-2 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                     {post.title}
@@ -541,8 +689,8 @@ export default function Home() {
                   <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
                     {post.excerpt}
                   </p>
-                  <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-semibold group/link">
-                    Дэлгэрэнгүй үзэх
+                  <Link href={`/${lang}/blog/${post.slug}`} className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-semibold group/link">
+                    {content.read_more}
                     <svg className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
@@ -553,7 +701,7 @@ export default function Home() {
           </div>
           <div className="text-center mt-10">
             <Link href="/blog" className="inline-flex items-center gap-2 bg-[#2455D8] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm">
-              Бүх нийтлэл үзэх
+              {content.all_news}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
@@ -567,7 +715,7 @@ export default function Home() {
         <section className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-10">
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Хамтран ажиллагч байгууллагууд</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">{content.partners_title}</h2>
             </motion.div>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
               {partners.map((partner, i) => (
@@ -607,13 +755,13 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#1b40a8]/50 to-transparent pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }}>
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">Өдөр бүрийн ханш ба зах зээлийн тойм мэдээ авах:</h2>
-            <p className="text-blue-100/80 text-lg mb-8 max-w-xl mx-auto">Бидний телеграм сувгийг дагаж валютын ханшийн мэдээлэл аваарай!</p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">{content.cta_title}</h2>
+            <p className="text-blue-100/80 text-lg mb-8 max-w-xl mx-auto">{content.cta_desc}</p>
             <a href="https://t.me/oyuns_alo" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-white text-[#2455D8] px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
               </svg>
-              Телеграм суваг
+              {content.cta_btn}
             </a>
           </motion.div>
         </div>

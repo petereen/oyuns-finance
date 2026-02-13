@@ -429,3 +429,9 @@ Happy coding! 🎉
 **Telegram:** @oyuns_alo
 **Phone:** +7 977 801 9143
 
+
+## 🌍 Localization Update (Russian Translation)
+
+- **Complete Translation**: All pages (Home, About, Services, Exchange, Contact, Blog, User Agreement) are now fully translated into Russian.
+- **Navigation & Footer**: Navigation menu and footer elements automatically switch based on the selected language.
+- **Dynamic Content**: API-driven content (Supabase/Directus) structure is prepared to support multilingual data.
