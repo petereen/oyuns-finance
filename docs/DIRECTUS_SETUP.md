@@ -156,6 +156,8 @@ DIRECTUS_STATIC_TOKEN=your-static-token-here
     "status": "published"
   }
 ]
+
+ðíð░ð╣ð¢ Ê»ð╣ð╗Ðçð©ð╗ð│ÐìÐìÐéÐìð╣ ð│ð░ðÀð░ÐÇ. ðóð░ð░ð╗ð░ð│ð┤Ðüð░ð¢.
 ```
 
 ### Blog Post Example

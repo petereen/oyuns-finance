@@ -41,7 +41,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16 lg:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <div className="relative h-10 w-auto">
+            <div className="relative h-12 lg:h-14 w-auto">
               <img 
                 src="/logo-main.svg" 
                 alt="Oyuns Finance" 
