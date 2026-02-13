@@ -41,10 +41,12 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16 lg:h-18">
           {/* Logo */}
           <Link href="/" className="flex items-center group">
-            <div className="relative">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow duration-300">
-                <span className="text-white font-extrabold text-sm tracking-tight">O</span>
-              </div>
+            <div className="relative h-10 w-auto">
+              <img 
+                src="/logo-main.svg" 
+                alt="Oyuns Finance" 
+                className="h-full w-auto object-contain"
+              />
             </div>
           </Link>
 

@@ -10,13 +10,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-1.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center">
-                <span className="text-white font-extrabold text-sm">O</span>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-lg font-extrabold tracking-tight text-white">OYUNS</span>
-                <span className="text-[10px] font-semibold text-slate-400 tracking-[0.2em] uppercase">Finance</span>
+            <div className="flex items-center gap-1.5 mb-5 space-x-2">
+              <div className="relative h-12 w-auto">
+                 <img 
+                  src="/logo-light-full.png" 
+                  alt="Oyuns Finance" 
+                  className="h-full w-auto object-contain"
+                />
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-5">
