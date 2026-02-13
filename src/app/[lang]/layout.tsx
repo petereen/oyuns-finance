@@ -11,8 +11,9 @@ const montserrat = Montserrat({
 });
 
 // Helper for dynamic metadata
-export async function generateMetadata({ params }: { params: Promise<{ lang: "mn" | "ru" }> }) {
-  const { lang } = await params;
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
+  const { lang: rawLang } = await params;
+  const lang = rawLang as "mn" | "ru";
   return {
     title: "OYUNS FINANCE",
     description: lang === "ru" 
@@ -59,9 +60,10 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: "mn" | "ru" }>;
+  params: Promise<{ lang: string }>;
 }) {
-  const { lang } = await params;
+  const { lang: rawLang } = await params;
+  const lang = rawLang as "mn" | "ru";
   const dict = await getDictionary(lang);
 
   return (

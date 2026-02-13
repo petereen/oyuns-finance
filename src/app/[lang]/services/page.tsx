@@ -254,10 +254,10 @@ export default function ServicesPage() {
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {mongolianIndividual.map((s, i) => (
-                <ServiceCard key={ind-} {...s} index={i} />
+                <ServiceCard key={i} {...s} index={i} />
               ))}
               {mongolianBusiness.map((s, i) => (
-                <ServiceCard key={iz-} {...s} index={i + 1} />
+                <ServiceCard key={i} {...s} index={i + 1} />
               ))}
             </div>
           </div>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {whyChoose.map((item, index) => (
               <div key={index} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-all duration-300">
-                <div className={w-12 h-12 rounded-xl mb-4 flex items-center justify-center }>
+                <div className={`${item.color} w-12 h-12 rounded-xl mb-4 flex items-center justify-center`}>
                   {item.icon}
                 </div>
                 <h3 className="text-lg font-bold text-[#1a1a1a] mb-2">{item.title}</h3>

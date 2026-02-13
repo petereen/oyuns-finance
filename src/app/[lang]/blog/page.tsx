@@ -143,7 +143,7 @@ export default function BlogPage() {
                   {post.excerpt}
                 </p>
                 <Link
-                  href={/blog/}
+                  href={`/${lang}/blog/${post.slug}`}
                   className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-semibold group/link"
                 >
                   {content.read_more}
