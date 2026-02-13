@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import ServiceCard from '@/components/ServiceCard';
 import TestimonialCard from '@/components/TestimonialCard';
 import ExchangeCalculator from '@/components/ExchangeCalculator';
-import { getServices, getTestimonials, getPartners, assetUrl, type Service, type Testimonial, type Partner } from '@/lib/directus';
-import { getLatestBotRate, type BotRate } from '@/lib/supabase';
+import { getServices, getTestimonials, getPartners, getBlogPosts, assetUrl, type Service, type Testimonial, type Partner, type BlogPost } from '@/lib/directus';
+import { getLatestBotRate, getLatestBusinessRate, type BotRate, type BusinessRate } from '@/lib/supabase';
 
 /* ── Icon Components ─────────────────────────────────────────────────── */
 
@@ -66,22 +66,30 @@ export default function Home() {
   const [directusTestimonials, setDirectusTestimonials] = useState<Testimonial[]>([]);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [botRate, setBotRate] = useState<BotRate | null>(null);
+  const [businessRate, setBusinessRate] = useState<BusinessRate | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [ratesLoading, setRatesLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [calcOpen, setCalcOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [services, testimonials, rate, partnerData] = await Promise.all([
+        const [services, testimonials, rate, bizRate, partnerData, posts] = await Promise.all([
           getServices().catch(() => []),
           getTestimonials().catch(() => []),
           getLatestBotRate().catch(() => null),
+          getLatestBusinessRate().catch(() => null),
           getPartners().catch(() => []),
+          getBlogPosts(3).catch(() => []),
         ]);
         if (services.length) setDirectusServices(services as Service[]);
         if (testimonials.length) setDirectusTestimonials(testimonials as Testimonial[]);
         if (partnerData.length) setPartners(partnerData as Partner[]);
         setBotRate(rate);
+        setBusinessRate(bizRate);
+        if (posts.length) setBlogPosts(posts as BlogPost[]);
+        setRatesLoading(false);
       } catch (e) {
         console.error('Fetch failed, using fallback:', e);
       } finally {
@@ -102,7 +110,7 @@ export default function Home() {
 
   /* Mongolian Individual (combined Student Pay + Individual) */
   const fallbackIndividual = {
-    title: 'Хувь хүнд зориулсан үйлчилгээ',
+    title: 'Хувь хэрэглэгчид зориулсан үйлчилгээ',
     description: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
     features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин'],
     telegramLink: 'https://t.me/oyunsaio_bot',
@@ -257,6 +265,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── About Info ─────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }}>
+            <div className="text-center mb-10">
+              <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">OYUNS FINANCE</p>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-6">Бидний тухай</h2>
+            </div>
+            <div className="bg-[#f7f7f7] rounded-2xl border border-gray-100 p-8 mb-8">
+              <p className="text-base text-slate-600 leading-relaxed mb-5">
+                <strong className="text-slate-900">OYUNS FINANCE</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
+                санхүүгийн үйлчилгээ, тээвэр зуучлал, карго, аялал жуулчлал зэрэг чиглэлээр
+                үйл ажиллагаа явуулж ирсэн ба олон улсын болон дотоодын санхүүгийн хэрэгцээг
+                хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага юм.
+              </p>
+              <p className="text-base text-slate-600 leading-relaxed">
+                Бид Монгол Улс болон ОХУ хоорондын мөнгөн гуйвуулга, валют солилцооны үйлчилгээг
+                хялбар, шуурхай, найдвартай хүргэж ирсэн туршлагатай байгууллага бөгөөд
+                хувь хүн болон байгууллагуудын санхүүгийн хэрэгцээг хангахад анхаарч ажилладаг.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+              {[
+                { value: '2018', label: 'оноос', gradient: 'from-[#2455D8] to-[#1b40a8]' },
+                { value: '10000+', label: 'гүйлгээ', gradient: 'from-[#1b40a8] to-[#1b40a8]' },
+                { value: '2500+', label: 'итгэлтэй үйлчлүүлэгч', gradient: 'from-[#1b40a8] to-indigo-500' },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 + i * 0.1 }}
+                  viewport={{ once: true }}
+                  className={`bg-gradient-to-br ${stat.gradient} rounded-2xl p-7 text-white text-center`}
+                >
+                  <div className="text-4xl font-extrabold mb-1">{stat.value}</div>
+                  <p className="text-sm text-white/70">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="text-center">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group"
+              >
+                Дэлгэрэнгүй
+                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* ── Features ──────────────────────────────────────────────────── */}
       <section className="py-20 bg-[#eaeaea]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -274,6 +339,115 @@ export default function Home() {
                 <p className="text-[#555] text-sm leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Exchange Rates ─────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Ханш</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Өнөөдрийн валютын ханш</h2>
+          </motion.div>
+
+          {/* Individual rates */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#1a1a1a]">Хувь хэрэглэгчийн ханш</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} viewport={{ once: true }} className="relative bg-gradient-to-br from-[#2455D8] to-[#3d6de5] rounded-2xl p-7 text-white overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-blue-200">Худалдан авах</p>
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11l5-5m0 0l5 5m-5-5v12" /></svg>
+                    </div>
+                  </div>
+                  <div className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-1">
+                    {ratesLoading ? <span className="inline-block w-32 h-12 shimmer rounded-lg" /> : botRate ? botRate.buy_rate.toFixed(2) : '—'}
+                  </div>
+                  <p className="text-blue-200 text-sm">MNT / RUB</p>
+                </div>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }} viewport={{ once: true }} className="relative bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-2xl p-7 text-white overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-emerald-200">Зарах</p>
+                    <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 13l-5 5m0 0l-5-5m5 5V6" /></svg>
+                    </div>
+                  </div>
+                  <div className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-1">
+                    {ratesLoading ? <span className="inline-block w-32 h-12 shimmer rounded-lg" /> : botRate ? botRate.sell_rate.toFixed(2) : '—'}
+                  </div>
+                  <p className="text-emerald-200 text-sm">MNT / RUB</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Business rates */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
+                <svg className="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-[#1a1a1a]">BusinessPay ханш</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="relative bg-white border border-gray-200 rounded-2xl p-7 overflow-hidden border-l-4 border-l-[#2455D8]">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-[#555]">Хувь хүнээс байгууллага руу</p>
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    </div>
+                  </div>
+                  <div className="text-4xl sm:text-5xl font-bold tracking-tight mb-1 text-[#1a1a1a]">
+                    {ratesLoading ? <span className="inline-block w-32 h-12 shimmer rounded-lg" /> : businessRate ? businessRate.b2c_rate.toFixed(2) : '—'}
+                  </div>
+                  <p className="text-[#555] text-sm">MNT / RUB</p>
+                </div>
+              </motion.div>
+
+              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.4 }} viewport={{ once: true }} className="relative bg-white border border-gray-200 rounded-2xl p-7 overflow-hidden border-l-4 border-l-cyan-600">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-50 rounded-full -translate-y-8 translate-x-8 blur-2xl" />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-3">
+                    <p className="text-sm font-medium text-[#555]">Байгууллагаас байгууллага руу</p>
+                    <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                    </div>
+                  </div>
+                  <div className="text-4xl sm:text-5xl font-bold tracking-tight mb-1 text-[#1a1a1a]">
+                    {ratesLoading ? <span className="inline-block w-32 h-12 shimmer rounded-lg" /> : businessRate ? businessRate.b2b_rate.toFixed(2) : '—'}
+                  </div>
+                  <p className="text-[#555] text-sm">MNT / RUB</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link href="/exchange" className="inline-flex items-center gap-2 text-[#2455D8] font-semibold hover:underline transition-all group">
+              Дэлгэрэнгүй ханш харах
+              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -321,6 +495,71 @@ export default function Home() {
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => <TestimonialCard key={i} {...t} />)}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Recent Blog Posts ────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="text-center mb-14">
+            <p className="text-sm font-semibold text-[#2455D8] tracking-wide uppercase mb-2">Мэдээ, мэдээлэл</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a]">Сүүлийн нийтлэлүүд</h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {(blogPosts.length > 0 ? blogPosts : [
+              { id: 1, title: 'OYUNShot №10 . Мөнгө, санхүүгийн суурь мэдлэг олгох 5 ном', slug: 'oyunshot-10-finance-books', excerpt: 'Санхүүгийн мэдлэгээ дээшлүүлэхэд тань тусална.', published_date: '2025-06-18', category: 'OYUNShot' },
+              { id: 2, title: 'OYUNShot №9. Хойш тавилтын зардал: "Дараа хийнэ ээ…"', slug: 'oyunshot-9-procrastination-cost', excerpt: 'Хойш тавих зуршил таны санхүүд хэрхэн нөлөөлдөг тухай.', published_date: '2025-06-11', category: 'OYUNShot' },
+              { id: 3, title: 'OYUNShot №8. Санхүү + Технологи = FinTech гэж юу вэ?', slug: 'oyunshot-8-what-is-fintech', excerpt: 'FinTech буюу санхүүгийн технологийн тухай ойлголт.', published_date: '2025-06-04', category: 'OYUNShot' },
+            ] as Array<{id: number; title: string; slug: string; excerpt: string; published_date: string; category: string; featured_image?: string}>).slice(0, 3).map((post, index) => (
+              <motion.article
+                key={post.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="group bg-[#f7f7f7] rounded-2xl border border-gray-100 overflow-hidden card-hover"
+              >
+                <div className="h-44 relative overflow-hidden">
+                  {post.featured_image ? (
+                    <img src={assetUrl(post.featured_image)} alt={post.title} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-500" />
+                  )}
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,255,255,0.15),transparent)] pointer-events-none" />
+                  <div className="absolute bottom-4 left-4">
+                    <span className="text-xs font-semibold text-white/90 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+                      {post.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <time className="text-xs text-slate-400 font-medium">
+                    {new Date(post.published_date).toLocaleDateString('mn-MN')}
+                  </time>
+                  <h3 className="text-base font-bold text-slate-900 mt-2 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                  <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm text-blue-600 hover:text-blue-700 font-semibold group/link">
+                    Дэлгэрэнгүй үзэх
+                    <svg className="w-4 h-4 ml-1 group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link href="/blog" className="inline-flex items-center gap-2 bg-[#2455D8] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 text-sm">
+              Бүх нийтлэл үзэх
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </Link>
           </div>
         </div>
       </section>

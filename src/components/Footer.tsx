@@ -66,10 +66,10 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">Үйлчилгээ</h3>
             <ul className="space-y-2.5 text-sm text-slate-400">
-              <li>Хувь хүнд зориулсан</li>
+              <li>Хувь хэрэглэгчид зориулсан</li>
               <li>BusinessPay</li>
-              <li>Төлбөр хүлээн авах</li>
-              <li>Төлбөр төлөх</li>
+              <li>Гадаадаас төлбөр хүлээн авах</li>
+              <li>Гадаад руу төлбөр төлөх</li>
             </ul>
           </div>
 

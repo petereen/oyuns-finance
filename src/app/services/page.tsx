@@ -81,7 +81,7 @@ export default function ServicesPage() {
 
   /* ── Mongolian Individual (combined Student Pay + Individual) ──────── */
   const fallbackIndividual = {
-    title: 'Хувь хүнд зориулсан үйлчилгээ',
+    title: 'Хувь хэрэглэгчид зориулсан үйлчилгээ',
     description: 'Хувь хүмүүст зориулсан олон улсын мөнгөн гуйвуулгын найдвартай шийдэл',
     features: ['Сургалтын төлбөр', 'Байрны түрээс', 'Хувийн хэрэглээний зардал', 'Шатахуун, замын төлбөр', 'Засвар, үйлчилгээний төлбөр', 'Aжилчдын цалин'],
     telegramLink: 'https://t.me/oyunsaio_bot',
