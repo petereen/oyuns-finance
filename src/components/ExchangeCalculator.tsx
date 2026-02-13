@@ -150,7 +150,7 @@ export default function ExchangeCalculator({ initialRate, compact = false }: Exc
 
       {/* CTA */}
       <a
-        href="https://t.me/oyuns_aio"
+        href="https://t.me/oyuns_alo"
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-3 rounded-xl hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold text-sm"
