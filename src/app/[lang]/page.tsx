@@ -394,6 +394,7 @@ export default function Home() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl mb-10 text-blue-100/80 max-w-2xl mx-auto leading-relaxed flex items-center justify-center gap-2">
+              {lang !== 'ru' && <span className="font-bold text-white">Илүү </span>}
               <span className={lang === 'ru' ? 'typewriter-ru font-bold text-white' : 'typewriter font-bold text-white'}></span>
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

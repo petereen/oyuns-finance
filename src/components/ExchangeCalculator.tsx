@@ -164,7 +164,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
       {/* Rate info */}
       {!loading && rate && (
         <p className="text-xs text-slate-400 mb-4 text-center">
-          {rateUsed} • Шинэчлэгдсэн: {new Date(rate.updated_at || Date.now()).toLocaleTimeString('mn-MN', { hour: '2-digit', minute: '2-digit' })}
+          {rateUsed} • {lang === 'ru' ? 'Обновлено' : 'Шинэчлэгдсэн'}: {new Date(rate.updated_at || Date.now()).toLocaleTimeString(lang === 'ru' ? 'ru-RU' : 'mn-MN', { hour: '2-digit', minute: '2-digit' })}
         </p>
       )}
 

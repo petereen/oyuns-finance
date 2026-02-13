@@ -338,7 +338,7 @@ export default function ExchangePage() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className=""
           >
-            <ExchangeCalculator initialRate={botRate} />
+            <ExchangeCalculator initialRate={botRate} lang={lang} />
           </motion.div>
         </motion.div>
       </div>
