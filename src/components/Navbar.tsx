@@ -68,7 +68,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
         <div className="flex justify-between items-center h-16 lg:h-18">
           {/* Logo */}
           <Link href={`/${lang}`} className="flex items-center group">
-            <div className="relative h-11 lg:h-12 w-auto">
+            <div className="relative h-7 lg:h-6 w-auto">
               <img 
                 src="/logo-main.svg" 
                 alt="OYUNS All-In-One" 
