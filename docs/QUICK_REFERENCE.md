@@ -1,4 +1,4 @@
-# OYUNS All-In-One — QUICK REFERENCE (Cheat Sheet)
+# OYUNS ALL-IN-ONE — QUICK REFERENCE (Cheat Sheet)
 
 > First-time setup? Go to **[COMPLETE_SETUP.md](COMPLETE_SETUP.md)** instead. This page is a reference card for day-to-day work.
 

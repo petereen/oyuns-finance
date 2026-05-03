@@ -106,14 +106,14 @@ export default function Home() {
   const t = {
     mn: {
       hero_since: '2018 ОНООС',
-      hero_title_main: 'OYUNS All-In-One',
+      hero_title_main: 'OYUNS ALL-IN-ONE',
       hero_title_sub: 'ОЛОН УЛСЫН МӨНГӨН ГУЙВУУЛГЫН ҮЙЛЧИЛГЭЭ',
       exchange_btn: 'ВАЛЮТ СОЛИХ',
       services_btn: 'БИДНИЙ ҮЙЛЧИЛГЭЭ',
       about_title: 'Бидний тухай',
       about_text_1: (
         <>
-          <strong className="text-slate-900">OYUNS All-In-One</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
+          <strong className="text-slate-900">OYUNS ALL-IN-ONE</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
           санхүүгийн үйлчилгээ, тээвэр зуучлал, карго, аялал жуулчлал зэрэг чиглэлээр
           үйл ажиллагаа явуулж ирсэн ба олон улсын болон дотоодын санхүүгийн хэрэгцээг
           хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага юм.
@@ -122,7 +122,7 @@ export default function Home() {
       about_text_2: 'Бид Монгол Улс болон ОХУ хоорондын мөнгөн гуйвуулга, валют солилцооны үйлчилгээг хялбар, шуурхай, найдвартай хүргэж ирсэн туршлагатай байгууллага бөгөөд хувь хүн болон байгууллагуудын санхүүгийн хэрэгцээг хангахад анхаарч ажилладаг.',
       stats: { since: 'оноос', transactions: 'гүйлгээ', clients: 'итгэлтэй үйлчлүүлэгч' },
       more_btn: 'Дэлгэрэнгүй',
-      why_title: (<span>ЯАГААД <span className="gradient-text">OYUNS All-In-One</span> ГЭЖ?</span>),
+      why_title: (<span>ЯАГААД <span className="gradient-text">OYUNS ALL-IN-ONE</span> ГЭЖ?</span>),
       today_rates: 'Өнөөдрийн валютын ханш',
       personal_rates: 'Хувь хэрэглэгчийн ханш',
       buy: 'Худалдан авах',
@@ -177,14 +177,14 @@ export default function Home() {
     },
     ru: {
       hero_since: 'С 2018 ГОДА',
-      hero_title_main: 'OYUNS All-In-One',
+      hero_title_main: 'OYUNS ALL-IN-ONE',
       hero_title_sub: 'МЕЖДУНАРОДНЫЕ ДЕНЕЖНЫЕ ПЕРЕВОДЫ',
       exchange_btn: 'ОБМЕН ВАЛЮТЫ',
       services_btn: 'НАШИ УСЛУГИ',
       about_title: 'О нас',
       about_text_1: (
         <>
-          <strong className="text-slate-900">OYUNS All-In-One</strong> предоставляет услуги международных денежных переводов,
+          <strong className="text-slate-900">OYUNS ALL-IN-ONE</strong> предоставляет услуги международных денежных переводов,
           финансовых услуг, грузоперевозок и туризма с 2018 года. Мы — финансовая организация, нацеленная на простое и надежное
           решение международных и местных финансовых потребностей.
         </>
@@ -192,7 +192,7 @@ export default function Home() {
       about_text_2: 'Мы имеем большой опыт в предоставлении простых, быстрых и надежных услуг по переводу денег и обмену валюты между Монголией и Россией, уделяя особое внимание финансовым потребностям частных лиц и организаций.',
       stats: { since: 'года', transactions: 'транзакций', clients: 'довольных клиентов' },
       more_btn: 'Подробнее',
-      why_title: (<span>ПОЧЕМУ <span className="gradient-text">OYUNS All-In-One</span>?</span>),
+      why_title: (<span>ПОЧЕМУ <span className="gradient-text">OYUNS ALL-IN-ONE</span>?</span>),
       today_rates: 'Курсы валют на сегодня',
       personal_rates: 'Курсы для физических лиц',
       buy: 'Покупка',

@@ -71,7 +71,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
             <div className="relative h-7 lg:h-6 w-auto">
               <img 
                 src="/logo-main.svg" 
-                alt="OYUNS All-In-One" 
+                alt="OYUNS ALL-IN-ONE" 
                 className="h-full w-auto object-contain"
               />
             </div>

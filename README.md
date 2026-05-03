@@ -1,4 +1,4 @@
-# OYUNS All-In-One — Modern Finance Website
+# OYUNS ALL-IN-ONE — Modern Finance Website
 
 International money transfer platform built with Next.js, Directus CMS, and Supabase.
 

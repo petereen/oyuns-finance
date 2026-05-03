@@ -1,4 +1,4 @@
-# 🎉 OYUNS All-In-One - COMPLETE PROJECT SUMMARY
+# 🎉 OYUNS ALL-IN-ONE - COMPLETE PROJECT SUMMARY
 
 ## Project Successfully Created ✅
 
@@ -10,7 +10,7 @@ Created a modern, minimalistic **Next.js finance website** replacing WordPress w
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│              OYUNS All-In-One - Next.js Website                │
+│              OYUNS ALL-IN-ONE - Next.js Website                │
 │         International Money Transfer Platform               │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -401,7 +401,7 @@ Optimized for:
 
 ## 📞 Project Details
 
-**Project Name:** OYUNS All-In-One Website
+**Project Name:** OYUNS ALL-IN-ONE Website
 **Status:** ✅ Complete & Ready
 **Framework:** Next.js 16
 **Database:** Supabase PostgreSQL
