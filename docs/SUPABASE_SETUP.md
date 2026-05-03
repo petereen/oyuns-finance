@@ -2,7 +2,7 @@
 
 > **Part of Step 3 in the [master guide](COMPLETE_SETUP.md).** Go there first if you haven't completed Steps 1–2.
 
-This guide covers the Supabase database used by Oyuns Finance. The website reads from two tables that are already connected to your apps: `bot_rates` (individual rates) and `business_rates` (business rates).
+This guide covers the Supabase database used by OYUNS All-In-One. The website reads from two tables that are already connected to your apps: `bot_rates` (individual rates) and `business_rates` (business rates).
 
 ## Creating a Supabase Project
 

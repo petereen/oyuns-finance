@@ -38,7 +38,7 @@ const sampleData = {
       slug: "what-is-fintech",
       excerpt: "FinTech буюу санхүүгийн технологи нь уламжлалт санхүүгийн үйлчилгээг технологийн тусламжтайгаар илүү хялбар, хямд, хүртээмжтэй болгож буй салбар юм.",
       content: "<p>FinTech (Financial Technology) нь санхүү болон технологийг хослуулсан нэр томьёо юм...</p>",
-      author: "Oyuns Finance Team",
+      author: "OYUNS All-In-One Team",
       published_date: new Date().toISOString(),
       category: "Education",
       tags: ["fintech", "technology", "finance"],
@@ -48,7 +48,7 @@ const sampleData = {
   testimonials: [
     {
       author: "Б. Бат-Эрдэнэ",
-      content: "Оюутан байхдаа сургалтын төлбөрөө шилжүүлэх гэж их зовдог байсан. Oyuns Finance гарч ирснээр бүх зүйл маш хялбар болсон.",
+      content: "Оюутан байхдаа сургалтын төлбөрөө шилжүүлэх гэж их зовдог байсан. OYUNS All-In-One гарч ирснээр бүх зүйл маш хялбар болсон.",
       rating: 5,
       status: "published"
     },

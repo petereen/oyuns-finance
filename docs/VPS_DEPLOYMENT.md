@@ -2,7 +2,7 @@
 
 > **Part of Step 7 in the [master guide](COMPLETE_SETUP.md).** Go there first if you haven't completed Steps 1–6.
 
-Deploy your Oyuns Finance Next.js website to a VPS (Virtual Private Server) with Nginx reverse proxy, PM2 process manager, and Let's Encrypt SSL.
+Deploy your OYUNS All-In-One Next.js website to a VPS (Virtual Private Server) with Nginx reverse proxy, PM2 process manager, and Let's Encrypt SSL.
 
 ---
 

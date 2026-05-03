@@ -1,4 +1,4 @@
-# OYUNS FINANCE — STEP-BY-STEP SETUP GUIDE
+# OYUNS All-In-One — STEP-BY-STEP SETUP GUIDE
 
 > **This is the master guide.** Follow it from top to bottom to go from a fresh clone to a live website. Each step links to a deeper reference doc when one exists.
 
@@ -33,7 +33,7 @@ Before you begin, make sure you have:
 ## Step 1 — Clone & Install
 
 ```bash
-cd "c:\Users\temuu\Downloads\Oyuns Finance Website"
+cd "c:\Users\temuu\Downloads\OYUNS All-In-One Website"
 cd oyuns-finance
 npm install
 ```
@@ -264,7 +264,7 @@ Open [http://localhost:3000](http://localhost:3000) again — everything should 
 ```bash
 git init
 git add .
-git commit -m "Initial commit: Oyuns Finance website"
+git commit -m "Initial commit: OYUNS All-In-One website"
 git branch -M main
 git remote add origin https://github.com/YOUR_USERNAME/oyuns-finance.git
 git push -u origin main

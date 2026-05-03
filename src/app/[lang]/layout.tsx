@@ -15,16 +15,16 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang: rawLang } = await params;
   const lang = rawLang as "mn" | "ru";
   return {
-    title: "OYUNS FINANCE",
+    title: "OYUNS All-In-One",
     description: lang === "ru" 
-      ? "OYUNS FINANCE - Услуги международных денежных переводов с 2018 года. Надежно, быстро и безопасно."
-      : "OYUNS FINANCE - 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга, санхүүгийн үйлчилгээ үзүүлж байна. Найдвартай, хурдан, аюулгүй.",
+      ? "OYUNS All-In-One - Услуги международных денежных переводов с 2018 года. Надежно, быстро и безопасно."
+      : "OYUNS All-In-One - 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга, санхүүгийн үйлчилгээ үзүүлж байна. Найдвартай, хурдан, аюулгүй.",
     keywords: "oyuns, finance, money transfer, валют солих, мөнгөн гуйвуулга, RUB, MNT",
     openGraph: {
-      title: "OYUNS FINANCE",
+      title: "OYUNS All-In-One",
       description: lang === "ru" ? "Надежный финансовый партнер" : "Найдвартай санхүүгийн түнш",
       url: "https://oyuns.mn",
-      siteName: "OYUNS FINANCE",
+      siteName: "OYUNS All-In-One",
       locale: lang === "ru" ? "ru_RU" : "mn_MN",
       type: "website",
     },

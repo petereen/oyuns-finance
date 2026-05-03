@@ -18,7 +18,7 @@ export default function Footer({ lang = 'mn' }: FooterProps) {
               <div className="relative h-12 w-auto">
                  <img 
                   src="/logo-light-full.png" 
-                  alt="Oyuns Finance" 
+                  alt="OYUNS All-In-One" 
                   className="h-full w-auto object-contain"
                 />
               </div>
@@ -116,7 +116,7 @@ export default function Footer({ lang = 'mn' }: FooterProps) {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-slate-500">
-          <p>&copy; {new Date().getFullYear()} OYUNS FINANCE. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} OYUNS All-In-One. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Made with
             <span className="text-red-400">♥</span>

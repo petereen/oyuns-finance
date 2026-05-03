@@ -31,7 +31,7 @@ const fallbackPosts: Record<string, Partial<BlogPost>> = {
     slug: 'oyunshot-8-what-is-fintech',
     excerpt: 'FinTech буюу санхүүгийн технологийн тухай ойлголт.',
     content:
-      '<p>FinTech нь Financial Technology гэсэн үгний товчлол бөгөөд санхүүгийн үйлчилгээг технологийн тусламжтайгаар илүү хялбар, хурдан, хүртээмжтэй болгох салбар юм.</p><p>Манай Oyuns Finance бол үүний нэг тод жишээ юм.</p>',
+      '<p>FinTech нь Financial Technology гэсэн үгний товчлол бөгөөд санхүүгийн үйлчилгээг технологийн тусламжтайгаар илүү хялбар, хурдан, хүртээмжтэй болгох салбар юм.</p><p>Манай OYUNS All-In-One бол үүний нэг тод жишээ юм.</p>',
     published_date: '2025-06-04',
     category: 'OYUNShot',
   },

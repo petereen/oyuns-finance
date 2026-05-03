@@ -2,8 +2,8 @@
   "name": "oyuns-finance",
   "version": "0.1.0",
   "private": true,
-  "description": "Oyuns Finance - Modern FinTech website for international money transfers",
-  "author": "Oyuns Finance",
+  "description": "OYUNS All-In-One - Modern FinTech website for international money transfers",
+  "author": "OYUNS All-In-One",
   "license": "MIT",
   "scripts": {
     "dev": "next dev",

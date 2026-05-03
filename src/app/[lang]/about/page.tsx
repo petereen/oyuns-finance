@@ -24,11 +24,11 @@ export default function AboutPage() {
 
   const t = {
     mn: {
-      header_sub: 'OYUNS FINANCE',
+      header_sub: 'OYUNS All-In-One',
       header_title: 'Бидний тухай',
       text_1: (
         <>
-          <strong className="text-slate-900">OYUNS FINANCE</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
+          <strong className="text-slate-900">OYUNS All-In-One</strong> нь 2018 оноос эхлэн олон улсын мөнгөн гуйвуулга,
           санхүүгийн үйлчилгээ, тээвэр зуучлал, карго, аялал жуулчлал зэрэг чиглэлээр
           үйл ажиллагаа явуулж ирсэн ба олон улсын болон дотоодын санхүүгийн хэрэгцээг
           хялбар, найдвартай шийдвэрлэхэд чиглэсэн санхүүгийн байгууллага юм.
@@ -48,11 +48,11 @@ export default function AboutPage() {
       cta_btn: 'Холбогдох'
     },
     ru: {
-      header_sub: 'OYUNS FINANCE',
+      header_sub: 'OYUNS All-In-One',
       header_title: 'О нас',
       text_1: (
         <>
-          <strong className="text-slate-900">OYUNS FINANCE</strong> предоставляет услуги международных денежных переводов,
+          <strong className="text-slate-900">OYUNS All-In-One</strong> предоставляет услуги международных денежных переводов,
           финансовых услуг, грузоперевозок и туризма с 2018 года. Мы — финансовая организация, нацеленная на простое и надежное
           решение международных и местных финансовых потребностей.
         </>

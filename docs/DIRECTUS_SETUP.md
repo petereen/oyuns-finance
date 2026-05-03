@@ -2,7 +2,7 @@
 
 > **Part of Step 4 in the [master guide](COMPLETE_SETUP.md).** Go there first if you haven't completed Steps 1–3.
 
-This guide covers setting up Directus as the headless CMS for Oyuns Finance.
+This guide covers setting up Directus as the headless CMS for OYUNS All-In-One.
 
 ## Installation Options
 
@@ -168,7 +168,7 @@ DIRECTUS_STATIC_TOKEN=your-static-token-here
     "slug": "what-is-fintech",
     "excerpt": "FinTech буюу санхүүгийн технологийн тухай ойлголт",
     "content": "<p>Full article content here...</p>",
-    "author": "Oyuns Finance Team",
+    "author": "OYUNS All-In-One Team",
     "published_date": "2025-06-04T00:00:00Z",
     "category": "OYUNShot",
     "tags": ["fintech", "technology", "finance"],
