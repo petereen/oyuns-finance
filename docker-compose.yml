@@ -1,5 +1,3 @@
-version: "3.8"
-
 # ─── Shared network (already created by the app/webapp stack) ────────────────
 # The website container joins `oyunswebapp_default` so that the existing
 # oyunswebapp-nginx-1 can proxy to it by container name.
@@ -16,7 +14,7 @@ services:
 
     # Mount Next.js build artifacts from this repository root on the VPS.
     volumes:
-      - ./.next/standalone:/app:ro
+      - ./.next/standalone:/app
       - ./.next/static:/app/.next/static:ro
       - ./public:/app/public:ro
 
