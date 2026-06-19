@@ -29,6 +29,8 @@ echo "=== Step 3: Reload app nginx (HTTP only, to pass ACME challenge) ==="
 
 echo ""
 echo "=== Step 4: Issue Let's Encrypt certificate ==="
+echo "Ensuring webroot exists for ACME challenges: $CERTBOT_WEBROOT"
+sudo mkdir -p "$CERTBOT_WEBROOT"
 echo "Choose ONE of the methods below depending on your setup:"
 echo ""
 echo "--- Method A: System certbot (if installed on VPS host) ---"

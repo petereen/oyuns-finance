@@ -14,12 +14,11 @@ services:
     restart: unless-stopped
     working_dir: /app
 
-    # Mount your Next.js standalone build directory (update the host path to
-    # wherever you cloned/copied this repo on the VPS)
+    # Mount Next.js build artifacts from this repository root on the VPS.
     volumes:
-      - ./oyuns-finance/.next/standalone:/app:ro
-      - ./oyuns-finance/.next/static:/app/.next/static:ro
-      - ./oyuns-finance/public:/app/public:ro
+      - ./.next/standalone:/app:ro
+      - ./.next/static:/app/.next/static:ro
+      - ./public:/app/public:ro
 
     environment:
       NODE_ENV: production
