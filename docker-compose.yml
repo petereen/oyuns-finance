@@ -1,0 +1,49 @@
+version: "3.8"
+
+# ─── Shared network (already created by the app/webapp stack) ────────────────
+# The website container joins `oyunswebapp_default` so that the existing
+# oyunswebapp-nginx-1 can proxy to it by container name.
+networks:
+  oyunswebapp_default:
+    external: true   # owned by the oyunswebapp stack
+
+services:
+  website:
+    image: node:20-alpine
+    container_name: oyuns-website-1
+    restart: unless-stopped
+    working_dir: /app
+
+    # Mount your Next.js standalone build directory (update the host path to
+    # wherever you cloned/copied this repo on the VPS)
+    volumes:
+      - ./oyuns-finance/.next/standalone:/app:ro
+      - ./oyuns-finance/.next/static:/app/.next/static:ro
+      - ./oyuns-finance/public:/app/public:ro
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: "0.0.0.0"
+      # Copy values from your .env.production
+      NEXT_PUBLIC_DIRECTUS_URL: "${NEXT_PUBLIC_DIRECTUS_URL:-https://api.oyuns.mn}"
+      NEXT_PUBLIC_SITE_URL: "${NEXT_PUBLIC_SITE_URL:-https://www.oyuns.mn}"
+      DIRECTUS_STATIC_TOKEN: "${DIRECTUS_STATIC_TOKEN}"
+      NEXT_PUBLIC_SUPABASE_URL: "${NEXT_PUBLIC_SUPABASE_URL}"
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: "${NEXT_PUBLIC_SUPABASE_ANON_KEY}"
+
+    command: ["node", "server.js"]
+
+    # Not exposed to the host — only accessible inside the Docker network
+    expose:
+      - "3000"
+
+    networks:
+      - oyunswebapp_default
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
