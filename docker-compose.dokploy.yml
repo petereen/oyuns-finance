@@ -62,7 +62,10 @@ services:
       test: ["CMD", "wget", "-qO-", "http://localhost:8055/server/health"]
       interval: 15s
       timeout: 5s
-      retries: 10
+      # The first Directus boot creates system tables and runs migrations.
+      # Give it time before failed probes count against its health status.
+      start_period: 120s
+      retries: 12
 
   database:
     image: postgres:16-alpine
