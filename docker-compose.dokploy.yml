@@ -1,0 +1,81 @@
+# Dokploy deployment: website + Directus CMS + PostgreSQL database.
+#
+# Configure the variables in Dokploy's Environment tab. Do not put secrets in
+# this file or commit a .env file to Git.
+services:
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_DIRECTUS_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+      DIRECTUS_STATIC_TOKEN: ${DIRECTUS_STATIC_TOKEN}
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    expose:
+      - "3000"
+    depends_on:
+      directus:
+        condition: service_healthy
+
+  directus:
+    image: directus/directus:11
+    restart: unless-stopped
+    expose:
+      - "8055"
+    environment:
+      KEY: ${DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET}
+      DB_CLIENT: pg
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
+      PUBLIC_URL: ${NEXT_PUBLIC_DIRECTUS_URL}
+      CORS_ENABLED: "true"
+      CORS_ORIGIN: ${CORS_ORIGIN}
+      CORS_METHODS: "GET,POST,PATCH,DELETE"
+      CORS_ALLOWED_HEADERS: "Content-Type,Authorization"
+      CORS_CREDENTIALS: "true"
+      WEBSOCKETS_ENABLED: "true"
+      STORAGE_LOCATIONS: local
+      STORAGE_LOCAL_ROOT: /directus/uploads
+    volumes:
+      - directus_uploads:/directus/uploads
+      - directus_extensions:/directus/extensions
+    depends_on:
+      database:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8055/server/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  database:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
+  directus_uploads:
+  directus_extensions:
