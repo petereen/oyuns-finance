@@ -8,6 +8,7 @@ type DirectusSchema = {
   partners: Partner[];
   logos: Logo[];
   site_settings: SiteSettings[];
+  site_content: SiteContent[];
   messages: Message[];
 };
 
@@ -75,6 +76,15 @@ export type SiteSettings = {
   key: string;
   value: string;
   updated_at: string;
+};
+
+export type SiteContent = {
+  id: number;
+  status: 'published' | 'draft';
+  key: string;
+  language: 'mn' | 'ru';
+  value: Record<string, unknown>;
+  updated_at?: string;
 };
 
 export type Logo = {
@@ -271,6 +281,30 @@ export async function getSetting(key: string): Promise<string | null> {
     return transformed[0]?.value ?? null;
   } catch (error) {
     console.error('Error fetching setting:', error);
+    return null;
+  }
+}
+
+/** Load the published translation object for one page or shared section. */
+export async function getSiteContent<T extends Record<string, unknown>>(
+  key: string,
+  language: 'mn' | 'ru'
+): Promise<T | null> {
+  try {
+    const items = await directus.request(
+      readItems('site_content', {
+        filter: {
+          key: { _eq: key },
+          language: { _eq: language },
+          status: { _eq: 'published' },
+        },
+        limit: 1,
+      })
+    );
+    const item = transformData(items[0]) as SiteContent | undefined;
+    return (item?.value as T | undefined) ?? null;
+  } catch (error) {
+    console.error(`Error fetching site content for ${key}/${language}:`, error);
     return null;
   }
 }

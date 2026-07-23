@@ -119,7 +119,7 @@ Fields:
 For the public role, grant **Read** access to:
 - `services` (status = published)
 - `blog_posts` (status = published)
-- `testimonials` (status = published)
+- `testimonials` (status = published) 
 - `partners` (status = published)
 - `site_settings` (all)
 

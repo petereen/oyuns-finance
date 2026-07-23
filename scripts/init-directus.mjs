@@ -1,7 +1,11 @@
 import { createDirectus, staticToken, rest, createCollection, createField } from '@directus/sdk';
 
-const DIRECTUS_URL = 'http://localhost:8055';
-const TOKEN = 'qf2MjhlatMAW1-VPhrWBDS-Ice1dVuMu';
+const DIRECTUS_URL = process.env.DIRECTUS_URL;
+const TOKEN = process.env.DIRECTUS_TOKEN;
+
+if (!DIRECTUS_URL || !TOKEN) {
+  throw new Error('Set DIRECTUS_URL and DIRECTUS_TOKEN before running this script.');
+}
 
 const client = createDirectus(DIRECTUS_URL)
   .with(staticToken(TOKEN))
@@ -79,6 +83,18 @@ const collections = [
     fields: [
       { field: 'key', type: 'string', schema: { is_unique: true }, meta: { interface: 'input', required: true, width: 'half' } },
       { field: 'value', type: 'json', meta: { interface: 'code', options: { language: 'json' }, special: ['cast-json'], width: 'full' } },
+      { field: 'updated_at', type: 'timestamp', meta: { special: ['date-updated'], interface: 'datetime', readonly: true, width: 'half' } }
+    ]
+  },
+  {
+    collection: 'site_content',
+    meta: { note: 'Multilingual website copy. One item per content key and language.', display_template: '{{key}} — {{language}}', icon: 'translate' },
+    schema: { name: 'site_content' },
+    fields: [
+      { field: 'status', type: 'string', schema: { default_value: 'draft' }, meta: { interface: 'select-dropdown', options: { choices: [{ text: 'Published', value: 'published' }, { text: 'Draft', value: 'draft' }, { text: 'Archived', value: 'archived' }] }, width: 'half' } },
+      { field: 'key', type: 'string', meta: { interface: 'input', required: true, width: 'half', note: 'Stable key, for example home or contact' } },
+      { field: 'language', type: 'string', meta: { interface: 'select-dropdown', required: true, options: { choices: [{ text: 'Mongolian', value: 'mn' }, { text: 'Russian', value: 'ru' }] }, width: 'half' } },
+      { field: 'value', type: 'json', meta: { interface: 'code', required: true, options: { language: 'json' }, special: ['cast-json'], width: 'full', note: 'The translated content object used by the matching page.' } },
       { field: 'updated_at', type: 'timestamp', meta: { special: ['date-updated'], interface: 'datetime', readonly: true, width: 'half' } }
     ]
   }
