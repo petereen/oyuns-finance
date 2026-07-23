@@ -1,4 +1,4 @@
-import { createDirectus, rest, staticToken, readItems, createItem } from '@directus/sdk';
+import { createDirectus, rest, readItems, createItem } from '@directus/sdk';
 
 // Define your Directus schema
 type DirectusSchema = {
@@ -90,7 +90,6 @@ export type Logo = {
 
 // Initialize Directus client
 const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api.oyuns.mn';
-const directusToken = process.env.DIRECTUS_STATIC_TOKEN || 'qf2MjhlatMAW1-VPhrWBDS-Ice1dVuMu';
 
 /**
  * Directus sometimes returns file/image UUIDs as binary objects
@@ -156,9 +155,9 @@ export function assetUrl(fileId: any): string {
   return `${directusUrl}/assets/${ensureString(fileId)}`;
 }
 
-export const directus = createDirectus<DirectusSchema>(directusUrl)
-  .with(staticToken(directusToken))
-  .with(rest());
+// This module is imported by client components, so it must never use a static
+// token. Public CMS data is instead protected by Directus Public-role rules.
+export const directus = createDirectus<DirectusSchema>(directusUrl).with(rest());
 
 // Helper functions for fetching data
 export async function getServices(category?: 'client' | 'business'): Promise<Service[]> {
@@ -328,4 +327,3 @@ export async function createMessage(data: Omit<Message, 'id' | 'status' | 'creat
     return false;
   }
 }
-
