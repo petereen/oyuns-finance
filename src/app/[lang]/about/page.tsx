@@ -147,7 +147,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
             {[
               { value: '2018', label: content.stats.since, gradient: 'from-[#2455D8] to-[#1b40a8]' },
-              { value: '10000+', label: content.stats.transactions, gradient: 'from-[#1b40a8] to-[#1b40a8]' },
+              { value: '15000+', label: content.stats.transactions, gradient: 'from-[#1b40a8] to-[#1b40a8]' },
               { value: '5000+', label: content.stats.customers, gradient: 'from-[#1b40a8] to-[#2455D8]' },
             ].map((stat, index) => (
               <motion.div
