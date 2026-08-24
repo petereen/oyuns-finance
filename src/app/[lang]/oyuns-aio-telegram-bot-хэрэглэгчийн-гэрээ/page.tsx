@@ -67,7 +67,7 @@ export default function BotUserAgreementPage() {
         {
           title: '8. Холбоо барих мэдээлэл',
           content: [
-            '<div class="bg-gray-50 p-4 rounded-xl border border-gray-100"><p class="mb-1"><strong>Үйлчилгээ үзүүлэгч:</strong> “OYUNS ALL-IN-ONE”</p><p class="mb-1"><strong>Хаяг:</strong> Улаанбаатар хот</p><p class="mb-1"><strong>Утас:</strong> <a href="tel:+97672113819" class="text-blue-600 hover:underline">+976 7211-3819</a>, <a href="tel:+79778019143" class="text-blue-600 hover:underline">+7 (977) 801-91-43</a></p><p class="mb-1"><strong>Цахим шуудан:</strong> <a href="mailto:support@oyuns.mn" class="text-blue-600 hover:underline">support@oyuns.mn</a></p><p><strong>Вэбсайт:</strong> <a href="https://www.oyuns.mn" class="text-blue-600 hover:underline">www.oyuns.mn</a></p></div>'
+            '<div class="bg-gray-50 p-4 rounded-xl border border-gray-100"><p class="mb-1"><strong>Үйлчилгээ үзүүлэгч:</strong> “OYUNS ALL-IN-ONE”</p><p class="mb-1"><strong>Хаяг:</strong> Улаанбаатар хот</p><p class="mb-1"><strong>Утас:</strong> <a href="tel:+97672000013" class="text-blue-600 hover:underline">+976 7200-0013</a>, <a href="tel:+79778019143" class="text-blue-600 hover:underline">+7 (977) 801-91-43</a></p><p class="mb-1"><strong>Цахим шуудан:</strong> <a href="mailto:support@oyuns.mn" class="text-blue-600 hover:underline">support@oyuns.mn</a></p><p><strong>Вэбсайт:</strong> <a href="https://www.oyuns.mn" class="text-blue-600 hover:underline">www.oyuns.mn</a></p></div>'
           ]
         },
         {
@@ -138,7 +138,7 @@ export default function BotUserAgreementPage() {
         {
           title: '8. Контактная информация',
           content: [
-            '<div class="bg-gray-50 p-4 rounded-xl border border-gray-100"><p class="mb-1"><strong>Поставщик услуг:</strong> “OYUNS ALL-IN-ONE”</p><p class="mb-1"><strong>Адрес:</strong> г. Улан-Батор</p><p class="mb-1"><strong>Телефон:</strong> <a href="tel:+97672113819" class="text-blue-600 hover:underline">+976 7211-3819</a>, <a href="tel:+79778019143" class="text-blue-600 hover:underline">+7 (977) 801-91-43</a></p><p class="mb-1"><strong>Эл. почта:</strong> <a href="mailto:support@oyuns.mn" class="text-blue-600 hover:underline">support@oyuns.mn</a></p><p><strong>Веб-сайт:</strong> <a href="https://www.oyuns.mn" class="text-blue-600 hover:underline">www.oyuns.mn</a></p></div>'
+            '<div class="bg-gray-50 p-4 rounded-xl border border-gray-100"><p class="mb-1"><strong>Поставщик услуг:</strong> “OYUNS ALL-IN-ONE”</p><p class="mb-1"><strong>Адрес:</strong> г. Улан-Батор</p><p class="mb-1"><strong>Телефон:</strong> <a href="tel:+97672000013" class="text-blue-600 hover:underline">+976 7200-0013</a>, <a href="tel:+79778019143" class="text-blue-600 hover:underline">+7 (977) 801-91-43</a></p><p class="mb-1"><strong>Эл. почта:</strong> <a href="mailto:support@oyuns.mn" class="text-blue-600 hover:underline">support@oyuns.mn</a></p><p><strong>Веб-сайт:</strong> <a href="https://www.oyuns.mn" class="text-blue-600 hover:underline">www.oyuns.mn</a></p></div>'
           ]
         },
         {
