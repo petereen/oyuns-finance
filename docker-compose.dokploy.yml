@@ -29,7 +29,7 @@ services:
         condition: service_started
 
   directus:
-    image: directus/directus:11
+    image: directus/directus:12.3.1
     restart: unless-stopped
     ports:
       - "8055"
