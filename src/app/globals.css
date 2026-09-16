@@ -44,6 +44,97 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
 
+/*
+ * Directus input-rich-text-html output.
+ * Keep this scoped to CMS content so editor-authored inline styles (including
+ * font-family) continue to win while the semantic HTML still has a complete
+ * web presentation.
+ */
+.directus-content {
+  color: #334155;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+
+.directus-content :where(p, ul, ol, blockquote, pre, table) {
+  margin-block: 1.5em;
+}
+
+.directus-content :where(h1, h2, h3, h4, h5, h6) {
+  color: #1a1a1a;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-block: 1.5em 0.75em;
+}
+
+.directus-content :where(h1) { font-size: 2.25rem; }
+.directus-content :where(h2) { font-size: 1.875rem; }
+.directus-content :where(h3) { font-size: 1.5rem; }
+.directus-content :where(h4) { font-size: 1.25rem; }
+
+.directus-content :where(ul, ol) {
+  padding-inline-start: 1.5em;
+}
+
+.directus-content :where(ul) { list-style-type: disc; }
+.directus-content :where(ol) { list-style-type: decimal; }
+
+.directus-content :where(a) {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.directus-content :where(a:hover) { color: #1d4ed8; }
+
+.directus-content :where(strong, b) {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.directus-content :where(blockquote) {
+  border-inline-start: 4px solid var(--primary);
+  color: #475569;
+  padding-inline-start: 1em;
+}
+
+.directus-content :where(pre) {
+  background: #f1f5f9;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.directus-content :where(code) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+.directus-content :where(img, video) {
+  border-radius: 0.75rem;
+  height: auto;
+  max-width: 100%;
+}
+
+.directus-content :where(table) {
+  border-collapse: collapse;
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  width: 100%;
+}
+
+.directus-content :where(th, td) {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: start;
+}
+
+.directus-content :where(th) {
+  background: #f8fafc;
+  font-weight: 700;
+}
+
 
 @keyframes typing-oyuns {
   /* 0-33%: хялбар */

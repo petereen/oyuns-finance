@@ -161,7 +161,7 @@ export default function BlogPostPage() {
 
           {post.content && (
             <div
-              className="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-headings:text-[#1a1a1a] prose-a:text-blue-600 hover:prose-a:text-blue-700 prose-img:rounded-xl prose-strong:text-slate-900"
+              className="directus-content max-w-none"
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           )}
