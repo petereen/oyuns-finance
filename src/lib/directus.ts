@@ -1,4 +1,4 @@
-import { createDirectus, rest, readItems, createItem } from '@directus/sdk';
+import { createDirectus, rest, readItems } from '@directus/sdk';
 
 // Define your Directus schema
 type DirectusSchema = {
@@ -349,13 +349,13 @@ export async function getLogo(variant: Logo['variant']) {
 
 export async function createMessage(data: Omit<Message, 'id' | 'status' | 'created_at'>): Promise<boolean> {
   try {
-    await directus.request(
-      createItem('messages', {
-        ...data,
-        status: 'new',
-      })
-    );
-    return true;
+    const response = await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    return response.ok;
   } catch (error) {
     console.error('Error creating message:', error);
     return false;

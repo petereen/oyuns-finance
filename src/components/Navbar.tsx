@@ -60,8 +60,8 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-lg shadow-black/[0.03] border-b border-gray-100'
-          : 'bg-white/60 backdrop-blur-md'
+          ? 'glass-surface shadow-lg shadow-blue-900/[0.04] border-b border-white/70'
+          : 'bg-white/42 backdrop-blur-xl border-b border-white/45'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -86,7 +86,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                 className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(link.href)
                     ? 'text-blue-600 bg-blue-50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/45'
                 }`}
               >
                 {link.label}
@@ -106,7 +106,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
             <div className="ml-4 flex items-center border-l border-gray-200 pl-4">
                <button
                   onClick={() => switchLanguage(lang === 'mn' ? 'ru' : 'mn')}
-                  className="p-2 rounded-lg hover:bg-slate-100 text-slate-600 transition-colors flex items-center gap-1.5 font-medium text-sm"
+                  className="p-2 rounded-lg hover:bg-white/55 text-slate-600 transition-colors flex items-center gap-1.5 font-medium text-sm"
                   title={lang === 'mn' ? 'Switch to Russian' : 'Монгол хэл рүү шилжих'}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -119,7 +119,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 transition-colors"
+            className="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-white/55 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -139,7 +139,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
             mobileMenuOpen ? 'max-h-[400px] opacity-100 pb-5' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="flex flex-col gap-1 pt-2 border-t border-gray-100">
+          <div className="flex flex-col gap-1 pt-2 border-t border-white/60">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -148,7 +148,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                 className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                   isActive(link.href)
                     ? 'text-[#2455D8] bg-blue-50'
-                    : 'text-[#555] hover:text-[#1a1a1a] hover:bg-gray-100'
+                    : 'text-[#555] hover:text-[#1a1a1a] hover:bg-white/55'
                 }`}
               >
                 {link.label}
@@ -168,7 +168,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                  switchLanguage(lang === 'mn' ? 'ru' : 'mn');
                  setMobileMenuOpen(false);
                }}
-               className="mt-2 w-full flex items-center justify-center p-3 rounded-xl bg-slate-50 text-slate-700 font-medium text-sm hover:bg-slate-100 transition-colors gap-2"
+               className="mt-2 w-full flex items-center justify-center p-3 rounded-xl glass-input text-slate-700 font-medium text-sm hover:bg-white/70 transition-colors gap-2"
              >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />

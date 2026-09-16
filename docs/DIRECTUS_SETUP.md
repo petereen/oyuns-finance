@@ -106,6 +106,20 @@ Fields:
 - `value` (JSON, required)
 - `updated_at` (DateTime, auto)
 
+### 6. Messages Collection
+
+**Collection Name:** `messages`
+
+Fields:
+
+- `id` (Integer, Primary Key, Auto Increment)
+- `name` (String, required)
+- `email` (String, required)
+- `phone` (String)
+- `message` (Text, required)
+- `status` (Dropdown: new, read, replied; default `new`)
+- `created_at` (DateTime, auto)
+
 ## Setting Up Collections
 
 1. Log in to your Directus admin panel
@@ -122,6 +136,8 @@ For the public role, grant **Read** access to:
 - `testimonials` (status = published) 
 - `partners` (status = published)
 - `site_settings` (all)
+
+The contact form submits through the Next.js server route `/api/messages`. Give the role associated with `DIRECTUS_STATIC_TOKEN` **Create** access to `messages` and no unnecessary read/update/delete access. Keep `DIRECTUS_STATIC_TOKEN` server-only; do not prefix it with `NEXT_PUBLIC_`.
 
 ## Getting Your API Token
 

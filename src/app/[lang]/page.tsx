@@ -557,9 +557,9 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#eaeaea]">
+    <div className="home-shell min-h-screen">
       {/* ── Hero — centered with slide-open calculator ──────────────── */}
-      <section className="relative mesh-gradient text-white pt-32 pb-24 overflow-hidden">
+      <section className="relative liquid-hero text-white pt-32 pb-24 overflow-hidden">
         <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-float pointer-events-none" />
         <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl animate-float-delay pointer-events-none" />
 
@@ -690,7 +690,7 @@ export default function Home() {
       </section>
 
       {/* ── About Info ─────────────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/30 backdrop-blur-[2px]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -703,7 +703,7 @@ export default function Home() {
                 {content.about_title}
               </h2>
             </div>
-            <div className="bg-[#f7f7f7] rounded-2xl border border-gray-100 p-8 mb-8">
+            <div className="glass-surface rounded-[1.5rem] p-8 mb-8">
               <p className="text-base text-slate-600 leading-relaxed mb-5">
                 {content.about_text_1}
               </p>
@@ -772,7 +772,7 @@ export default function Home() {
       </section>
 
       {/* ── Features ──────────────────────────────────────────────────── */}
-      <section className="py-20 bg-[#eaeaea]">
+      <section className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -814,7 +814,7 @@ export default function Home() {
       </section>
 
       {/* ── Exchange Rates ─────────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/25 backdrop-blur-[2px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -1071,7 +1071,7 @@ export default function Home() {
       </section>
 
       {/* ── Монгол хэрэглэгчдэд — Хувь хүн + Байгууллага side-by-side ── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/25 backdrop-blur-[2px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -1126,7 +1126,7 @@ export default function Home() {
       </section>
 
       {/* ── Testimonials ──────────────────────────────────────────────── */}
-      <section className="py-20 bg-[#eaeaea]">
+      <section className="py-20 bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -1148,7 +1148,7 @@ export default function Home() {
       </section>
 
       {/* ── Recent Blog Posts ────────────────────────────────────── */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white/25 backdrop-blur-[2px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -1295,7 +1295,7 @@ export default function Home() {
 
       {/* ── CTA ───────────────────────────────────────────────────────── */}
       {partners.length > 0 && (
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white/25 backdrop-blur-[2px]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 15 }}
@@ -1351,7 +1351,7 @@ export default function Home() {
       )}
 
       {/* ── CTA ───────────────────────────────────────────────────────── */}
-      <section className="relative py-20 mesh-gradient text-white overflow-hidden">
+      <section className="relative py-20 liquid-hero text-white overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-[#1b40a8]/50 to-transparent pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div

@@ -33,13 +33,13 @@ export default function ServiceCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative bg-white rounded-2xl p-6 card-hover border border-gray-100 overflow-hidden flex flex-col h-full"
+      className="group relative glass-surface rounded-[1.5rem] p-6 card-hover overflow-hidden flex flex-col h-full"
     >
       {/* Subtle gradient hover overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 to-cyan-50/0 group-hover:from-blue-50/50 group-hover:to-cyan-50/50 transition-all duration-500 rounded-2xl" />
       
       <div className="relative z-10 flex flex-col flex-1">
-        <div className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl mb-5 group-hover:scale-110 transition-transform duration-300">
+        <div className="flex items-center justify-center w-14 h-14 bg-white/60 backdrop-blur-sm border border-white/70 rounded-2xl mb-5 group-hover:scale-110 transition-transform duration-300">
           {isValidElement(icon) ? (
             icon
           ) : typeof icon === 'string' ? (

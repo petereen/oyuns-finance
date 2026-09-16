@@ -97,6 +97,19 @@ const collections = [
       { field: 'value', type: 'json', meta: { interface: 'code', required: true, options: { language: 'json' }, special: ['cast-json'], width: 'full', note: 'The translated content object used by the matching page.' } },
       { field: 'updated_at', type: 'timestamp', meta: { special: ['date-updated'], interface: 'datetime', readonly: true, width: 'half' } }
     ]
+  },
+  {
+    collection: 'messages',
+    meta: { note: 'Contact form messages', display_template: '{{name}} — {{email}}', icon: 'mail' },
+    schema: { name: 'messages' },
+    fields: [
+      { field: 'name', type: 'string', meta: { interface: 'input', required: true, width: 'half' } },
+      { field: 'email', type: 'string', meta: { interface: 'input', required: true, width: 'half' } },
+      { field: 'phone', type: 'string', meta: { interface: 'input', width: 'half' } },
+      { field: 'message', type: 'text', meta: { interface: 'input-multiline', required: true, width: 'full' } },
+      { field: 'status', type: 'string', schema: { default_value: 'new' }, meta: { interface: 'select-dropdown', options: { choices: [{ text: 'New', value: 'new' }, { text: 'Read', value: 'read' }, { text: 'Replied', value: 'replied' }] }, width: 'half' } },
+      { field: 'created_at', type: 'timestamp', meta: { special: ['date-created'], interface: 'datetime', readonly: true, width: 'half' } }
+    ]
   }
 ];
 

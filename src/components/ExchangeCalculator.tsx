@@ -89,7 +89,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
   };
 
   return (
-    <div className={`bg-white rounded-2xl border border-gray-100 ${compact ? 'p-5' : 'p-7'} card-hover`}>
+    <div className={`glass-surface rounded-[1.5rem] ${compact ? 'p-5' : 'p-7'} card-hover`}>
       <h3 className={`${compact ? 'text-base' : 'text-lg'} font-bold text-[#1a1a1a] mb-4`}>
         {content.title}
       </h3>
@@ -101,7 +101,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
           className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
             direction === 'rub-to-mnt'
               ? 'bg-[#2455D8] text-white shadow-md shadow-blue-900/25'
-              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              : 'bg-white/45 text-slate-500 hover:bg-white/75'
           }`}
         >
           RUB → MNT
@@ -109,7 +109,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
 
         <button
           onClick={toggleDirection}
-          className="w-9 h-9 flex-shrink-0 rounded-full bg-slate-100 hover:bg-blue-50 flex items-center justify-center transition-colors group"
+          className="w-9 h-9 flex-shrink-0 rounded-full glass-input hover:bg-blue-50 flex items-center justify-center transition-colors group"
           aria-label={content.switch}
         >
           <svg className="w-4 h-4 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
@@ -122,7 +122,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
           className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
             direction === 'mnt-to-rub'
               ? 'bg-[#2455D8] text-white shadow-md shadow-blue-900/25'
-              : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+              : 'bg-white/45 text-slate-500 hover:bg-white/75'
           }`}
         >
           MNT → RUB
@@ -140,7 +140,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
             placeholder="100000"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900 font-semibold pr-16"
+            className="glass-input w-full px-4 py-3 border rounded-xl transition-all text-slate-900 font-semibold pr-16"
           />
           <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">{fromLabel}</span>
         </div>
@@ -151,7 +151,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
         <label className="block text-xs font-medium text-slate-500 mb-1.5">
           {content.receive} ({toLabel})
         </label>
-        <div className="relative w-full px-4 py-3 border border-gray-200 rounded-xl bg-slate-50 text-slate-900 font-semibold">
+        <div className="glass-input relative w-full px-4 py-3 border rounded-xl text-slate-900 font-semibold">
           {loading ? (
             <span className="inline-block w-20 h-5 shimmer rounded" />
           ) : (

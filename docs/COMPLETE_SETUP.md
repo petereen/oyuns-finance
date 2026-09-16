@@ -196,12 +196,13 @@ In the Directus admin panel → **Settings → Data Model**, create these 5 coll
 | 3 | `testimonials` | author, content, rating (1-5), status |
 | 4 | `partners` | name, logo, url, sort, status |
 | 5 | `site_settings` | key (unique), value (JSON) |
+| 6 | `messages` | name, email, phone, message, status, created_at |
 
 > See [DIRECTUS_SETUP.md](DIRECTUS_SETUP.md) for the exact field types and sample data.
 
 ### 4.3 Set up permissions
 
-For the **Public** role, grant **Read** access to all 5 collections (filter `status = published` where applicable).
+For the **Public** role, grant **Read** access to the content collections (filter `status = published` where applicable). Grant **Create** access to `messages` only to the role used by `DIRECTUS_STATIC_TOKEN`; the contact form writes through the server-side `/api/messages` route.
 
 ### 4.4 Generate an API token
 

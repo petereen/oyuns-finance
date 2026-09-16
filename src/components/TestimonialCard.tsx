@@ -15,7 +15,7 @@ export default function TestimonialCard({ author, content, rating }: Testimonial
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className="relative bg-white rounded-2xl p-6 card-hover border border-gray-100"
+      className="relative glass-surface rounded-[1.5rem] p-6 card-hover"
     >
       {/* Quote icon */}
       <div className="absolute -top-3 left-6">
@@ -44,7 +44,7 @@ export default function TestimonialCard({ author, content, rating }: Testimonial
       <p className="text-slate-600 text-sm leading-relaxed mb-5">&ldquo;{content}&rdquo;</p>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
+      <div className="flex items-center gap-3 pt-4 border-t border-white/70">
         <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-100 to-cyan-100 flex items-center justify-center">
           <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

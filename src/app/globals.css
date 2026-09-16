@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  --background: #eaeaea;
-  --foreground: #1a1a1a;
-  --primary: #2455D8;
+  --background: #eef5ff;
+  --foreground: #231f20;
+  --primary: #2d62ec;
   --primary-dark: #1b40a8;
-  --primary-light: #3d6de5;
+  --primary-light: #5d89f4;
   --accent: #06b6d4;
   --accent-dark: #0891b2;
-  --accent-light: #22d3ee;
+  --accent-light: #67e8f9;
   --surface: #ffffff;
-  --surface-secondary: #f0f0f0;
-  --border: #d4d4d4;
-  --text-muted: #555555;
-  --gradient-start: #2455D8;
-  --gradient-mid: #3d6de5;
+  --surface-secondary: #e7f0ff;
+  --border: #cbdcf7;
+  --text-muted: #52627a;
+  --gradient-start: #2d62ec;
+  --gradient-mid: #5d89f4;
   --gradient-end: #06b6d4;
+  --glass-fill: rgba(255, 255, 255, 0.68);
+  --glass-fill-strong: rgba(255, 255, 255, 0.84);
+  --glass-line: rgba(255, 255, 255, 0.74);
+  --glass-shadow: 0 24px 70px rgba(45, 98, 236, 0.12);
 }
 
 @theme inline {
@@ -39,7 +43,10 @@ html {
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(circle at 10% 8%, rgba(103, 232, 249, 0.22), transparent 30rem),
+    radial-gradient(circle at 88% 12%, rgba(93, 137, 244, 0.2), transparent 28rem),
+    var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
 }
@@ -265,10 +272,11 @@ body {
   50% { opacity: 0; }
 }
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-fill);
+  backdrop-filter: blur(24px) saturate(130%);
+  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .glass-dark {
@@ -276,6 +284,40 @@ body {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-surface {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(232, 242, 255, 0.58));
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.82);
+}
+
+.glass-surface:hover {
+  border-color: rgba(93, 137, 244, 0.42);
+  box-shadow: 0 28px 78px rgba(45, 98, 236, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.38);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.54);
+  border-color: rgba(148, 182, 236, 0.55);
+  box-shadow: inset 0 1px 2px rgba(45, 98, 236, 0.04);
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(45, 98, 236, 0.12);
+  outline: none;
 }
 
 /* Gradient text utility */
@@ -301,13 +343,20 @@ body {
 
 /* Mesh gradient hero */
 .mesh-gradient {
-  background-color: #2455D8;
+  background-color: #2d62ec;
   background-image:
     radial-gradient(at 40% 20%, #3d6de5 0px, transparent 50%),
     radial-gradient(at 80% 0%, #0891b2 0px, transparent 50%),
     radial-gradient(at 0% 50%, #1b40a8 0px, transparent 50%),
     radial-gradient(at 80% 80%, #06b6d4 0px, transparent 50%),
     radial-gradient(at 0% 100%, #2455D8 0px, transparent 50%);
+}
+
+.liquid-hero {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(103, 232, 249, 0.34), transparent 22rem),
+    radial-gradient(circle at 84% 12%, rgba(255, 255, 255, 0.24), transparent 20rem),
+    linear-gradient(135deg, #1b40a8 0%, #2d62ec 48%, #0891b2 100%);
 }
 
 /* Floating animation */
@@ -381,6 +430,15 @@ body {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
   border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Custom scrollbar */
