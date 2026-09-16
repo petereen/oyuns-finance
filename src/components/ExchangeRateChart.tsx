@@ -1,7 +1,7 @@
 'use client';
 
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, Area, AreaChart } from 'recharts';
-import { format } from 'date-fns';
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { format, parseISO } from 'date-fns';
 
 interface ExchangeRateChartProps {
   data: Array<{
@@ -15,7 +15,7 @@ interface ExchangeRateChartProps {
 export default function ExchangeRateChart({ data, currencyPair }: ExchangeRateChartProps) {
   const formattedData = data.map(item => ({
     ...item,
-    date: format(new Date(item.date), 'MM/dd'),
+    date: format(parseISO(item.date), 'MM/dd'),
   }));
 
   return (
@@ -75,7 +75,7 @@ export default function ExchangeRateChart({ data, currencyPair }: ExchangeRateCh
               fontSize: '13px',
               padding: '10px 14px',
             }}
-            formatter={(value: any) => (typeof value === 'number' ? value.toFixed(2) : '0.00')}
+            formatter={(value) => (typeof value === 'number' ? value.toFixed(2) : '0.00')}
           />
           <Area 
             type="monotone" 

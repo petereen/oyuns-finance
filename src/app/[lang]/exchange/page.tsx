@@ -37,12 +37,7 @@ export default function ExchangePage() {
       setBotRate(latestBotRate);
       setBusinessRate(latestBusinessRate);
 
-      const chartData = history.map((rate) => ({
-        date: rate.updated_at || '',
-        buy_rate: rate.buy_rate,
-        sell_rate: rate.sell_rate,
-      }));
-      setHistoryData(chartData);
+      setHistoryData(history);
       setLoading(false);
     };
 

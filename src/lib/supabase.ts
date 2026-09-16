@@ -23,6 +23,12 @@ export type BusinessRate = {
   created_at: string | null;
 };
 
+export type DailyBotRate = {
+  date: string;
+  buy_rate: number;
+  sell_rate: number;
+};
+
 // Get latest individual (bot) rate
 export async function getLatestBotRate() {
   const { data, error } = await supabase
@@ -57,23 +63,70 @@ export async function getLatestBusinessRate() {
   return data as BusinessRate;
 }
 
-// Get historical bot rates for chart
-export async function getBotRateHistory(days: number = 30) {
-  const startDate = new Date();
-  startDate.setDate(startDate.getDate() - days);
+// Get a daily, gap-free bot-rate series for the chart. A missing day inherits
+// the most recently uploaded rate so the graph represents the rate in effect.
+export async function getBotRateHistory(days: number = 30): Promise<DailyBotRate[]> {
+  const now = new Date();
 
-  const { data, error } = await supabase
-    .from('bot_rates')
-    .select('*')
-    .gte('updated_at', startDate.toISOString())
-    .order('updated_at', { ascending: true });
+  const firstDay = new Date(now);
+  firstDay.setHours(0, 0, 0, 0);
+  firstDay.setDate(firstDay.getDate() - days + 1);
 
-  if (error) {
-    console.error('Error fetching bot rate history:', error);
+  const [historyResult, previousResult] = await Promise.all([
+    supabase
+      .from('bot_rates')
+      .select('*')
+      .gte('updated_at', firstDay.toISOString())
+      .lte('updated_at', now.toISOString())
+      .order('updated_at', { ascending: true }),
+    supabase
+      .from('bot_rates')
+      .select('*')
+      .lt('updated_at', firstDay.toISOString())
+      .order('updated_at', { ascending: false })
+      .limit(1),
+  ]);
+
+  if (historyResult.error || previousResult.error) {
+    console.error('Error fetching bot rate history:', historyResult.error || previousResult.error);
     return [];
   }
 
-  return data as BotRate[];
+  const rates = [
+    ...((previousResult.data || []) as BotRate[]),
+    ...((historyResult.data || []) as BotRate[]),
+  ].filter((rate): rate is BotRate & { updated_at: string } => Boolean(rate.updated_at));
+
+  let latestRate: BotRate | undefined = rates[0];
+  const dailyRates: DailyBotRate[] = [];
+
+  for (let offset = 0; offset < days; offset += 1) {
+    const day = new Date(firstDay);
+    day.setDate(firstDay.getDate() + offset);
+    const nextDay = new Date(day);
+    nextDay.setDate(day.getDate() + 1);
+
+    const updatesForDay = rates.filter((rate) => {
+      const updatedAt = new Date(rate.updated_at);
+      return updatedAt >= day && updatedAt < nextDay;
+    });
+
+    if (updatesForDay.length > 0) {
+      latestRate = updatesForDay[updatesForDay.length - 1];
+    }
+
+    if (latestRate) {
+      dailyRates.push({
+        date: [day.getFullYear(), day.getMonth() + 1, day.getDate()]
+          .map((part) => String(part).padStart(2, '0'))
+          .join('-'),
+        buy_rate: latestRate.buy_rate,
+        sell_rate: latestRate.sell_rate,
+      });
+    }
+  }
+
+  return dailyRates;
 }
 
 // Get historical business rates for chart
