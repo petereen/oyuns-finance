@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { getPartners, assetUrl, type Partner } from '@/lib/directus';
+import { getPartners, type Partner } from '@/lib/directus';
+import PartnerLogoSlider from '@/components/PartnerLogoSlider';
 
 export default function AboutPage() {
   const params = useParams();
@@ -191,21 +192,7 @@ export default function AboutPage() {
               className="bg-white rounded-2xl border border-gray-100 p-8 mb-8"
             >
               <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">{content.partners_title}</h2>
-              <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-                {partners.map((partner) => (
-                  <div key={partner.id}>
-                    {partner.url ? (
-                      <a href={partner.url} target="_blank" rel="noopener noreferrer" className="block grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300" title={partner.name}>
-                        <img src={assetUrl(partner.logo)} alt={partner.name} className="h-12 md:h-14 w-auto object-contain" />
-                      </a>
-                    ) : (
-                      <div className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300" title={partner.name}>
-                        <img src={assetUrl(partner.logo)} alt={partner.name} className="h-12 md:h-14 w-auto object-contain" />
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
+              <PartnerLogoSlider partners={partners} />
             </motion.div>
           )}
 

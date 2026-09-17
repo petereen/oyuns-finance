@@ -7,6 +7,8 @@ import { useParams } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
 import TestimonialCard from "@/components/TestimonialCard";
 import ExchangeCalculator from "@/components/ExchangeCalculator";
+import WebGLMeshBackground from "@/components/WebGLMeshBackground";
+import PartnerLogoSlider from "@/components/PartnerLogoSlider";
 import {
   getServices,
   getTestimonials,
@@ -559,9 +561,8 @@ export default function Home() {
   return (
     <div className="home-shell min-h-screen">
       {/* ── Hero — centered with slide-open calculator ──────────────── */}
-      <section className="relative liquid-hero text-white pt-32 pb-24 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-float pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 bg-cyan-400/10 rounded-full blur-3xl animate-float-delay pointer-events-none" />
+      <section className="relative liquid-hero isolate text-white pt-32 pb-24 overflow-hidden">
+        <WebGLMeshBackground />
 
         {/* Slide-open calculator panel */}
         <AnimatePresence>
@@ -629,7 +630,7 @@ export default function Home() {
           </span>
         </button>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1308,44 +1309,7 @@ export default function Home() {
                 {content.partners_title}
               </h2>
             </motion.div>
-            <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-              {partners.map((partner, i) => (
-                <motion.div
-                  key={partner.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  viewport={{ once: true }}
-                >
-                  {partner.url ? (
-                    <a
-                      href={partner.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
-                      title={partner.name}
-                    >
-                      <img
-                        src={assetUrl(partner.logo)}
-                        alt={partner.name}
-                        className="h-12 md:h-14 w-auto object-contain"
-                      />
-                    </a>
-                  ) : (
-                    <div
-                      className="grayscale hover:grayscale-0 opacity-60 hover:opacity-100 transition-all duration-300"
-                      title={partner.name}
-                    >
-                      <img
-                        src={assetUrl(partner.logo)}
-                        alt={partner.name}
-                        className="h-12 md:h-14 w-auto object-contain"
-                      />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+            <PartnerLogoSlider partners={partners} />
           </div>
         </section>
       )}
