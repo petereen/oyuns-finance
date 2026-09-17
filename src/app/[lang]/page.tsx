@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ServiceCard from "@/components/ServiceCard";
@@ -174,6 +174,16 @@ export default function Home() {
   const [ratesLoading, setRatesLoading] = useState(true);
   const [loaded, setLoaded] = useState(false);
   const [calcOpen, setCalcOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
+    const updateViewport = () => setIsMobile(mediaQuery.matches);
+    updateViewport();
+    mediaQuery.addEventListener("change", updateViewport);
+    return () => mediaQuery.removeEventListener("change", updateViewport);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -586,13 +596,36 @@ export default function Home() {
             role="dialog"
             aria-modal="true"
             aria-label={content.calc_label}
-            initial={{ x: "-100%", opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: "-100%", opacity: 0 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-y-0 left-0 z-[80] w-full overflow-y-auto bg-surface shadow-2xl sm:w-[380px]"
+            initial={
+              reduceMotion
+                ? false
+                : isMobile
+                  ? { x: "-100%", opacity: 0 }
+                  : { scale: 0.94, opacity: 0 }
+            }
+            animate={isMobile ? { x: 0, opacity: 1 } : { scale: 1, opacity: 1 }}
+            exit={
+              reduceMotion
+                ? { opacity: 0 }
+                : isMobile
+                  ? { x: "-100%", opacity: 0 }
+                  : { scale: 0.94, opacity: 0 }
+            }
+            transition={{
+              type: isMobile && !reduceMotion ? "spring" : "tween",
+              stiffness: 300,
+              damping: 30,
+              duration: reduceMotion ? 0 : 0.25,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={isMobile ? undefined : { transformOrigin: "calc(100% - 2.75rem) calc(100% - 2rem)" }}
+            className={
+              isMobile
+                ? "fixed inset-y-0 left-0 z-[80] w-full overflow-y-auto bg-surface shadow-2xl"
+                : "fixed right-4 bottom-4 z-[80] w-[min(380px,calc(100vw-2rem))] max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-[1.75rem] bg-surface shadow-2xl sm:right-8 sm:bottom-8 sm:max-h-[calc(100dvh-4rem)]"
+            }
           >
-            <div className="p-6">
+            <div className="p-5 sm:p-6">
               <button
                 data-slot="calculator-close"
                 type="button"
@@ -622,16 +655,15 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Floating calculator trigger — page-level to avoid clipped stacking contexts. */}
-      {!calcOpen && (
-        <button
-          data-slot="calculator-trigger"
-          type="button"
-          onClick={() => setCalcOpen(true)}
-          aria-haspopup="dialog"
-          aria-expanded={calcOpen}
-          className="group fixed right-4 bottom-4 z-[60] flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-xl shadow-primary-dark/25 transition-[box-shadow,transform,background-color] duration-200 hover:bg-primary-dark hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:bottom-8 sm:min-h-14 sm:px-5"
-          aria-label={lang === "ru" ? "Открыть калькулятор" : "Тооцоолуур нээх"}
-        >
+      <button
+        data-slot="calculator-trigger"
+        type="button"
+        onClick={() => setCalcOpen(true)}
+        aria-haspopup="dialog"
+        aria-expanded={calcOpen}
+        className={`group fixed right-4 bottom-4 z-[60] flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-xl shadow-primary-dark/25 transition-[box-shadow,transform,background-color,opacity] duration-200 hover:bg-primary-dark hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:bottom-8 sm:min-h-14 sm:px-5 ${calcOpen ? "pointer-events-none opacity-0" : ""}`}
+        aria-label={lang === "ru" ? "Открыть калькулятор" : "Тооцоолуур нээх"}
+      >
           <svg
             aria-hidden="true"
             className="size-5 shrink-0 transition-transform duration-200 motion-safe:group-hover:scale-110 motion-reduce:transition-none sm:size-6"
@@ -644,8 +676,7 @@ export default function Home() {
             <path strokeLinecap="round" d="M7.5 6.5h9M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.25h4" />
           </svg>
           <span>{content.calc_label}</span>
-        </button>
-      )}
+      </button>
 
       {/* ── Hero — centered with slide-open calculator ──────────────── */}
       <section className="relative liquid-hero isolate text-white pt-32 pb-24 overflow-hidden">

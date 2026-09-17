@@ -1,6 +1,10 @@
 # Project Task Tracker
 
 ## Current Milestone
+- [x] Fix CMS asset URLs for mobile image rendering (src/lib/directus.ts)
+- [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
+- [x] Restore the full-height mobile calculator side panel while keeping the rounded trigger-origin panel on larger screens (src/app/[lang]/page.tsx)
+- [x] Open the calculator as a rounded panel that scales from the floating calculator trigger (src/app/[lang]/page.tsx)
 - [x] Lift the calculator trigger and drawer above blurred stacking contexts, fix the icon, and display the localized calculator label (src/app/[lang]/page.tsx)
 - [x] Replace the hero’s static blue gradient with a paused-when-hidden WebGL mesh-drift background (src/components/WebGLMeshBackground.tsx, src/app/[lang]/page.tsx, src/app/globals.css)
 - [x] Add the WebGL1 mesh-drift renderer with packed uniforms, current OYUNS blue palette, DPR cap, reduced-motion fallback, visibility pause, and pointer pass-through (src/components/WebGLMeshBackground.tsx)
@@ -15,6 +19,7 @@
 - [x] Keep the liquid-metal header CTA visible with OYUNS blue fill across locale changes (src/components/Navbar.tsx)
 
 ## Completed Tasks
+- [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
 - [x] Make the floating calculator trigger circular and position it at the bottom-right with responsive edge spacing (src/app/[lang]/page.tsx)
 - [x] Render the branded 404 view directly from the locale catch-all route (src/app/[lang]/[...notFound]/page.tsx)
 - [x] Route all unmatched locale URLs through the branded 404 view (src/app/[lang]/[...notFound]/page.tsx)

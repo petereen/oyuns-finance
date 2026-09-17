@@ -1,15 +1,13 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
 
 const locales = ["mn", "ru"];
 const defaultLocale = "mn";
 
-function getLocale(request: NextRequest) {
-  const headers = { "accept-language": request.headers.get("accept-language") || "" };
-  const languages = new Negotiator({ headers }).languages();
-  return match(languages, locales, defaultLocale);
+function getLocale() {
+  // Keep the public, locale-less entry point deterministic. Users can still
+  // switch language explicitly from the navbar.
+  return defaultLocale;
 }
 
 export function middleware(request: NextRequest) {
@@ -32,7 +30,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Redirect if there is no locale
-  const locale = getLocale(request);
+  const locale = getLocale();
   request.nextUrl.pathname = `/${locale}${pathname}`;
   // e.g. incoming request is /products
   // The new URL is now /en-US/products

@@ -99,7 +99,7 @@ export type Logo = {
 };
 
 // Initialize Directus client
-const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api.oyuns.mn';
+const directusUrl = (process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api.oyuns.mn').replace(/\/+$/, '');
 
 /**
  * Directus sometimes returns file/image UUIDs as binary objects
@@ -109,6 +109,9 @@ const directusUrl = process.env.NEXT_PUBLIC_DIRECTUS_URL || 'https://api.oyuns.m
 export function ensureString(val: any): string {
   if (typeof val === 'string') return val;
   if (val && typeof val === 'object') {
+    // Expanded Directus file relations are returned as { id, ... } objects.
+    if ('id' in val) return ensureString(val.id);
+
     // UUID buffer object with keys 0–15 (16 bytes)
     const keys = Object.keys(val);
     // Check if keys are approximately 0..15
@@ -151,7 +154,7 @@ function transformData(data: any): any {
       return ensureString(data);
     }
     // Otherwise recurse
-    const newData: any = {};
+    const newData: Record<string, unknown> = {};
     for (const key of keys) {
       newData[key] = transformData(data[key]);
     }
@@ -160,9 +163,13 @@ function transformData(data: any): any {
   return data;
 }
 
-/** Build a Directus asset URL from a file UUID (handles object UUIDs) */
-export function assetUrl(fileId: any): string {
-  return `${directusUrl}/assets/${ensureString(fileId)}`;
+/** Build a Directus asset URL from a file UUID or expanded file relation. */
+export function assetUrl(fileId: unknown): string {
+  const id = ensureString(fileId).trim();
+  if (!id) return '';
+  // Preserve CMS values that already contain an absolute or root-relative URL.
+  if (/^(https?:)?\/\//.test(id) || id.startsWith('/')) return id;
+  return `${directusUrl}/assets/${encodeURIComponent(id)}`;
 }
 
 // This module is imported by client components, so it must never use a static

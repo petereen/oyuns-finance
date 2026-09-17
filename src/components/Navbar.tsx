@@ -71,9 +71,9 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 lg:h-18">
+        <div className="flex items-center h-16 lg:h-18">
           {/* Logo */}
-          <Link href={`/${lang}`} className="flex items-center group">
+          <Link href={`/${lang}`} className="flex shrink-0 items-center group lg:flex-1">
             <div className="relative h-7 lg:h-6 w-auto">
               <img 
                 src="/logo-main.svg" 
@@ -84,7 +84,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center justify-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -102,7 +102,6 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
-              key={`desktop-exchange-${lang}`}
               className="ml-3"
               preset="chromatic"
               variant="button"
@@ -120,7 +119,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
             </MetalFx>
 
             {/* Language Switcher - Minimal Icon */}
-            <div className="ml-4 flex items-center border-l border-gray-200 pl-4">
+            <div className="ml-4 flex shrink-0 items-center border-l border-gray-200 pl-4 lg:flex-1 lg:justify-end">
                <button
                   onClick={() => switchLanguage(lang === 'mn' ? 'ru' : 'mn')}
                   className="p-2 rounded-full hover:bg-white/55 text-slate-600 transition-colors flex items-center gap-1.5 font-medium text-sm"
@@ -172,7 +171,6 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
-              key={`mobile-exchange-${lang}`}
               className="mt-2 w-full"
               preset="chromatic"
               variant="button"
