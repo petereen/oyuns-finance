@@ -7,19 +7,19 @@ import { useParams } from "next/navigation";
 const copy = {
   mn: {
     status: "ХУУДАС ОЛДСОНГҮЙ",
-    code: "ШИЛЖҮҮЛЭГ / 404",
+    code: "АЛДАА / 404",
     title: "Энэ шилжүүлэг замдаа төөрчихлөө.",
-    body: "Таны хайсан хуудас одоогоор байхгүй байна. Найдвартай замаар буцаж, хүссэн үйлчилгээгээ үргэлжлүүлээрэй.",
+    body: "Таны хайсан хуудас одоогоор байхгүй байна. Доорх товчоор буцаж, хүссэн үйлчилгээгээ аваарай.",
     action: "Нүүр хуудас руу буцах",
     transfer: "ШИЛЖҮҮЛГИЙН ЧИГЛЭЛ",
-    pending: "Замдаа",
+    pending: "Идэвхтэй",
     from: "Орос",
     to: "Монгол",
     reference: "Гүйлгээний дугаар",
   },
   ru: {
     status: "СТРАНИЦА НЕ НАЙДЕНА",
-    code: "ПЕРЕВОД / 404",
+    code: "ОШИБКА / 404",
     title: "Этот перевод сбился с маршрута.",
     body: "Страница, которую вы ищете, сейчас недоступна. Вернитесь по надежному маршруту и продолжите с нужной услуги.",
     action: "Вернуться на главную",
@@ -41,7 +41,7 @@ function TransferIllustration({
       <div className="oyuns-not-found__art-grid" />
 
       <div className="oyuns-not-found__logo-card">
-        <span className="oyuns-not-found__art-label">ALL-IN-ONE</span>
+        <span className="oyuns-not-found__art-label">OYUNS ALL-IN-ONE</span>
         <Image src="/logo-main.svg" width={140} height={28} alt="" />
       </div>
 
