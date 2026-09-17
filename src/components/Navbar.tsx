@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { MetalFx } from 'metal-fx';
+import { MetalFx, type MaskFn } from 'metal-fx';
 
 interface NavbarProps {
   lang: 'mn' | 'ru';
@@ -13,6 +13,13 @@ interface NavbarProps {
 const metalButtonStyle = {
   background: 'linear-gradient(to right, #2455D8, #3d6de5)',
   color: '#fff',
+};
+
+const paintMetalPill: MaskFn = (ctx, width, height) => {
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.roundRect(0, 0, width, height, height / 2);
+  ctx.fill();
 };
 
 export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
@@ -102,12 +109,14 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
+              key={`desktop-exchange-${lang}`}
               className="ml-3"
               preset="chromatic"
               variant="button"
               theme="light"
               strength={1}
               innerShadow
+              mask={paintMetalPill}
               style={metalButtonStyle}
             >
               <Link
@@ -171,12 +180,14 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
+              key={`mobile-exchange-${lang}`}
               className="mt-2 w-full"
               preset="chromatic"
               variant="button"
               theme="light"
               strength={1}
               innerShadow
+              mask={paintMetalPill}
               style={metalButtonStyle}
             >
               <Link

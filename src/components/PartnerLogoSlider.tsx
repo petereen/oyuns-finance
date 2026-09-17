@@ -27,8 +27,8 @@ export default function PartnerLogoSlider({
     >
       <InfiniteSlider
         gap={48}
-        duration={32}
-        durationOnHover={72}
+        duration={96}
+        durationOnHover={216}
         reverse
         className="w-full"
       >

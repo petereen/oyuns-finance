@@ -1,6 +1,7 @@
 # Project Task Tracker
 
 ## Current Milestone
+- [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
 - [x] Fix CMS asset URLs for mobile image rendering (src/lib/directus.ts)
 - [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
 - [x] Restore the full-height mobile calculator side panel while keeping the rounded trigger-origin panel on larger screens (src/app/[lang]/page.tsx)
@@ -17,8 +18,10 @@
 - [x] Add the liquid-metal effect to the localized header exchange CTA (src/components/Navbar.tsx, package.json)
 - [x] Convert rounded button controls and CTA links to pill geometry (src/components, src/app)
 - [x] Keep the liquid-metal header CTA visible with OYUNS blue fill across locale changes (src/components/Navbar.tsx)
+- [x] Fill the header CTA with the animated liquid-metal shader instead of limiting it to the border (src/components/Navbar.tsx)
 
 ## Completed Tasks
+- [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
 - [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
 - [x] Make the floating calculator trigger circular and position it at the bottom-right with responsive edge spacing (src/app/[lang]/page.tsx)
 - [x] Render the branded 404 view directly from the locale catch-all route (src/app/[lang]/[...notFound]/page.tsx)
