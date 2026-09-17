@@ -11,8 +11,10 @@
 - [x] Add shadcn utility configuration and slider dependencies (components.json, src/lib/utils.ts, package.json)
 - [x] Add the liquid-metal effect to the localized header exchange CTA (src/components/Navbar.tsx, package.json)
 - [x] Convert rounded button controls and CTA links to pill geometry (src/components, src/app)
+- [x] Keep the liquid-metal header CTA visible with OYUNS blue fill across locale changes (src/components/Navbar.tsx)
 
 ## Completed Tasks
+- [x] Make the floating calculator trigger circular and position it at the bottom-right with responsive edge spacing (src/app/[lang]/page.tsx)
 - [x] Render the branded 404 view directly from the locale catch-all route (src/app/[lang]/[...notFound]/page.tsx)
 - [x] Route all unmatched locale URLs through the branded 404 view (src/app/[lang]/[...notFound]/page.tsx)
 - [x] Build a branded localized 404 page with OYUNS, RUB, and MNT transaction illustrations (src/app/[lang]/not-found.tsx, src/app/globals.css)

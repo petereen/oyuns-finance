@@ -10,6 +10,11 @@ interface NavbarProps {
   dict: any;
 }
 
+const metalButtonStyle = {
+  background: 'linear-gradient(to right, #2455D8, #3d6de5)',
+  color: '#fff',
+};
+
 export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -97,16 +102,18 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
+              key={`desktop-exchange-${lang}`}
               className="ml-3"
               preset="chromatic"
               variant="button"
               theme="light"
               strength={1}
               innerShadow
+              style={metalButtonStyle}
             >
               <Link
                 href={`/${lang}/exchange`}
-                className="bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+                className="px-5 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
               >
                 {t.exchange_btn}
               </Link>
@@ -165,17 +172,19 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               </Link>
             ))}
             <MetalFx
+              key={`mobile-exchange-${lang}`}
               className="mt-2 w-full"
               preset="chromatic"
               variant="button"
               theme="light"
               strength={1}
               innerShadow
+              style={metalButtonStyle}
             >
               <Link
                 href={`/${lang}/exchange`}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-6 py-3 rounded-full font-semibold text-center text-sm"
+                className="w-full px-6 py-3 rounded-full font-semibold text-center text-sm"
               >
                 {t.exchange_btn}
               </Link>

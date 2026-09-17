@@ -606,14 +606,16 @@ export default function Home() {
           />
         )}
 
-        {/* Floating calculator button — left side */}
+        {/* Floating calculator button — bottom right */}
         <button
+          type="button"
           onClick={() => setCalcOpen(true)}
-          className="fixed left-0 top-1/2 -translate-y-1/2 z-30 bg-gradient-to-b from-amber-400 to-amber-600 text-white px-3 py-5 rounded-full shadow-lg hover:shadow-xl hover:px-4 transition-all duration-300 group"
-          aria-label="Тооцоолуур нээх"
+          className="group fixed right-6 bottom-6 z-30 flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg transition-[box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary motion-safe:active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:bottom-8"
+          aria-label={lang === "ru" ? "Открыть калькулятор" : "Тооцоолуур нээх"}
         >
           <svg
-            className="w-6 h-6 group-hover:scale-110 transition-transform"
+            aria-hidden="true"
+            className="size-6 transition-transform duration-200 motion-safe:group-hover:scale-110 motion-reduce:transition-none"
             fill="none"
             stroke="currentColor"
             strokeWidth={1.5}
@@ -625,9 +627,6 @@ export default function Home() {
               d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm2.25-4.5h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm2.25-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H15v-.008Zm0 2.25h.008v.008H15v-.008ZM4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
             />
           </svg>
-          <span className="block text-[10px] font-bold mt-1 tracking-wide">
-            {content.calc_label}
-          </span>
         </button>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
