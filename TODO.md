@@ -6,6 +6,7 @@
 - [x] Fill missing exchange-rate calendar days with the latest uploaded rate and render a continuous graph (src/lib/supabase.ts, src/app/[lang]/exchange/page.tsx, src/components/ExchangeRateChart.tsx)
 
 ## Completed Tasks
+- [x] Build a branded localized 404 page with OYUNS, RUB, and MNT transaction illustrations (src/app/[lang]/not-found.tsx, src/app/globals.css)
 - [x] Apply liquid-glass visual system across the core web UI (globals.css, Navbar, homepage cards, calculator, service/testimonial cards, Footer)
 - [x] Show both Mongolian and Russian contact phone numbers on the web (Footer.tsx, contact/page.tsx)
 - [x] Render Directus rich-text HTML with scoped web styles and preserve editor font choices (blog/[slug]/page.tsx, globals.css)
