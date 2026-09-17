@@ -18,7 +18,7 @@
 - [x] Add the liquid-metal effect to the localized header exchange CTA (src/components/Navbar.tsx, package.json)
 - [x] Convert rounded button controls and CTA links to pill geometry (src/components, src/app)
 - [x] Keep the liquid-metal header CTA visible with OYUNS blue fill across locale changes (src/components/Navbar.tsx)
-- [x] Fill the header CTA with the animated liquid-metal shader instead of limiting it to the border (src/components/Navbar.tsx)
+- [x] Keep the animated liquid-metal shader limited to the header CTA border (src/components/Navbar.tsx)
 
 ## Completed Tasks
 - [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
