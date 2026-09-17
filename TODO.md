@@ -1,6 +1,7 @@
 # Project Task Tracker
 
 ## Current Milestone
+- [x] Lift the calculator trigger and drawer above blurred stacking contexts, fix the icon, and display the localized calculator label (src/app/[lang]/page.tsx)
 - [x] Replace the hero’s static blue gradient with a paused-when-hidden WebGL mesh-drift background (src/components/WebGLMeshBackground.tsx, src/app/[lang]/page.tsx, src/app/globals.css)
 - [x] Add the WebGL1 mesh-drift renderer with packed uniforms, current OYUNS blue palette, DPR cap, reduced-motion fallback, visibility pause, and pointer pass-through (src/components/WebGLMeshBackground.tsx)
 - [x] Mount the shader behind the localized hero content and remove the old static floating blobs (src/app/[lang]/page.tsx)

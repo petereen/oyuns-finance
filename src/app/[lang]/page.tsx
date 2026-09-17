@@ -257,7 +257,7 @@ export default function Home() {
         "Бидний телеграм сувгийг дагаж валютын ханшийн мэдээлэл аваарай!",
       cta_btn: "Телеграм суваг",
       close_calc: "Хаах",
-      calc_label: "Ханш",
+      calc_label: "Тооцоолуур",
 
       fallback_ind: {
         title: "Хувь хэрэглэгчид зориулсан үйлчилгээ",
@@ -368,7 +368,7 @@ export default function Home() {
         "Подписывайтесь на наш канал в Telegram, чтобы получать информацию о наших услугах и курсах валют!",
       cta_btn: "Канал Telegram",
       close_calc: "Закрыть",
-      calc_label: "Курс",
+      calc_label: "Калькулятор",
 
       fallback_ind: {
         title: "Услуги для частных лиц",
@@ -560,74 +560,96 @@ export default function Home() {
 
   return (
     <div className="home-shell min-h-screen">
-      {/* ── Hero — centered with slide-open calculator ──────────────── */}
-      <section className="relative liquid-hero isolate text-white pt-32 pb-24 overflow-hidden">
-        <WebGLMeshBackground />
-
-        {/* Slide-open calculator panel */}
-        <AnimatePresence>
-          {calcOpen && (
-            <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 left-0 z-50 h-full w-full sm:w-[380px] bg-white shadow-2xl overflow-y-auto"
-            >
-              <div className="p-6">
-                <button
-                  onClick={() => setCalcOpen(false)}
-                  className="mb-4 flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-slate-900 transition-colors"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                  {content.close_calc}
-                </button>
-                <ExchangeCalculator initialRate={botRate} lang={lang} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Page-level calculator layers stay above the navbar and hero effects. */}
+      <AnimatePresence>
         {calcOpen && (
-          <div
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm"
+          <motion.button
+            key="calculator-backdrop"
+            data-slot="calculator-backdrop"
+            type="button"
+            aria-label={content.close_calc}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={() => setCalcOpen(false)}
+            className="fixed inset-0 z-[70] cursor-default bg-foreground/45 backdrop-blur-sm"
           />
         )}
+      </AnimatePresence>
 
-        {/* Floating calculator button — bottom right */}
+      <AnimatePresence>
+        {calcOpen && (
+          <motion.aside
+            key="calculator-drawer"
+            data-slot="calculator-drawer"
+            role="dialog"
+            aria-modal="true"
+            aria-label={content.calc_label}
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed inset-y-0 left-0 z-[80] w-full overflow-y-auto bg-surface shadow-2xl sm:w-[380px]"
+          >
+            <div className="p-6">
+              <button
+                data-slot="calculator-close"
+                type="button"
+                onClick={() => setCalcOpen(false)}
+                className="mb-4 flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-semibold text-text-muted transition-colors hover:bg-surface-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <svg
+                  aria-hidden="true"
+                  className="size-5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+                {content.close_calc}
+              </button>
+              <ExchangeCalculator initialRate={botRate} lang={lang} />
+            </div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* Floating calculator trigger — page-level to avoid clipped stacking contexts. */}
+      {!calcOpen && (
         <button
+          data-slot="calculator-trigger"
           type="button"
           onClick={() => setCalcOpen(true)}
-          className="group fixed right-6 bottom-6 z-30 flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-white shadow-lg transition-[box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary motion-safe:active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:bottom-8"
+          aria-haspopup="dialog"
+          aria-expanded={calcOpen}
+          className="group fixed right-4 bottom-4 z-[60] flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-4 text-sm font-semibold text-white shadow-xl shadow-primary-dark/25 transition-[box-shadow,transform,background-color] duration-200 hover:bg-primary-dark hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:bottom-8 sm:min-h-14 sm:px-5"
           aria-label={lang === "ru" ? "Открыть калькулятор" : "Тооцоолуур нээх"}
         >
           <svg
             aria-hidden="true"
-            className="size-6 transition-transform duration-200 motion-safe:group-hover:scale-110 motion-reduce:transition-none"
+            className="size-5 shrink-0 transition-transform duration-200 motion-safe:group-hover:scale-110 motion-reduce:transition-none sm:size-6"
             fill="none"
             stroke="currentColor"
-            strokeWidth={1.5}
+            strokeWidth={1.8}
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25v-.008Zm2.25-4.5h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm0 2.25h.008v.008H10.5v-.008Zm2.25-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H15v-.008Zm0 2.25h.008v.008H15v-.008ZM4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
-            />
+            <rect x="4" y="2.75" width="16" height="18.5" rx="2.5" />
+            <path strokeLinecap="round" d="M7.5 6.5h9M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.25h4" />
           </svg>
+          <span>{content.calc_label}</span>
         </button>
+      )}
+
+      {/* ── Hero — centered with slide-open calculator ──────────────── */}
+      <section className="relative liquid-hero isolate text-white pt-32 pb-24 overflow-hidden">
+        <WebGLMeshBackground />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
