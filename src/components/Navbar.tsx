@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import { MetalFx } from 'metal-fx';
 
 interface NavbarProps {
   lang: 'mn' | 'ru';
@@ -83,7 +84,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`relative px-3.5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                   isActive(link.href)
                     ? 'text-blue-600 bg-blue-50'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/45'
@@ -95,18 +96,27 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                 )}
               </Link>
             ))}
-            <Link
-              href={`/${lang}/exchange`}
-              className="ml-3 bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+            <MetalFx
+              className="ml-3"
+              preset="chromatic"
+              variant="button"
+              theme="light"
+              strength={1}
+              innerShadow
             >
-              {t.exchange_btn}
-            </Link>
+              <Link
+                href={`/${lang}/exchange`}
+                className="bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200"
+              >
+                {t.exchange_btn}
+              </Link>
+            </MetalFx>
 
             {/* Language Switcher - Minimal Icon */}
             <div className="ml-4 flex items-center border-l border-gray-200 pl-4">
                <button
                   onClick={() => switchLanguage(lang === 'mn' ? 'ru' : 'mn')}
-                  className="p-2 rounded-lg hover:bg-white/55 text-slate-600 transition-colors flex items-center gap-1.5 font-medium text-sm"
+                  className="p-2 rounded-full hover:bg-white/55 text-slate-600 transition-colors flex items-center gap-1.5 font-medium text-sm"
                   title={lang === 'mn' ? 'Switch to Russian' : 'Монгол хэл рүү шилжих'}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -119,7 +129,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2.5 rounded-xl text-slate-600 hover:bg-white/55 transition-colors"
+            className="lg:hidden p-2.5 rounded-full text-slate-600 hover:bg-white/55 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -145,7 +155,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                className={`px-4 py-2.5 rounded-full text-sm font-medium transition-colors ${
                   isActive(link.href)
                     ? 'text-[#2455D8] bg-blue-50'
                     : 'text-[#555] hover:text-[#1a1a1a] hover:bg-white/55'
@@ -154,13 +164,22 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href={`/${lang}/exchange`}
-              onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-6 py-3 rounded-xl font-semibold text-center text-sm"
+            <MetalFx
+              className="mt-2 w-full"
+              preset="chromatic"
+              variant="button"
+              theme="light"
+              strength={1}
+              innerShadow
             >
-              {t.exchange_btn}
-            </Link>
+              <Link
+                href={`/${lang}/exchange`}
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-6 py-3 rounded-full font-semibold text-center text-sm"
+              >
+                {t.exchange_btn}
+              </Link>
+            </MetalFx>
 
             {/* Mobile Language Switcher */}
             <button
@@ -168,7 +187,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
                  switchLanguage(lang === 'mn' ? 'ru' : 'mn');
                  setMobileMenuOpen(false);
                }}
-               className="mt-2 w-full flex items-center justify-center p-3 rounded-xl glass-input text-slate-700 font-medium text-sm hover:bg-white/70 transition-colors gap-2"
+               className="mt-2 w-full flex items-center justify-center p-3 rounded-full glass-input text-slate-700 font-medium text-sm hover:bg-white/70 transition-colors gap-2"
              >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />

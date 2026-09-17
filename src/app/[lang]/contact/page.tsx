@@ -240,7 +240,7 @@ export default function ContactPage() {
                       href={item.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all rounded-xl p-3.5 border border-white/10 hover:border-white/25 text-sm font-medium"
+                      className="flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all rounded-full p-3.5 border border-white/10 hover:border-white/25 text-sm font-medium"
                     >
                       {item.icon}
                       {item.label}
@@ -326,7 +326,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-8 py-3.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-8 py-3.5 rounded-full font-semibold hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? content.btn_sending : content.btn_send}
               </button>

@@ -98,7 +98,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
       <div className="flex items-center gap-2 mb-4">
         <button
           onClick={() => setDirection('rub-to-mnt')}
-          className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-2 rounded-full text-xs font-semibold transition-all ${
             direction === 'rub-to-mnt'
               ? 'bg-[#2455D8] text-white shadow-md shadow-blue-900/25'
               : 'bg-white/45 text-slate-500 hover:bg-white/75'
@@ -119,7 +119,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
 
         <button
           onClick={() => setDirection('mnt-to-rub')}
-          className={`flex-1 py-2 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-2 rounded-full text-xs font-semibold transition-all ${
             direction === 'mnt-to-rub'
               ? 'bg-[#2455D8] text-white shadow-md shadow-blue-900/25'
               : 'bg-white/45 text-slate-500 hover:bg-white/75'
@@ -173,7 +173,7 @@ export default function ExchangeCalculator({ initialRate, compact = false, lang 
         href="https://t.me/oyuns_alo"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-3 rounded-xl hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold text-sm"
+        className="inline-flex items-center justify-center w-full bg-gradient-to-r from-[#2455D8] to-[#3d6de5] text-white px-5 py-3 rounded-full hover:shadow-lg hover:shadow-blue-900/25 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold text-sm"
       >
         <TelegramIcon className="w-4 h-4 mr-2" />
         {content.contact}

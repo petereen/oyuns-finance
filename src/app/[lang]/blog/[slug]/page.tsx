@@ -96,7 +96,7 @@ export default function BlogPostPage() {
           <p className="text-[#555] mb-8">{content.not_found_desc}</p>
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 bg-[#2455D8] text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all"
+            className="inline-flex items-center gap-2 bg-[#2455D8] text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all"
           >
             {content.back_btn}
           </Link>

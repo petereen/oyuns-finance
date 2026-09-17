@@ -9,6 +9,8 @@
 - [x] Fill missing exchange-rate calendar days with the latest uploaded rate and render a continuous graph (src/lib/supabase.ts, src/app/[lang]/exchange/page.tsx, src/components/ExchangeRateChart.tsx)
 - [x] Add the reusable InfiniteSlider and Directus-backed partner logo presentation (src/components/ui/infinite-slider.tsx, src/components/PartnerLogoSlider.tsx)
 - [x] Add shadcn utility configuration and slider dependencies (components.json, src/lib/utils.ts, package.json)
+- [x] Add the liquid-metal effect to the localized header exchange CTA (src/components/Navbar.tsx, package.json)
+- [x] Convert rounded button controls and CTA links to pill geometry (src/components, src/app)
 
 ## Completed Tasks
 - [x] Render the branded 404 view directly from the locale catch-all route (src/app/[lang]/[...notFound]/page.tsx)
