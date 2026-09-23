@@ -1,6 +1,7 @@
 # Project Task Tracker
 
 ## Current Milestone
+- [x] Add localized office address and animated map, and remove the retired phone number everywhere (contact, footer, agreements; reuse installed framer-motion)
 - [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
 - [x] Fix CMS asset URLs for mobile image rendering (src/lib/directus.ts)
 - [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
@@ -21,6 +22,7 @@
 - [x] Keep the animated liquid-metal shader limited to the header CTA border (src/components/Navbar.tsx)
 
 ## Completed Tasks
+- [x] Add localized office address and animated map, and remove the retired phone number everywhere (contact, footer, agreements; reuse installed framer-motion)
 - [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
 - [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
 - [x] Make the floating calculator trigger circular and position it at the bottom-right with responsive edge spacing (src/app/[lang]/page.tsx)
