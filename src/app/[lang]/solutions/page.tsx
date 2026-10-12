@@ -7,8 +7,19 @@ import SolutionsTabs from '@/components/SolutionsTabs';
 
 const SITE_URL = 'https://oyuns.mn';
 
-// TODO: add product screenshots to /public (e.g. /solutions/hr.png) keyed by module id
-const SCREENSHOTS: Partial<Record<string, string>> = {};
+// Module id → illustration in /public
+const SCREENSHOTS: Partial<Record<string, string>> = {
+  hr: '/01-hr.png',
+  time: '/02-time.png',
+  tasks: '/03-tasks.png',
+  reports: '/04-reports.png',
+  crm: '/05-crm.png',
+  contracts: '/06-contracts.png',
+  budget: '/07-budget.png',
+  payroll: '/08-payroll.png',
+  ai: '/09-ai.png',
+  chat: '/10-chat.png',
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang: rawLang } = await params;
