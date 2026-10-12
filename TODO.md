@@ -22,6 +22,7 @@
 - [x] Keep the animated liquid-metal shader limited to the header CTA border (src/components/Navbar.tsx)
 
 ## Completed Tasks
+- [x] Improve Mongolian solutions-page copy with natural phrasing and consistent terminology (src/dictionaries/mn.json)
 - [x] Add localized office address and animated map, and remove the retired phone number everywhere (contact, footer, agreements; reuse installed framer-motion)
 - [x] Make the partners roll 3× slower, including its hover speed (src/components/PartnerLogoSlider.tsx)
 - [x] Make Mongolian the default interface locale and stabilize the localized navbar CTA (src/middleware.ts, src/components/Navbar.tsx)
