@@ -108,7 +108,7 @@ export default function SolutionsTabs({ items, screenshotAlt, screenshots }: Sol
             </ul>
           </div>
 
-          <div className={screenshots[item.id] ? '' : 'rounded-2xl bg-gray-50 border border-gray-100 p-2.5'}>
+          <div className={screenshots[item.id] ? 'relative z-10' : 'rounded-2xl bg-gray-50 border border-gray-100 p-2.5'}>
             {screenshots[item.id] ? (
               <Image
                 src={screenshots[item.id]!}
@@ -116,7 +116,7 @@ export default function SolutionsTabs({ items, screenshotAlt, screenshots }: Sol
                 width={2496}
                 height={1738}
                 sizes="(min-width: 1024px) 620px, (min-width: 768px) 55vw, 100vw"
-                className="w-full h-auto"
+                className="w-full h-auto md:origin-top-left md:scale-[1.35] pointer-events-none"
               />
             ) : (
               // Decorative stand-in until a real screenshot is provided
