@@ -89,7 +89,7 @@ export default function SolutionsTabs({ items, screenshotAlt, screenshots }: Sol
           role="tabpanel"
           aria-labelledby={`tab-${item.id}`}
           hidden={item.id !== activeId}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start"
+          className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-6 lg:gap-10 items-center"
         >
           <div>
             <h3 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a] mb-2">{item.title}</h3>
@@ -108,15 +108,15 @@ export default function SolutionsTabs({ items, screenshotAlt, screenshots }: Sol
             </ul>
           </div>
 
-          <div className="rounded-2xl bg-gray-50 border border-gray-100 p-2.5">
+          <div className={screenshots[item.id] ? '' : 'rounded-2xl bg-gray-50 border border-gray-100 p-2.5'}>
             {screenshots[item.id] ? (
               <Image
                 src={screenshots[item.id]!}
                 alt={`OYUNS ERP — ${item.title} ${screenshotAlt}`}
-                width={1280}
-                height={800}
-                sizes="(min-width: 1024px) 420px, 100vw"
-                className="w-full h-auto rounded-xl"
+                width={2496}
+                height={1738}
+                sizes="(min-width: 1024px) 620px, (min-width: 768px) 55vw, 100vw"
+                className="w-full h-auto"
               />
             ) : (
               // Decorative stand-in until a real screenshot is provided
