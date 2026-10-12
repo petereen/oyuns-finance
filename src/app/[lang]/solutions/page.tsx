@@ -9,16 +9,16 @@ const SITE_URL = 'https://oyuns.mn';
 
 // Module id → illustration in /public
 const SCREENSHOTS: Partial<Record<string, string>> = {
-  hr: '/01-hr.png',
-  time: '/02-time.png',
-  tasks: '/03-tasks.png',
-  reports: '/04-reports.png',
-  crm: '/05-crm.png',
-  contracts: '/06-contracts.png',
-  budget: '/07-budget.png',
-  payroll: '/08-payroll.png',
-  ai: '/09-ai.png',
-  chat: '/10-chat.png',
+  hr: '/01-hr-v2.png',
+  time: '/02-time-v2.png',
+  tasks: '/03-tasks-v2.png',
+  reports: '/04-reports-v2.png',
+  crm: '/05-crm-v2.png',
+  contracts: '/06-contracts-v2.png',
+  budget: '/07-budget-v2.png',
+  payroll: '/08-payroll-v2.png',
+  ai: '/09-ai-v2.png',
+  chat: '/10-chat-v2.png',
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
