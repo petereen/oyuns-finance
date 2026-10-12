@@ -28,6 +28,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
     home: 'Нүүр хуудас',
     about: 'Бидний тухай',
     services: 'Үйлчилгээ',
+    solutions: 'Шийдлүүд',
     exchange: 'Ханш',
     blog: 'Мэдээ, мэдээлэл',
     contact: 'Бидэнтэй холбогдох',
@@ -44,6 +45,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
     { href: `/${lang}`, label: t.home },
     { href: `/${lang}/about`, label: t.about },
     { href: `/${lang}/services`, label: t.services },
+    { href: `/${lang}/solutions`, label: t.solutions },
     { href: `/${lang}/exchange`, label: t.exchange },
     { href: `/${lang}/blog`, label: t.blog },
     { href: `/${lang}/contact`, label: t.contact },
@@ -84,7 +86,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center justify-center gap-1">
+          <div className="hidden xl:flex items-center justify-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -136,7 +138,7 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2.5 rounded-full text-slate-600 hover:bg-white/55 transition-colors"
+            className="xl:hidden p-2.5 rounded-full text-slate-600 hover:bg-white/55 transition-colors"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -152,8 +154,8 @@ export default function Navbar({ lang = 'mn', dict }: NavbarProps) {
 
         {/* Mobile Navigation */}
         <div
-          className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            mobileMenuOpen ? 'max-h-[400px] opacity-100 pb-5' : 'max-h-0 opacity-0'
+          className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-[460px] opacity-100 pb-5' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="flex flex-col gap-1 pt-2 border-t border-white/60">

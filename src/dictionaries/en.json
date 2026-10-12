@@ -1,0 +1,288 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "Services",
+    "solutions": "Solutions",
+    "exchange": "Rates",
+    "blog": "News",
+    "contact": "Contact",
+    "exchange_btn": "Exchange currency"
+  },
+  "solutions": {
+    "meta": {
+      "title": "OYUNS ERP Solutions | OYUNS ALL-IN-ONE",
+      "description": "OYUNS ERP brings HR, time tracking, tasks, reports, CRM, contracts, budget, payroll and an AI assistant into one workspace. Works on web, mobile and Telegram."
+    },
+    "hero": {
+      "eyebrow": "OYUNS ERP",
+      "title": "Run your whole company from one workspace",
+      "subtitle": "HR, time tracking, tasks, reports, customers, contracts, budget and payroll, all connected in one place. An AI assistant that understands Mongolian, and access from the web, your phone or Telegram.",
+      "cta_demo": "Book a demo",
+      "cta_pricing": "See pricing",
+      "audience": "For owners, directors, HR, finance and sales teams at companies with 10–500 employees"
+    },
+    "subnav_label": "Solutions menu",
+    "overview": {
+      "eyebrow": "Solutions",
+      "title": "Modules for everyday work",
+      "subtitle": "Turn on only the modules you need. They all share the same data, so nothing has to be entered twice."
+    },
+    "labels": {
+      "problem": "The problem",
+      "solution": "How OYUNS solves it",
+      "features": "Key features",
+      "outcome": "The outcome",
+      "screenshot_alt": "screenshot"
+    },
+    "items": [
+      {
+        "id": "hr",
+        "title": "HR",
+        "tagline": "Employee records in one organized place",
+        "problem": "Employee forms, documents and tenure records are scattered across folders, spreadsheets and email. Granting access and onboarding a new hire depends on one person remembering every step.",
+        "solution": "Keep every employee's personal file, documents, schedule and permissions in one system. New users are guided by a role-specific \"Getting started\" checklist.",
+        "features": [
+          "Personal files: photo, tenure, documents and custom sections",
+          "Platform access and role assignment",
+          "Work schedules and work statistics per employee",
+          "Automatic service-anniversary greetings",
+          "Role-specific \"Getting started\" checklists"
+        ],
+        "outcome": "HR data has a single source of truth, and new hires get up to speed without the scramble."
+      },
+      {
+        "id": "time",
+        "title": "Time tracking",
+        "tagline": "Attendance without the manual work",
+        "problem": "Attendance lives in paper logs or spreadsheets and gets tallied by hand at month end. Late arrivals and absences aren't visible when they happen.",
+        "solution": "Employees clock in from the web, the mobile app, Telegram or an office QR code. The phone can detect arrival at and departure from a work site and start or stop the clock automatically.",
+        "features": [
+          "Clock in from web, mobile app or Telegram",
+          "QR-code check-in at the office",
+          "Automatic geofence tracking with configurable grace periods, hours and weekdays. Coordinates are not stored",
+          "Schedules and reminders, per employee or in bulk",
+          "Attendance grids, statistics and Excel/CSV export"
+        ],
+        "outcome": "Attendance is visible as it happens and feeds straight into payroll."
+      },
+      {
+        "id": "tasks",
+        "title": "Tasks, projects and plans",
+        "tagline": "See who is working on what",
+        "problem": "Tasks get handed out in chat or in passing, so owners and deadlines are forgotten. Managers hear about overdue work too late.",
+        "solution": "Manage tasks, projects, plans and your calendar in one place. Reminders go out before deadlines, and overdue work is escalated to managers automatically.",
+        "features": [
+          "Board (Kanban), list, timeline and calendar views",
+          "Assignees, reviewers, deadlines and reminders",
+          "Escalation of overdue tasks to managers",
+          "Projects, plans and ideas in one place",
+          "AI task creation: say \"assign Bat to send the proposal by Friday\" and it drafts the task for you to confirm"
+        ],
+        "outcome": "Progress is transparent, so you can act before a deadline slips."
+      },
+      {
+        "id": "reports",
+        "title": "Reports",
+        "tagline": "No more chasing people for reports",
+        "problem": "Reports have to be requested from each employee and collected from email and chat. Managers spend hours reading and consolidating them.",
+        "solution": "Set the reporting period per employee or department. The system sends reminders and routes reports through approval, and AI summarizes the key figures and text for managers.",
+        "features": [
+          "Daily, weekly, monthly, quarterly, half-yearly, yearly or custom periods",
+          "Report policies per employee or department, with automatic reminders",
+          "Approval flow and consolidated department reports",
+          "AI summaries of KPIs and report text, plus bulk ZIP export",
+          "Submit reports from Telegram by text or voice message"
+        ],
+        "outcome": "Reports arrive on time, and managers see the state of their team in one place."
+      },
+      {
+        "id": "crm",
+        "title": "Customers / CRM",
+        "tagline": "Customer history that never gets lost",
+        "problem": "Customer details sit in each salesperson's phone or spreadsheet, and the relationship history leaves when they do.",
+        "solution": "Keep customers in one shared registry and log every meeting and call. The system reminds you of next steps and links each customer to their contracts.",
+        "features": [
+          "Customer records with parent and subsidiary hierarchy",
+          "Activity history: meetings, calls and notes",
+          "Next-step reminders",
+          "Track expected revenue",
+          "Linked to the contract registry"
+        ],
+        "outcome": "Your sales team works from the same information and doesn't let opportunities slip."
+      },
+      {
+        "id": "contracts",
+        "title": "Contracts",
+        "tagline": "No contract expires unnoticed",
+        "problem": "Contracts sit in paper folders, and nobody tracks who is reviewing them or when they expire. Approvals drag on.",
+        "solution": "Prepare contracts step by step and route them through reviewers and approvers. Approved contracts are kept in a registry and archive, with reminders before they expire.",
+        "features": [
+          "Guided multi-step workflow with reviewers and approvers",
+          "Registry: code, number, counterparty, amount, term and group",
+          "Archive of signed and uploaded documents",
+          "Reminders before the term ends",
+          "Printable output"
+        ],
+        "outcome": "You always know where each contract is and what stage it's at."
+      },
+      {
+        "id": "budget",
+        "title": "Budget and chart of accounts",
+        "tagline": "Compare plan against actual",
+        "problem": "Budget performance is rebuilt in spreadsheets every month, and the numbers never quite match.",
+        "solution": "Plan your budget in the system and compare it against actuals. Start your chart of accounts from a ready-made Mongolian standard template; enforced account types keep the books consistent.",
+        "features": [
+          "Budget vs. actual analysis",
+          "Chart of accounts with a Mongolian standard template",
+          "Enforced account types for consistent records",
+          "Payroll entries post straight to the general ledger"
+        ],
+        "outcome": "Your finance team spends its time on analysis, not on rebuilding numbers."
+      },
+      {
+        "id": "payroll",
+        "title": "Payroll",
+        "tagline": "From attendance to payroll in one flow",
+        "problem": "Payroll is calculated by hand from attendance spreadsheets, with social insurance, income tax and deductions worked out separately, so mistakes creep in.",
+        "solution": "Worked hours come straight from attendance, and monthly pay is calculated with overtime, contributions, advances and deductions. Every calculation has a transparent breakdown.",
+        "features": [
+          "Advance and month-end payroll runs",
+          "Overtime, social insurance, personal income tax and deductions",
+          "Transparent worked-hours breakdown",
+          "Import data from an Excel template",
+          "Salary-structure templates and general-ledger posting"
+        ],
+        "outcome": "Payroll takes less effort, and every figure is easy to explain to employees."
+      },
+      {
+        "id": "ai",
+        "title": "OYUNS AI",
+        "tagline": "An assistant that knows your company",
+        "problem": "Finding information means digging through menus and files, or interrupting a colleague.",
+        "solution": "Ask OYUNS AI in plain language and it answers from your tasks, reports, attendance, CRM, contracts and payroll summaries, and drafts tasks for you. It speaks Mongolian, Russian and English, by text or voice call.",
+        "features": [
+          "Ask questions in chat or on a voice call",
+          "Company knowledge base: upload policies and guides and get answers from them",
+          "Answers only within the user's permissions; admins can limit which sections the AI can access",
+          "Each company's data is isolated, including AI queries",
+          "Used only with employee consent, which can be withdrawn at any time"
+        ],
+        "outcome": "Employees and managers ask and get answers, instead of searching."
+      },
+      {
+        "id": "chat",
+        "title": "Chat, calls and news",
+        "tagline": "Work conversations stay in your work system",
+        "problem": "Work discussions get buried in personal messengers, and company announcements don't reach everyone.",
+        "solution": "Team and direct chat, voice and video calls and company news in one system. When you share a task, report or contract in chat, access is checked for every recipient.",
+        "features": [
+          "Team and direct messages",
+          "Voice and video calls that ring like a phone call, even when the app is closed",
+          "Share tasks, reports and contracts in chat, with access checked per recipient",
+          "Company news with images, pinned posts and Markdown",
+          "Notification controls: categories, quiet hours, Telegram and push"
+        ],
+        "outcome": "Team conversations and knowledge stay inside your workspace."
+      }
+    ],
+    "channels": {
+      "eyebrow": "Channels",
+      "title": "Everyone works in the channel that suits them",
+      "subtitle": "Every channel runs on the same core, so the data is the same wherever you sign in.",
+      "items": [
+        {
+          "id": "web",
+          "title": "Web workspace",
+          "audience": "Everyone, especially management, HR and finance",
+          "description": "The full system, with dashboards, settings and reports"
+        },
+        {
+          "id": "mobile",
+          "title": "Mobile app (iOS, Android)",
+          "audience": "Field and office staff",
+          "description": "Push notifications, calls, biometric lock and automatic time tracking"
+        },
+        {
+          "id": "telegram",
+          "title": "Telegram bot and Mini App",
+          "audience": "Employees who live in Telegram",
+          "description": "Tasks, reports, clock-in and the AI assistant by text or voice, plus a lightweight task board in the Mini App"
+        }
+      ],
+      "note": "Each company can use its own logo, colors, domain and Telegram bot."
+    },
+    "security": {
+      "eyebrow": "Security",
+      "title": "Data security and trust",
+      "subtitle": "Security and privacy are built into the foundation of the system.",
+      "items": [
+        {
+          "id": "isolation",
+          "title": "Tenant isolation",
+          "description": "Each company's data is isolated at the database row level. AI queries work within the same boundary."
+        },
+        {
+          "id": "roles",
+          "title": "Role-based access",
+          "description": "Build roles that match your organization. Everyone sees only the data they have access to."
+        },
+        {
+          "id": "twofa",
+          "title": "Two-factor authentication",
+          "description": "TOTP verification that admins can require for everyone."
+        },
+        {
+          "id": "biometric",
+          "title": "Biometric lock",
+          "description": "Lock the mobile app with Face ID or fingerprint."
+        },
+        {
+          "id": "consent",
+          "title": "Employee consent",
+          "description": "AI and location-based check-in are used only after an employee agrees, and consent can be withdrawn at any time."
+        },
+        {
+          "id": "audit",
+          "title": "Audit trail",
+          "description": "Records who changed what, and when."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "question": "Do we have to use every module?",
+          "answer": "No. Licenses are based on seats and modules. Start with the modules you need and add more later."
+        },
+        {
+          "question": "Is our data kept separate from other companies?",
+          "answer": "Yes. Each company's data is isolated at the database level, and AI assistant queries stay within that boundary."
+        },
+        {
+          "question": "Can OYUNS AI see every employee's data?",
+          "answer": "No. The AI only answers from data the asking user is allowed to see. Admins can restrict its access further by section, and employees give consent before using it."
+        },
+        {
+          "question": "Does geofence time tracking store employees' locations?",
+          "answer": "No. The phone only detects entering and leaving the work site to start or stop the clock. Coordinates are not stored, and the feature is used only with employee consent."
+        },
+        {
+          "question": "Which languages are supported?",
+          "answer": "Mongolian, Russian and English. Each user picks their own language, and the AI assistant speaks all three."
+        },
+        {
+          "question": "How do we get started?",
+          "answer": "Book a demo. In 30 minutes we'll walk through OYUNS ERP using your company's day-to-day work and decide together which modules to start with."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Let's see how it works for your team",
+      "description": "In a 30-minute meeting, we'll show you what OYUNS ERP can do using examples from your company's daily work.",
+      "button": "Book a demo"
+    }
+  }
+}

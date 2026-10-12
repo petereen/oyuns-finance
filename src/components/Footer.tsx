@@ -58,6 +58,7 @@ export default function Footer({ lang = 'mn' }: FooterProps) {
                 { href: `/${lang}`, label: lang === 'ru' ? 'Главная' : 'Нүүр хуудас' },
                 { href: `/${lang}/about`, label: lang === 'ru' ? 'О нас' : 'Бидний тухай' },
                 { href: `/${lang}/services`, label: lang === 'ru' ? 'Услуги' : 'Үйлчилгээ' },
+                { href: `/${lang}/solutions`, label: lang === 'ru' ? 'Решения' : 'Шийдлүүд' },
                 { href: `/${lang}/blog`, label: lang === 'ru' ? 'Новости' : 'Мэдээ, мэдээлэл' },
                 { href: `/${lang}/contact`, label: lang === 'ru' ? 'Контакты' : 'Бидэнтэй холбогдох' },
               ].map((link) => (
