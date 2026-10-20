@@ -220,7 +220,8 @@
       ]
     },
     "cta": {
-      "button": "Book a demo"
+      "button": "Book a demo",
+      "demoButton": "Try the demo"
     }
   }
 }

@@ -53,6 +53,7 @@ export default async function SolutionsPage({ params }: { params: Promise<{ lang
   const lang = rawLang === 'ru' ? 'ru' : 'mn';
   const content = (await getDictionary(lang)).solutions;
   const demoHref = `/${lang}/contact`;
+  const demoTourHref = 'https://demo.oyuns.mn'; // TODO: confirm demo URL
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -166,13 +167,21 @@ export default async function SolutionsPage({ params }: { params: Promise<{ lang
           className="mt-16 relative mesh-gradient rounded-2xl p-8 md:p-12 text-center text-white overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent pointer-events-none" />
-          <div className="relative">
+          <div className="relative flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href={demoHref}
               className="inline-flex items-center gap-2 bg-white text-[#2455D8] px-8 py-4 rounded-full font-semibold hover:shadow-xl hover:shadow-white/25 hover:-translate-y-0.5 transition-all duration-300 text-base"
             >
               {content.cta.button}
             </Link>
+            <a
+              href={demoTourHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300 text-base"
+            >
+              {content.cta.demoButton}
+            </a>
           </div>
         </motion.div>
       </div>
