@@ -1,4 +1,7 @@
 import type { MetadataRoute } from 'next';
+import { isIndexingAllowed } from '@/lib/indexing';
+
+export const dynamic = 'force-dynamic';
 
 const SITE_URL = 'https://oyuns.mn';
 const locales = ['mn', 'ru'] as const;
@@ -7,6 +10,7 @@ const locales = ['mn', 'ru'] as const;
 const routes = ['', '/about', '/services', '/solutions', '/exchange', '/blog', '/contact', '/user-agreement'];
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  if (!isIndexingAllowed()) return [];
   return routes.flatMap((route) =>
     locales.map((lang) => ({
       url: `${SITE_URL}/${lang}${route}`,

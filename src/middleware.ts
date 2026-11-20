@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { isIndexingAllowed } from "@/lib/indexing";
 
 const locales = ["mn", "ru"];
 const defaultLocale = "mn";
@@ -10,6 +11,13 @@ function getLocale() {
   return defaultLocale;
 }
 
+function withRobots(response: NextResponse) {
+  if (!isIndexingAllowed()) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  }
+  return response;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
@@ -18,7 +26,7 @@ export function middleware(request: NextRequest) {
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
-  if (pathnameHasLocale) return;
+  if (pathnameHasLocale) return withRobots(NextResponse.next());
 
   // Exclude internal paths, API routes, and static files
   if (
@@ -26,7 +34,7 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.includes('.') // file extension (svg, png, ico, etc)
   ) {
-    return;
+    return withRobots(NextResponse.next());
   }
 
   // Redirect if there is no locale
@@ -34,7 +42,7 @@ export function middleware(request: NextRequest) {
   request.nextUrl.pathname = `/${locale}${pathname}`;
   // e.g. incoming request is /products
   // The new URL is now /en-US/products
-  return NextResponse.redirect(request.nextUrl);
+  return withRobots(NextResponse.redirect(request.nextUrl));
 }
 
 export const config = {
