@@ -18,9 +18,52 @@ function withRobots(response: NextResponse) {
   return response;
 }
 
+// Candidate assessment subdomain(s). Comma-separated; e.g. "careers.oyuns.mn".
+// "careers.localhost" always works for local development.
+const assessmentHosts = (process.env.ASSESSMENT_HOST || "careers.oyuns.mn")
+  .split(",")
+  .map((h) => h.trim().toLowerCase())
+  .filter(Boolean);
+
+function requestHost(request: NextRequest) {
+  const raw = request.headers.get("x-forwarded-host") || request.headers.get("host") || "";
+  return raw.split(",")[0].trim().toLowerCase().replace(/:\d+$/, "");
+}
+
+function isAssessmentHost(host: string) {
+  return assessmentHosts.includes(host) || host === "careers.localhost";
+}
+
+function noindex(response: NextResponse) {
+  response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, nosnippet");
+  return response;
+}
+
+function assessmentMiddleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/api/assessment/")) return noindex(NextResponse.next());
+  if (pathname.startsWith("/api/")) return noindex(new NextResponse(null, { status: 404 }));
+  if (pathname.includes(".")) return noindex(NextResponse.next()); // static files
+
+  if (pathname === "/" || pathname === "/assessment") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/assessment";
+    return noindex(NextResponse.rewrite(url));
+  }
+
+  // Any other path on the subdomain goes to the single assessment page.
+  const url = request.nextUrl.clone();
+  url.pathname = "/";
+  url.search = "";
+  return noindex(NextResponse.redirect(url));
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
+  if (isAssessmentHost(requestHost(request))) return assessmentMiddleware(request);
+
   // Check if there is any supported locale in the pathname
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`

@@ -20,6 +20,13 @@ services:
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
       NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      # Candidate assessment (careers subdomain) — server-side secrets.
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+      ASSESSMENT_SESSION_SECRET: ${ASSESSMENT_SESSION_SECRET}
+      ASSESSMENT_HOST: ${ASSESSMENT_HOST:-careers.oyuns.mn}
+      ASSESSMENT_INVITE_ONLY: ${ASSESSMENT_INVITE_ONLY:-false}
+      ASSESSMENT_EMAIL_FROM: ${ASSESSMENT_EMAIL_FROM:-OYUNS ALL-IN-ONE <info@oyuns.mn>}
     # Dokploy uses this internal port to discover and route the service.
     # No fixed host port is published by this short Compose syntax.
     ports:
