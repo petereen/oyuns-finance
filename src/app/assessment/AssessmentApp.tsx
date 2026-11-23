@@ -193,8 +193,18 @@ export default function AssessmentApp() {
   }, [applyState]);
 
   useEffect(() => {
-    refresh();
-  }, [refresh]);
+    let cancelled = false;
+    api('state')
+      .then((data) => {
+        if (!cancelled) applyState(data.state);
+      })
+      .catch((error) => {
+        if (!cancelled) setLoadError(errorText(error instanceof ApiError ? error.code : 'server_error'));
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [applyState]);
 
   // Handles errors from any action: session lost -> back to login; server says
   // already submitted -> show completion page.
