@@ -239,7 +239,7 @@ export default function AssessmentApp() {
         <div className="flex items-center gap-3">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-main.svg" alt="OYUNS ALL-IN-ONE" className="h-9 w-auto" />
-          <span className="hidden text-sm font-semibold text-[#52627a] sm:inline">Ажлын байрны даалгавар</span>
+          <span className="hidden text-sm font-semibold text-[#52627a] sm:inline">Careers</span>
         </div>
         {headerEmail && (
           <div className="flex items-center gap-2 text-sm">
@@ -361,7 +361,7 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
     return (
       <Card>
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#2455D8]">Тавтай морил</p>
-        <h1 className="mb-3 text-2xl font-bold text-[#1a1a1a] sm:text-3xl">Ажил горилогчийн даалгавар</h1>
+        <h1 className="mb-3 text-2xl font-bold text-[#1a1a1a] sm:text-3xl">Careers</h1>
         <p className="mb-8 text-[#52627a]">
           OYUNS ALL-IN-ONE-д CV илгээж ажиллах сонирхолоо илэрхийлсэнд баярлалаа. Эхлэхийн өмнө доорх мэдээлэлтэй сайтар танилцана уу.
         </p>

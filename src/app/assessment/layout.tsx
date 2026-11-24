@@ -8,8 +8,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: 'Ажлын байрны даалгавар | OYUNS ALL-IN-ONE',
-  description: 'OYUNS ALL-IN-ONE — ажил горилогчийн даалгавар',
+  title: 'Careers| OYUNS ALL-IN-ONE',
+  description: 'OYUNS ALL-IN-ONE — Careers',
   robots: { index: false, follow: false, nocache: true },
   icons: {
     icon: [
