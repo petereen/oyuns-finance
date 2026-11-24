@@ -29,7 +29,11 @@ async function looksLikeZip(path: string): Promise<boolean> {
   const signed = await db().storage.from(ASSESSMENT_BUCKET).createSignedUrl(path, 60);
   if (signed.error || !signed.data?.signedUrl) throw signed.error ?? new Error('could not sign download url');
 
-  const res = await fetch(signed.data.signedUrl, { headers: { Range: 'bytes=0-3' }, cache: 'no-store' });
+  const res = await fetch(signed.data.signedUrl, {
+    headers: { Range: 'bytes=0-3' },
+    cache: 'no-store',
+    signal: AbortSignal.timeout(8000),
+  });
   if (!res.ok || !res.body) return false;
 
   const reader = res.body.getReader();
@@ -78,7 +82,13 @@ export const POST = handler(
       await db().storage.from(ASSESSMENT_BUCKET).remove([path]);
       return fail('file_too_large', 400);
     }
-    if (!(await looksLikeZip(path))) {
+    // Best effort: if the storage URL is unreachable/slow from the server, don't hang the
+    // candidate's submission (size and path were already verified above).
+    const zipOk = await looksLikeZip(path).catch((error) => {
+      console.warn('[assessment] zip signature check skipped:', error);
+      return true;
+    });
+    if (!zipOk) {
       await db().storage.from(ASSESSMENT_BUCKET).remove([path]);
       return fail('invalid_zip', 400);
     }

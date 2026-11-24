@@ -66,6 +66,7 @@ async function api<T = { state: AssessmentState }>(path: string, body?: unknown)
       body: body === undefined ? undefined : JSON.stringify(body),
       credentials: 'same-origin',
       cache: 'no-store',
+      signal: AbortSignal.timeout(60000),
     });
   } catch {
     throw new ApiError('network', {});
