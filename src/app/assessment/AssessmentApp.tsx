@@ -339,7 +339,7 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
     const items = [
       {
         title: `${durationMinutes} минутын хугацаатай`,
-        text: `Нэвтэрсний дараа "Эхлэх" товч дарахад ${durationMinutes} минутын хугацаа эхэлнэ. Хугацааг түр зогсоох, сунгах боломжгүй.`,
+        text: `Нэвтэрсний дараа "Эхлэх" товч дарахад ${durationMinutes} минутын хугацаа явж эхэлнэ. Хугацааг түр зогсоох, сунгах боломжгүй.`,
       },
       {
         title: 'Нээлттэй асуулттай даалгавар',
@@ -347,15 +347,15 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
       },
       {
         title: 'Имэйлээр нэвтрэх',
-        text: 'Имэйл хаягтаа ирсэн нэг удаагийн кодоор нэвтэрнэ. Нэг имэйл хаягаар зөвхөн нэг удаа оролцох боломжтой.',
+        text: 'Таны zangia.mn-д бүртгүүлсэн имэйл хаягаар илгээсэн нэг удаагийн кодоор нэвтэрнэ. Нэг имэйл хаягаар зөвхөн нэг удаа оролцох боломжтой.',
       },
       {
         title: 'Портфолио',
-        text: 'Портфолио, ажлын холбоосоо даалгавартай хамт эсвэл даалгавраа илгээсний дараа илгээж болно.',
+        text: 'Портфолио, өмнө хийсэн ажлын туршлага, бүтээлүүдээ даалгавартай хамт эсвэл даалгавраа илгээсний дараа илгээж болно.',
       },
       {
         title: 'Бэлтгэлээ хангана уу',
-        text: 'Тогтвортой интернэт холболттой компьютер, чимээгүй орчин бэлдээрэй. Хуудсаа хаасан ч хугацаа үргэлжлэн тоологдоно — дахин нэвтэрч үргэлжлүүлж болно.',
+        text: 'Тогтвортой интернэт холболттой компьютер, чимээгүй орчин бэлдээрэй. Хуудсаа хаасан ч хугацаа үргэлжлэхийг анхаарна уу. Дахин нэвтэрч үргэлжлүүлж болно.',
       },
     ];
     return (
@@ -363,7 +363,7 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#2455D8]">Тавтай морил</p>
         <h1 className="mb-3 text-2xl font-bold text-[#1a1a1a] sm:text-3xl">Ажил горилогчийн даалгавар</h1>
         <p className="mb-8 text-[#52627a]">
-          OYUNS ALL-IN-ONE-д сонирхол илэрхийлсэнд баярлалаа. Эхлэхээс өмнө доорх мэдээлэлтэй сайтар танилцана уу.
+          OYUNS ALL-IN-ONE-д CV илгээж ажиллах сонирхолоо илэрхийлсэнд баярлалаа. Эхлэхийн өмнө доорх мэдээлэлтэй сайтар танилцана уу.
         </p>
         <ol className="mb-8 space-y-4">
           {items.map((item, i) => (
@@ -379,7 +379,7 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
           ))}
         </ol>
         <Button className="w-full sm:w-auto" onClick={() => setStep('email')}>
-          Бэлэн байна — нэвтрэх
+          Би бэлэн
         </Button>
       </Card>
     );
@@ -434,7 +434,7 @@ function AuthFlow({ durationMinutes, onAuthed }: { durationMinutes: number; onAu
           <div>
             <h1 className="mb-2 text-xl font-bold text-[#1a1a1a]">Кодоо оруулна уу</h1>
             <p className="text-sm text-[#52627a]">
-              <span className="font-semibold text-[#1a1a1a]">{email}</span> хаяг руу код илгээлээ. Spam хавтсаа ч шалгаарай.
+              <span className="font-semibold text-[#1a1a1a]">{email}</span> хаяг руу код илгээлээ.
             </p>
           </div>
           <input
@@ -521,10 +521,10 @@ function StartView({
             <p className="mb-2 font-semibold">Анхааруулга</p>
             <ul className="list-disc space-y-1 pl-5">
               <li>
-                &quot;Эхлэх&quot; товч дармагц <b>{state.durationMinutes} минутын</b> хугацаа эхэлж, зогсоох боломжгүй.
+                &quot;Эхлэх&quot; товч дармагц <b>{state.durationMinutes} минутын</b> хугацаа эхлэх болно, зогсоох боломжгүйг анхаараарай.
               </li>
               <li>Хуудсаа хаасан, интернэт тасарсан ч хугацаа үргэлжлэн тоологдоно.</li>
-              <li>Хугацаа дуусахаас өмнө .zip файлаа илгээх шаардлагатай. Хугацаа дууссаны дараа илгээх боломжгүй.</li>
+              <li>Хугацаа дуусахаас өмнө .zip файлаа илгээх шаардлагатай учир хугацааг сайн тооцож илгээх.</li>
               <li>Даалгаврыг зөвхөн нэг удаа илгээнэ.</li>
             </ul>
           </div>
@@ -539,7 +539,7 @@ function StartView({
           </label>
           <ErrorBox message={error} />
           <Button className="w-full sm:w-auto" disabled={!agreed} loading={busy} onClick={start}>
-            Эхлэх — {state.durationMinutes} минут
+            Эхлэх. {state.durationMinutes} минут
           </Button>
         </>
       )}
@@ -629,6 +629,85 @@ function invalidLink(links: string[]): boolean {
       return true;
     }
   });
+}
+
+// ---------------------------------------------------------------------------
+// Task body: lightweight markdown (headings, lists, **bold**, paragraphs)
+// ---------------------------------------------------------------------------
+function renderInline(text: string) {
+  return text.split(/(\*\*[^*]+\*\*)/g).map((part, i) =>
+    part.startsWith('**') && part.endsWith('**') && part.length > 4 ? (
+      <strong key={i} className="font-semibold text-[#1a1a1a]">
+        {part.slice(2, -2)}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
+function TaskBody({ text }: { text: string }) {
+  const lines = text.replace(/\r\n?/g, '\n').split('\n');
+  const out: React.ReactNode[] = [];
+  let para: string[] = [];
+  let list: { ordered: boolean; items: string[] } | null = null;
+  let key = 0;
+
+  const flushPara = () => {
+    if (para.length) {
+      out.push(
+        <p key={key++} className="mb-3 whitespace-pre-line">
+          {renderInline(para.join('\n'))}
+        </p>,
+      );
+      para = [];
+    }
+  };
+  const flushList = () => {
+    if (list) {
+      const Tag = list.ordered ? 'ol' : 'ul';
+      out.push(
+        <Tag key={key++} className={`mb-3 space-y-1 pl-6 ${list.ordered ? 'list-decimal' : 'list-disc'}`}>
+          {list.items.map((it, i) => (
+            <li key={i}>{renderInline(it)}</li>
+          ))}
+        </Tag>,
+      );
+      list = null;
+    }
+  };
+
+  for (const raw of lines) {
+    const line = raw.trimEnd();
+    const heading = /^(#{1,4})\s+(.*)$/.exec(line);
+    const bullet = /^\s*[-*•]\s+(.*)$/.exec(line);
+    const num = /^\s*\d+[.)]\s+(.*)$/.exec(line);
+    if (!line.trim()) {
+      flushPara();
+      flushList();
+    } else if (heading) {
+      flushPara();
+      flushList();
+      out.push(
+        <h2 key={key++} className="mb-2 mt-5 text-lg font-bold text-[#1a1a1a]">
+          {renderInline(heading[2])}
+        </h2>,
+      );
+    } else if (bullet || num) {
+      flushPara();
+      const ordered = !!num;
+      if (list && list.ordered !== ordered) flushList();
+      if (!list) list = { ordered, items: [] };
+      list.items.push((bullet ?? num)![1]);
+    } else {
+      flushList();
+      para.push(line);
+    }
+  }
+  flushPara();
+  flushList();
+
+  return <div className="break-words leading-relaxed text-[#334155]">{out}</div>;
 }
 
 // ---------------------------------------------------------------------------
@@ -739,7 +818,7 @@ function TaskView({
         </div>
         {timeUp && busy && (
           <p className="mt-2 rounded-xl bg-amber-50 px-4 py-2 text-center text-sm text-amber-800">
-            Хугацаа дууслаа — хуулж буй файлыг дуусгаж байна…
+            Хугацаа дууслаа. Хуулж буй файлыг дуусгаж байна…
           </p>
         )}
       </div>
@@ -747,14 +826,14 @@ function TaskView({
       <Card>
         <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-[#2455D8]">Даалгавар</p>
         {state.task.title && <h1 className="mb-4 text-2xl font-bold text-[#1a1a1a]">{state.task.title}</h1>}
-        <div className="whitespace-pre-wrap break-words leading-relaxed text-[#334155]">{state.task.body}</div>
+        <TaskBody text={state.task.body} />
       </Card>
 
       <Card className="space-y-6">
         <div>
           <h2 className="mb-1 text-xl font-bold text-[#1a1a1a]">Даалгавар илгээх</h2>
           <p className="text-sm text-[#52627a]">
-            Гүйцэтгэлээ нэг .zip файл болгон оруулна уу ({Math.round(MAX_ZIP_BYTES / 1024 / 1024)}MB хүртэл).
+            Хийсэн бүтээлээ нэг .zip файл болгон оруулна уу ({Math.round(MAX_ZIP_BYTES / 1024 / 1024)}MB хүртэл).
           </p>
         </div>
 
@@ -804,7 +883,7 @@ function TaskView({
               Портфолио <span className="font-normal text-[#52627a]">(заавал биш)</span>
             </h3>
             <p className="text-sm text-[#52627a]">
-              Портфолиогоо даалгавраа илгээсний дараа ч илгээх боломжтой.
+              Портфолиогоо даалгавраа илгээсний дараа ч илгээх боломжтой шүү.
             </p>
           </div>
           <PortfolioFields value={portfolio} onChange={setPortfolio} disabled={busy} />
@@ -859,7 +938,7 @@ function ExpiredView({ deadlineAt }: { deadlineAt: string }) {
       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-100 text-2xl">⏱</div>
       <h1 className="text-2xl font-bold text-[#1a1a1a]">Хугацаа дууссан</h1>
       <p className="text-[#52627a]">
-        Даалгаврын хугацаа {formatDate(deadlineAt)}-д дууссан тул илгээх боломжгүй болсон. Асуух зүйл байвал HR-тай холбогдоно уу.
+        Даалгаврын хугацаа {formatDate(deadlineAt)}-д дууссан тул илгээх боломжгүй болсон байна. Асуух зүйл байвал info@oyuns.mn хаягаар холбогдоно уу.
       </p>
     </Card>
   );
@@ -908,7 +987,7 @@ function CompleteView({
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl text-emerald-600">✓</div>
         <h1 className="text-2xl font-bold text-[#1a1a1a]">Даалгавар амжилттай илгээгдлээ</h1>
         <p className="text-[#52627a]">
-          Оролцсонд баярлалаа! Таны гүйцэтгэлийг хянаж үзээд <span className="font-semibold">{state.email}</span> хаягаар холбогдох болно.
+          Оролцсонд баярлалаа! Таны даалгаврын гүйцэтгэлийг хянаж үзээд <span className="font-semibold">{state.email}</span> хаягаар холбогдох болно.
         </p>
         <div className="mx-auto inline-block rounded-2xl bg-[#f6f9ff] px-5 py-3 text-left text-sm text-[#52627a]">
           <p>
@@ -927,7 +1006,7 @@ function CompleteView({
           <div>
             <h2 className="text-lg font-bold text-[#1a1a1a]">Портфолио</h2>
             <p className="text-sm text-[#52627a]">
-              {sent ? 'Таны портфолио хүлээн авагдсан.' : 'Портфолио, ажлын холбоосоо нэмж илгээх боломжтой (нэг удаа).'}
+              {sent ? 'Таны портфолио хүлээн авлаа.' : 'Портфолио, ажлын холбоосоо нэмж илгээх боломжтой.'}
             </p>
           </div>
           {!sent && !open && (
