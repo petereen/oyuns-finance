@@ -144,7 +144,7 @@ export async function sendOtpEmail(to: string, code: string) {
 <h1 style="margin:0 0 16px;font-size:20px">Даалгаврын нэвтрэх код</h1>
 <p style="margin:0 0 24px;font-size:15px;line-height:1.5">Таны нэг удаагийн нэвтрэх код:</p>
 <p style="margin:0 0 24px;font-size:34px;font-weight:bold;letter-spacing:8px;color:#1b40a8">${code}</p>
-<p style="margin:0;font-size:13px;line-height:1.5;color:#52627a">Код ${minutes} минутын дараа хүчингүй болно. Хэрэв та энэ кодыг хүсээгүй бол энэ имэйлийг үл тоомсорлоно уу.</p>
+<p style="margin:0;font-size:13px;line-height:1.5;color:#52627a">Код ${minutes} минутын дараа хүчингүй болно.</p>
 </td></tr></table></body></html>`;
 
   const res = await fetch('https://api.resend.com/emails', {
