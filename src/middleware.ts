@@ -46,6 +46,13 @@ function assessmentMiddleware(request: NextRequest) {
   if (pathname.startsWith("/api/")) return noindex(new NextResponse(null, { status: 404 }));
   if (pathname.includes(".")) return noindex(NextResponse.next()); // static files
 
+  // Admin dashboard (env email + password login).
+  if (pathname === "/admin" || pathname === "/admin/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/assessment/admin";
+    return noindex(NextResponse.rewrite(url));
+  }
+
   if (pathname === "/" || pathname === "/assessment") {
     const url = request.nextUrl.clone();
     url.pathname = "/assessment";

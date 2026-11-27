@@ -47,3 +47,31 @@ export type AssessmentState =
       fileName: string | null;
       portfolio: PortfolioInfo;
     };
+
+// ---------------------------------------------------------------------------
+// Admin dashboard (shared between the admin API and the admin UI)
+// ---------------------------------------------------------------------------
+// 60 × 50 MB stays well under the 4 GB zip (non-zip64) limit of the bulk export.
+export const MAX_EXPORT_CANDIDATES = 60;
+
+export type CandidateStatus = 'not_started' | 'in_progress' | 'expired' | 'submitted';
+
+export type AdminCandidate = {
+  id: string;
+  email: string;
+  fullName: string | null;
+  invited: boolean;
+  taskTitle: string | null;
+  status: CandidateStatus;
+  createdAt: string;
+  lastLoginAt: string | null;
+  startedAt: string | null;
+  deadlineAt: string | null;
+  submittedAt: string | null;
+  minutesUsed: number | null;
+  submission: { fileName: string | null; size: number | null } | null;
+  portfolio: PortfolioInfo;
+  startIp: string | null;
+  submitIp: string | null;
+  userAgent: string | null;
+};

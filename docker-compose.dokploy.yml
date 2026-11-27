@@ -27,6 +27,8 @@ services:
       ASSESSMENT_HOST: ${ASSESSMENT_HOST:-careers.oyuns.mn}
       ASSESSMENT_INVITE_ONLY: ${ASSESSMENT_INVITE_ONLY:-false}
       ASSESSMENT_EMAIL_FROM: ${ASSESSMENT_EMAIL_FROM:-OYUNS ALL-IN-ONE <info@oyuns.mn>}
+      ASSESSMENT_ADMIN_EMAIL: ${ASSESSMENT_ADMIN_EMAIL}
+      ASSESSMENT_ADMIN_PASSWORD: ${ASSESSMENT_ADMIN_PASSWORD}
     # Dokploy uses this internal port to discover and route the service.
     # No fixed host port is published by this short Compose syntax.
     ports:

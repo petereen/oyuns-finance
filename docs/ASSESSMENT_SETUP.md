@@ -34,7 +34,17 @@ where slug = 'open-task-v1';
 
 **To let a candidate retake:** `delete from assessment_candidates where email = '...';`. Updates to started or submitted rows are blocked by a trigger.
 
-**To download submissions:** go to Storage → `assessment-submissions` → `<candidate id>/…zip`, or use the `submission_path` column in `assessment_results`.
+**To download submissions:** use the admin dashboard (below). You can also go to Storage → `assessment-submissions` → `<candidate id>/…zip`.
+
+### Admin dashboard (`/admin`)
+
+Open `https://careers.oyuns.mn/admin` (locally: `http://careers.localhost:3000/admin`) and log in with `ASSESSMENT_ADMIN_EMAIL` / `ASSESSMENT_ADMIN_PASSWORD`. There is no OTP.
+
+- The table lists every candidate with their status (submitted / in progress / expired / not started), timings, file and portfolio. You can search and filter by status.
+- **Дэлгэрэнгүй** opens the full candidate info and portfolio (links + text).
+- Each row can download the project `.zip` directly, or a bundle with the project plus `portfolio.md`.
+- **Bulk download:** select rows (or use "download all submitted") to get one zip containing `summary.csv` and a folder per candidate with their project zip and `portfolio.md`. Each export holds at most 60 candidates; the UI splits larger sets into several downloads.
+- Security: an HMAC-signed `httpOnly`, `SameSite=Strict` cookie that lasts 8 h, separate from the candidate cookie. POSTs are checked for same origin. Failed logins are throttled to 8 per 15 min per IP and 50 per 15 min overall (in memory, per server process).
 
 ## 2. Environment variables (Dokploy → Environment)
 
@@ -46,6 +56,8 @@ where slug = 'open-task-v1';
 | `ASSESSMENT_HOST` | `careers.oyuns.mn` (comma-separate if you need more than one host). |
 | `ASSESSMENT_INVITE_ONLY` | `false` = anyone with an email can take it. `true` = only pre-registered emails (see below). |
 | `ASSESSMENT_EMAIL_FROM` | Optional. Defaults to `OYUNS ALL-IN-ONE <info@oyuns.mn>`. |
+| `ASSESSMENT_ADMIN_EMAIL` | Login email for the admin dashboard at `https://careers.oyuns.mn/admin`. |
+| `ASSESSMENT_ADMIN_PASSWORD` | Admin password, at least 12 characters (e.g. `openssl rand -base64 18`). Changing it logs out existing admin sessions. |
 
 `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are already configured for the main site.
 
